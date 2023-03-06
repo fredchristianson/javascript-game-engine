@@ -1,6 +1,5 @@
 # JavaScript Game Engine
 
-======================
 
 There are 2 purposes for this project
 
@@ -26,5 +25,13 @@ Ideally, anyone can join us with
 - A text editor
 - Chrome
 - git
+
+/docs will contain documentation about the system.  Some examples 
+- requirements
+- architecture
+- task descriptions
+Most of these will be word documents of [my blog](https://devrelief.net/javascript-game-engine).
+
+
 
 The best way to reach me is on [Twitter](https://twitter.com/DevReliefFred).
