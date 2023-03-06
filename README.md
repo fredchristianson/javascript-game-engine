@@ -1,6 +1,5 @@
 # JavaScript Game Engine
 
-======================
 
 There are 2 purposes for this project
 
