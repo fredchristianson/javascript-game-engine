@@ -1,8 +1,9 @@
 # JavaScript Game Engine
 
 If you want to be a collaborator, [request access](https://github.com/fredchristianson/javascript-game-engine/discussions/2).
+Also read about [branches](https://github.com/fredchristianson/javascript-game-engine/discussions/3).
 
-There are other Discussions about project organization, tasks, and architecture.
+There are other Discussions about project organization, tasks, and architecture. Feel free to read them or ignore them.  
 
 There are 2 purposes for this project
 
