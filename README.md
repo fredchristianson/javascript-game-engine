@@ -1,6 +1,6 @@
 # JavaScript Game Engine
 
-If you want to be a collaborator, (request access)[https://github.com/fredchristianson/javascript-game-engine/discussions/2].
+If you want to be a collaborator, [request access](https://github.com/fredchristianson/javascript-game-engine/discussions/2).
 
 There are other Discussions about project organization, tasks, and architecture.
 
