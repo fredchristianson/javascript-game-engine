@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="controls">
+            <div class="engine">engine controls</div>
+            <div class="game">game controls</div>
+        </div>
+        <div id='world' class="world game">world</div>
+        <div class="status">
+            <div class="engine">engine status</div>
+            <div class="game">game status</div>
+
+        </div>
+    </div>
+
+</body>
+<script type="module">
+    import { theGameApp } from "./js/game-app.js";
+    theGameApp.run("launcher");
+</script>
+
+</html>

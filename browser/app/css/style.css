@@ -1,0 +1,43 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+}
+
+#app {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    overflow: hidden;
+
+    grid-template-areas: 
+    'controls'
+    'world'
+    'status';
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr auto;
+}
+
+.controls {
+    grid-area: controls;
+    display: flex;
+    border-bottom: 1px solid black;
+}
+
+.world {
+    grid-area: world;
+}
+
+.status {
+    grid-area: status;
+    display: flex;
+    border-top: 1px solid black;
+}
+
+.engine {
+    background-color: hsl(190, 100%, 50%);
+}
+
+.game {
+    background-color: hsl(40 100% 50%);
+}
+
