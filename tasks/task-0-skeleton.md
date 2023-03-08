@@ -1,4 +1,6 @@
-This task is to create a skeleton directory and file structure.
+This task is to create an environment module for properties
+such as
+- production or debug
+- logging levels
+- performance levels (may disable effects on slow machines)
 
-There is no need to do this unless you want to have other people
-review what you would have done.
