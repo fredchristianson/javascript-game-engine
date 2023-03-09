@@ -20,11 +20,17 @@
 
 </body>
 <script type="module">
-    import { ENV} from "../modules/env.js";
+    import { ENV } from "../modules/env.js";
     import { theGameApp } from "./js/game-app.js";
-
-    console.log(`running in mode ${ENV.get('mode','debug')}`)
-    theGameApp.run("launcher");
+  
+    async function init() {
+      await ENV.setGlobalEnv();
+      console.log(ENV.globalEnv);
+      theGameApp.run("launcher");
+    }
+  
+    console.log(`running in mode ${ENV.get('mode', 'debug')}`);
+    init();
 </script>
-
+  
 </html>

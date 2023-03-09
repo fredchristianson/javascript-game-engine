@@ -15,14 +15,87 @@
 // for example, logging levels may change when a new game is loaded
 
 class Environment {
-  constructor() {}
+  constructor() {
+    // The "urlParams", "gameEnv", and "localEnv" properties are objects that will be used to store environment variables
+    // loaded from their respective sources. The "globalEnv" property is an object that will be used to store environment
+    // variables set using the "set()" function.
+    this.urlParams = {};
+    this.gameEnv = {};
+    this.localEnv = {};
+    this.globalEnv = {};
+  }
 
+  async loadJSON(url) {
+    // fetch the JSON data from the specified URL
+    const response = await fetch(url);
+    // check if the response was successful (i.e. status code in the range 200-299)
+    if (response.ok) {
+      // parse the response body as JSON and return the result
+      return await response.json();
+    } else {
+      // throw an error if the response was not successful
+      throw new Error(`Failed to load JSON from ${url}`);
+    }
+  }
+  
+  async setGameEnv() {
+    // construct the URL for the game-specific environment variables
+    const gameEnvUrl = `/games/game/${CURRENT_GAME}/env.json`;
+    // fetch the game-specific environment variables and merge them with any existing values in gameEnv
+    const gameEnv = await this.loadJSON(gameEnvUrl);
+    Object.assign(this.gameEnv, gameEnv);
+  }
+  
+  async setLocalEnv() {
+    // construct the URL for the local environment variables
+    const localEnvUrl = 'browser/env-local.json';
+    // fetch the local environment variables and merge them with any existing values in localEnv
+    const localEnv = await this.loadJSON(localEnvUrl);
+    Object.assign(this.localEnv, localEnv);
+  }
+  
+  async setGlobalEnv() {
+    // construct the URL for the global(browser) environment variables
+    const globalEnvUrl = '/browser/env.json';
+    // fetch the global environment variables and merge them with any existing values in globalEnv
+    const globalEnv = await this.loadJSON(globalEnvUrl);
+    Object.assign(this.globalEnv, globalEnv);
+  }
+  
   get(name, defaultValue) {
-    // return the property with the given name or default if not set;
+    // Look for the property in the following order:
+    // 1. Check if the property is set in globalEnv
+    // 2. Check if the property is set in urlParams
+    // 3. Check if the property is set in gameEnv
+    // 4. Check if the property is set in localEnv
+    // 5. Return the default value if property is not set in any source
+    
+    if (this.globalEnv.hasOwnProperty(name)) {
+      return this.globalEnv[name];
+    } else if (this.urlParams.hasOwnProperty(name)) {
+      return this.urlParams[name];
+    } else if (this.gameEnv.hasOwnProperty(name)) {
+      return this.gameEnv[name];
+    } else if (this.localEnv.hasOwnProperty(name)) {
+      return this.localEnv[name];
+    } else {
+      return defaultValue;
+    }
   }
 
   set(name, value) {
-    // set the property name
+    // The "set()" function takes a "name" and "value" argument and sets the value of the property with the given name in 
+    // the "globalEnv" object.
+    this.globalEnv[name] = value;
+  }
+
+  setUrlParams() {
+    //  The setUrlParams() function parses the URL parameters using the URLSearchParams API and stores them in the urlParams 
+    //  property of the Environment object using a for loop.
+    const params = new URLSearchParams(window.location.search);
+    for (const [key, value] of params.entries()) {
+      this.urlParams[key] = value;
+    }
   }
 }
 
