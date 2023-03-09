@@ -1,5 +1,7 @@
 # JavaScript Game Engine
 
+We are in the very early stages.  A simple skeleton of the code and discussions of what we will build.
+
 If you want to be a collaborator, [request access](https://github.com/fredchristianson/javascript-game-engine/discussions/2).
 Also read about [branches](https://github.com/fredchristianson/javascript-game-engine/discussions/3).
 
