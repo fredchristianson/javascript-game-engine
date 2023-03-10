@@ -16,7 +16,8 @@ const extenstionToMimeTypeMap = {
   '.jpeg': 'image/jpg',
   '.gif': 'image/gif',
   '.ico': 'image/x-icon',
-  '.svg': 'image/svg+xml'
+  '.svg': 'image/svg+xml',
+  '.json': 'application/json',
 };
 
 const notImplemented = {
