@@ -1,121 +1,54 @@
+/**
+ * This is a simple HTTP server with some basic routing.
+ * It requires nodeJS 12 or newer.
+ * 
+ * To run:
+ *  >node server.js
+ * 
+ * There are 2 reasons for this implementation
+ * 1. To keep beginners from being frustrated.  Once
+ *    additional modules are included (e.g. express),
+ *    things are more likely to break.  The only
+ *    requirement is nodejs itslef.
+ * 
+ * 2. To show the basics of what is going on when modules
+ *    like express are used.  It doesn't need to be complicated
+ *    and is is one simple example.
+ */
+
 const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const ROOT = __dirname + '/../browser';
-const GAME_DIRECTORY = __dirname + '/../browser/games';
+
+// Router does some very basic mapping of the request URL
+// the the apprpriate handler.
+const Router = require('./modules/request-router.js');
+
+// handler to a logger API so clients can log messages
+// over the network
+const LogHandler = require('./handlers/logger.js');
+
+// a handler to return static files
+const FileHandler = require('./handlers/file.js');
+
+// a handler to return lists of games by scanning
+// the game folder, and to return game resources (html, json,etc)
+const GameHandler = require('./handlers/game.js');
 
 const PORT = 4263; // GAME on phone dial
 
-const extenstionToMimeTypeMap = {
-  '.html': 'text/html',
-  '.htm': 'text/html',
-  '.js': 'application/javascript',
-  '.css': 'text/css',
-  '.png': 'image/png',
-  '.jpg': 'image/jpg',
-  '.jpeg': 'image/jpg',
-  '.gif': 'image/gif',
-  '.ico': 'image/x-icon',
-  '.svg': 'image/svg+xml'
-};
 
-const notImplemented = {
-  success: false,
-  message: 'this API is not implemented'
-};
+const METHODS = Router.METHODS;
+const router = Router.createRouter();
+// map of url to correct handler functions
+router.addHandler(METHODS.POST, "/api/v1/log", LogHandler.log);
+router.addHandler(METHODS.GET, "/api/v1/games", GameHandler.getGames);
+router.addHandler(METHODS.GET, "/game/:name", GameHandler.getGameResource);
+router.addHandler(METHODS.GET, "/", FileHandler.getResource);
 
-function getContentType(url) {
-  let ext = path.extname(url);
-  let mimeType = extenstionToMimeTypeMap[ext] || 'text/plain';
-  console.log(`extension ${ext}`);
-  return mimeType;
-}
 
-async function getGames() {
-  const games = [];
-  const dirs = fs.readdirSync(GAME_DIRECTORY);
-  dirs.forEach((dir) => {
-    const gameDescriptionFile = path.join(
-      GAME_DIRECTORY,
-      dir,
-      'description.json'
-    );
-    try {
-    fs.accessSync(gameDescriptionFile, fs.constants.R_OK);
-        const description = fs.readFileSync(gameDescriptionFile, 'utf8');
-        const json = JSON.parse(description);
-        games.push(json);
-    } catch (ex) {
-      console.error(`failed to read game description ${gameDescriptionFile}`);
-    }
-  });
-
-  return games;
-}
-
-async function handleApiV1(req, res) {
-  let url = req.url;
-  let response = notImplemented;
-  let api = url.substring('/api/v1/'.length);
-  console.log(`Handle API ${api}`);
-  if (api == 'games') {
-    const list = await getGames();
-
-    response = {
-      success: true,
-      data: list
-    };
-  }
-
-  // don't mix transport and API results
-  // we return a "good" transport response:  status code 200.
-  // the indication of API failure is in the json that is returned.
-  res.statusCode = 200;
-  res.end(JSON.stringify(response));
-}
-
-function returnFile(req, res) {
-  let url = req.url;
-  let filePath = path.join(ROOT, url);
-  console.log(url);
-
-  fs.access(filePath, fs.constants.R_OK, (err) => {
-    if (err) {
-      res.statusCode = 404;
-      res.end(`File ${filePath} not found!`);
-    } else {
-      if (fs.statSync(filePath).isDirectory()) {
-        filePath += '/index.html';
-      }
-
-      fs.readFile(filePath, (err, data) => {
-        if (err) {
-          res.statusCode = 500;
-          res.end(`Error getting the file: ${err}.`);
-        } else {
-          res.setHeader('Content-Type', getContentType(req.url));
-          res.end(data);
-        }
-      });
-    }
-  });
-}
-
-const server = http.createServer((req, res) => {
+// create a server that that users the router to handle requests.
+const server = http.createServer(async (req, res) => {
   try {
-    let url = req.url;
-    if (url == '/') {
-      res.writeHead(302, {
-        Location: '/app/index.html'
-      });
-      res.end();
-      return;
-    }
-    if (url.startsWith('/api/v1')) {
-      handleApiV1(req, res);
-    } else {
-      returnFile(req, res);
-    }
+    router.handle(req, res);
   } catch (e) {
     res.statusCode = 500;
     res.end(`exception ${e}`);
