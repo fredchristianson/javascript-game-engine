@@ -9,6 +9,8 @@ import { Environment } from './env/env.js';
 /**
  * A singleton instance of the environment properties.
  * @type {Environment}
+ * 
+ * @instance
  */
 const ENV = new Environment();
 
