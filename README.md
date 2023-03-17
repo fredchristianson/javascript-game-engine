@@ -1,5 +1,6 @@
 # JavaScript Game Engine
 
+
 **Requires**
 
 - node v12 or later
@@ -11,10 +12,15 @@
 > node server.js
 > in chrome open "http://localhost:4264"
 
+
 If you want to be a collaborator, [request access](https://github.com/fredchristianson/javascript-game-engine/discussions/2).
 Also read about [branches](https://github.com/fredchristianson/javascript-game-engine/discussions/3).
 
-There are other Discussions about project organization, tasks, and architecture. Feel free to read them or ignore them. I would like to minimize process and constraints. If we see problems we'll make corrections.
+
+There is an [intro video on youtube](https://youtu.be/ioV574iunR4).
+
+There are other Discussions about project organization, tasks, and architecture. Feel free to read them or ignore them. I would like to minimize process and constraints.  If we see problems we'll make corrections.  
+
 
 There are 2 purposes for this project
 
@@ -41,3 +47,5 @@ Ideally, anyone can join us with
 - NodeJS (for a simple static file server)
 
 The best way to reach me is on [Twitter](https://twitter.com/DevReliefFred).
+
+To get in touch with the team directly join our [discord](https://discord.gg/zfKx2wpsjY) server
