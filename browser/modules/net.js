@@ -1,17 +1,28 @@
-import { ResourceManager } from './network/resource-manager.js';
+export { ResourceManagerImpl } from './network/resource-manager.js';
 
 /**
  * @module Net
  * 
- * test
  */
 
 /**
  * A singleton instance of the ResourceManager
  *
- * @type {ResourceManager}
+ * @type {ResourceManagerImpl}
+ * @export
+ * @instance
  */
-const resourceManager = new ResourceManager();
+const resourceManager = new ResourceManagerImpl();
 
 
-export { resourceManager, ResourceManager };
+/**
+ * The external name for the class ResourceManagerImpl
+ *
+ * @class
+ * @extends {ResourceManagerImpl} 
+ * @type {ResourceManagerImpl}
+ * 
+ */
+const ResourceManager = ResourceManagerImpl;
+
+export { ResourceManager, resourceManager };

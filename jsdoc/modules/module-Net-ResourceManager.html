@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Environment</title>
+    <title>JSDoc: Class: ResourceManager</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Environment</h1>
+    <h1 class="page-title">Class: ResourceManager</h1>
 
     
 
@@ -28,25 +28,8 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Environment<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description"><p>Environment name/value property provider.  Multiple sources
-of property values are searched in priority order.</p>
-<ol>
-<li>
-<p>Set with Environment.set()</p>
-</li>
-<li>
-<p>Url parameters: This url http://localhost:4263?env=dev&amp;performance=hi
-sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
-</li>
-<li>
-<p>/games/game/CURRENT-GAME/env.json</p>
-</li>
-<li>
-<p>JSON files loaded with loadUrls(url1,url2,...).  Order of urls is the priority.</p>
-</li>
-</ol></div>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-Net.html">Net</a>~</span>ResourceManager<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -57,16 +40,18 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
         
 
     
-    <h2>Constructor</h2>
-    
 
     
-    <h4 class="name" id="Environment"><span class="type-signature"></span>new Environment<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ResourceManager"><span class="type-signature"></span>new ResourceManager<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
 
+
+<div class="description">
+    <p>The external name for the class ResourceManagerImpl</p>
+</div>
 
 
 
@@ -109,7 +94,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line20">line 20</a>
+        <a href="net.js.html">net.js</a>, <a href="net.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -143,6 +128,17 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -165,7 +161,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     
 
     
-    <h4 class="name" id="isDebug"><span class="type-signature"></span>isDebug<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="getGameModule"><span class="type-signature">(async) </span>getGameModule<span class="signature">(gameName, moduleName<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Module}</span></h4>
     
 
     
@@ -173,253 +169,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
 
 
 <div class="description">
-    <p>Return true if environment isDebug is true or environment property mode is 'debug'</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line96">line 96</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">*</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="loadGameEnvironment"><span class="type-signature">(async) </span>loadGameEnvironment<span class="signature">(gameName)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Load env.json for gameName</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>gameName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the game to load.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line46">line 46</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="loadUrls"><span class="type-signature">(async) </span>loadUrls<span class="signature">(&hellip;urls)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>loads properties from one or more urls.  if multiple
-urls have the same property, the first one has priority.</p>
-<p>If a load fails, the urls is ignored.  It's not an error
-to try to load a url that doesn't exist.</p>
+    <p>Import a module by url.</p>
 </div>
 
 
@@ -447,6 +197,8 @@ to try to load a url that doesn't exist.</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -457,7 +209,7 @@ to try to load a url that doesn't exist.</p>
 
         <tr>
             
-                <td class="name"><code>urls</code></td>
+                <td class="name"><code>gameName</code></td>
             
 
             <td class="type">
@@ -476,14 +228,55 @@ to try to load a url that doesn't exist.</p>
                 
 
                 
-                    &lt;repeatable><br>
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>moduleName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
                 
                 </td>
             
 
             
+                <td class="default">
+                
+                    'game.js'
+                
+                </td>
+            
 
-            <td class="description last"><p>urls to load</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -502,29 +295,9 @@ to try to load a url that doesn't exist.</p>
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line64">line 64</a>
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="ResourceManagerImpl.html#getGameModule">ResourceManagerImpl#getGameModule</a>
     </li></ul></dd>
     
 
@@ -533,70 +306,6 @@ to try to load a url that doesn't exist.</p>
     
 
     
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="waitForLoad"><span class="type-signature">(async) </span>waitForLoad<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>wait until any loading resource are complete.  return true
-if there were no issues.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     
 
@@ -613,7 +322,7 @@ if there were no issues.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line83">line 83</a>
+        <a href="network_resource-manager.js.html">network/resource-manager.js</a>, <a href="network_resource-manager.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -641,12 +350,6 @@ if there were no issues.</p>
 <h5>Returns:</h5>
 
         
-<div class="param-desc">
-    <ul>
-<li>always true</li>
-</ul>
-</div>
-
 
 
 <dl>
@@ -655,7 +358,167 @@ if there were no issues.</p>
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Module</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getResource"><span class="type-signature">(async) </span>getResource<span class="signature">(url)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Request a URL and return the response object</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="ResourceManagerImpl.html#getResource">ResourceManagerImpl#getResource</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="network_resource-manager.js.html">network/resource-manager.js</a>, <a href="network_resource-manager.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
 
 
     </dd>
