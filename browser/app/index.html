@@ -20,7 +20,10 @@
 
 </body>
 <script type="module">
+    import { ENV} from "../modules/env.js";
     import { theGameApp } from "./js/game-app.js";
+
+    console.log(`running in mode ${ENV.get('mode','debug')}`)
     theGameApp.run("launcher");
 </script>
 

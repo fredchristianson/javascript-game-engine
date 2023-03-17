@@ -1,0 +1,17 @@
+<html>
+
+<head>
+</head>
+
+<body>
+Testing ENV
+
+</body>
+<script type="module">
+    import { ENV} from "../modules/env.js";
+    await ENV.loadUrls('test-env1.json','test-env2.json');
+    console.log(`${ENV.get('test')} should be 'env1'`);
+    
+</script>
+
+</html>
