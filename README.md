@@ -34,3 +34,5 @@ Ideally, anyone can join us with
 - NodeJS (for a simple static file server)
 
 The best way to reach me is on [Twitter](https://twitter.com/DevReliefFred).
+
+To get in touch with the team directly join our [discord](https://discord.gg/zfKx2wpsjY) server
