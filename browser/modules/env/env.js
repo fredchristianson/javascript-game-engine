@@ -18,6 +18,13 @@ import { ArgumentException } from './exception.js';
 
 
 
+/**
+ * Description placeholder
+ * @date 3/16/2023 - 6:37:18 AM
+ *
+ * @class PropertySource
+ * @typedef {PropertySource}
+ */
 class PropertySource {
   constructor() {
     this._values = new Map();
