@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: env.js</title>
+    <title>JSDoc: Source: helpers/function.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: env.js</h1>
+    <h1 class="page-title">Source: helpers/function.js</h1>
 
     
 
@@ -26,24 +26,55 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Environment } from './env/env.js';
+            <pre class="prettyprint source linenums"><code>
+/** @namespace FUNCTION */
+const FUNCTION = {
 
-/**
- * @module Env
- * 
- * 
+  /**
+ * Return true if the value is a function
+ *
+ * @param {*} value - the object to test
+ * @return {Boolean} true if value is a function
  */
+  isFunction: function (value) {
+    if (typeof value === 'function') {
+      return true;
+    }
+    return false;
+  },
 
-/**
- * A singleton instance of the environment properties.
- * @type {Environment}
- * 
- * @instance
- */
-const ENV = new Environment();
+  /**
+   * return all methods an object has, not including
+   * methods in the base Object class.
+   * This includes:
+   *   1) functions added to the object after it was created
+   *   2) functions in the class (if created by new)
+   *   3) functions in base classes that have not been overriden 
+   * 
+   * @param {Object} object - the object to get functions of
+   * @return {Map} map of {names ==> function}.  Empty if the parameter is not an object.
+   */
+  getMethods: function (object) {
+    const methods = new Map();
+    if (object == null || typeof object != 'object' || Array.isArray(object)) {
+      return methods;
+    }
+    let proto = object;
 
-export { ENV };
-</code></pre>
+    while (proto != null &amp;&amp; proto.constructor != Object) {
+      for (let name of Object.getOwnPropertyNames(proto)) {
+        const value = proto[name];
+        if (isFunction(value) &amp;&amp; methods[name] == null) {
+          methods.set(name, value);
+        }
+      }
+      proto = Object.getPrototypeOf(proto);
+    }
+    return methods;
+  }
+};
+
+export { FUNCTION }; </code></pre>
         </article>
     </section>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: env.js</title>
+    <title>JSDoc: Source: helpers/number.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: env.js</h1>
+    <h1 class="page-title">Source: helpers/number.js</h1>
 
     
 
@@ -26,24 +26,20 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Environment } from './env/env.js';
-
-/**
- * @module Env
- * 
- * 
+            <pre class="prettyprint source linenums"><code>/** @namespace NUMBER */
+const NUMBER = {
+  /**
+ * Return true if the value is a 'number'
+ *
+ * @param {String} value - the object to test
+ * @return {Boolean} true if null
  */
+  isNumber: function (value) {
+    return typeof value === 'number';
+  }
+};
 
-/**
- * A singleton instance of the environment properties.
- * @type {Environment}
- * 
- * @instance
- */
-const ENV = new Environment();
-
-export { ENV };
-</code></pre>
+export { NUMBER };</code></pre>
         </article>
     </section>
 

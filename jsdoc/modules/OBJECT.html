@@ -70,7 +70,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers.js.html">helpers.js</a>, <a href="helpers.js.html#line23">line 23</a>
+        <a href="helpers_object.js.html">helpers/object.js</a>, <a href="helpers_object.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -117,8 +117,45 @@
 
 
 <div class="description">
-    <p>addNewProperties does a deep copy of all properties in
-newProperties if they do not already exist in value.</p>
+    <p>Recursively copies all properties from the newProperties object
+into the value object if they do not already exist.
+If these 2 objects are the parameters</p>
+<p>OBJECT.addNewProperties(a,b)</p>
+<p>const a = {
+mode:&quot;deubg&quot;,
+logging: {
+level: {
+default: &quot;info&quot;,
+game: &quot;debug&quot;,
+net:  &quot;warn&quot;
+}
+}
+}</p>
+<p>const b = {
+mode:&quot;prod&quot;,
+logging: {
+level: {
+default: &quot;error&quot;,
+game: &quot;never&quot;,
+ui:  &quot;debug&quot;
+}
+},
+quality: &quot;high&quot;
+}</p>
+<p>the result value of a will be</p>
+<p>{
+mode:&quot;deubg&quot;,
+logging: {
+level: {
+default: &quot;info&quot;,
+game: &quot;debug&quot;,
+ui:  &quot;debug&quot;
+}
+},
+quality: &quot;high&quot;
+}</p>
+<p>The deep value &quot;logging.level.ui&quot; and the top-level &quot;quality&quot; are
+added.  All other values in b were already in a so are not added.</p>
 </div>
 
 
@@ -170,7 +207,7 @@ newProperties if they do not already exist in value.</p>
 
             
 
-            <td class="description last"><p>original object</p></td>
+            <td class="description last"><p>the object to add properties to</p></td>
         </tr>
 
     
@@ -193,7 +230,7 @@ newProperties if they do not already exist in value.</p>
 
             
 
-            <td class="description last"><p>object with properties to add</p></td>
+            <td class="description last"><p>object to copy properties from</p></td>
         </tr>
 
     
@@ -234,7 +271,7 @@ newProperties if they do not already exist in value.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers.js.html">helpers.js</a>, <a href="helpers.js.html#line46">line 46</a>
+        <a href="helpers_object.js.html">helpers/object.js</a>, <a href="helpers_object.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -270,7 +307,7 @@ newProperties if they do not already exist in value.</p>
     
 
     
-    <h4 class="name" id=".isObject"><span class="type-signature">(static) </span>isObject<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".isEmpty"><span class="type-signature">(static) </span>isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -278,8 +315,7 @@ newProperties if they do not already exist in value.</p>
 
 
 <div class="description">
-    <p>return true if the value is an Object, but not an Array.
-an Array is an object but should not be used as one.</p>
+    <p>Return true if the value is null or &quot;undefined&quot; or an object with no properties</p>
 </div>
 
 
@@ -331,7 +367,7 @@ an Array is an object but should not be used as one.</p>
 
             
 
-            <td class="description last"><p>value to test</p></td>
+            <td class="description last"><p>the object to test</p></td>
         </tr>
 
     
@@ -372,7 +408,7 @@ an Array is an object but should not be used as one.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers.js.html">helpers.js</a>, <a href="helpers.js.html#line33">line 33</a>
+        <a href="helpers_object.js.html">helpers/object.js</a>, <a href="helpers_object.js.html#line20">line 20</a>
     </li></ul></dd>
     
 
@@ -401,7 +437,332 @@ an Array is an object but should not be used as one.</p>
 
         
 <div class="param-desc">
-    <p>true if value is an object but not an Array</p>
+    <p>true if value is null or not an Object or has no properties</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".isNull"><span class="type-signature">(static) </span>isNull<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Return true if the value is null or &quot;undefined&quot;</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object to test</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_object.js.html">helpers/object.js</a>, <a href="helpers_object.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if null</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".isObject"><span class="type-signature">(static) </span>isObject<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Return true if the value is</p>
+<ol>
+<li>not null null or &quot;undefined&quot;</li>
+<li>typeof == 'object'</li>
+<li>is not an Array or Map since caller shouldn't treat those like Object</li>
+</ol>
+<p>Only Array and Map are considered &quot;not Objects&quot; even thought the are 'object'.
+Typed arrays like Int8Array return true;</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object to test</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_object.js.html">helpers/object.js</a>, <a href="helpers_object.js.html#line37">line 37</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if value is an object</p>
 </div>
 
 
@@ -440,13 +801,13 @@ an Array is an object but should not be used as one.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="Net%250D%250Dtestmodule_.html">Nettest</a></li><li><a href="module-Env.html">Env</a></li></ul><h3>Namespaces</h3><ul><li><a href="OBJECT.html">OBJECT</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManager.html">ResourceManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Net.html">Net</a></li></ul><h3>Namespaces</h3><ul><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 17 2023 14:05:31 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 17 2023 17:53:18 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
