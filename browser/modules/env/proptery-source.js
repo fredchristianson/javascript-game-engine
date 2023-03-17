@@ -1,30 +1,26 @@
 /**
  * a PropertySource is anything that can provide properties
- *  -- url query parameters ?name=value&name2=value2
- *  -- files (env.json)
- *  -- set(name,value) from code
+ *  + url query parameters ?name=value&name2=value2
+ *  + files (env.json)
+ *  + set(name,value) from code
  * 
  */
 
-import { UTIL, STRING } from './helpers.js';
-import { ArgumentException } from './exception.js';
+import { UTIL, STRING } from '../helpers.js';
+import { ArgumentException } from '../exception.js';
 
 /**
  * PropertySource is the base class for anything providing ENV properties
- * @date 3/16/2023 - 7:29:31 AM
  *
- * @export
- * @class PropertySource
- * @typedef {PropertySource}
  */
 class PropertySource {
-  /**
-   * Creates an instance of PropertySource.
-   * @date 3/16/2023 - 7:30:04 AM
-   *
-   * @constructor
-   */
+  /** @constructor */
   constructor() {
+
+    /**
+     * @property { Map } _values - the name / value map for this source
+     * @private
+     */
     this._values = new Map();
   }
 
@@ -33,7 +29,7 @@ class PropertySource {
    * @date 3/16/2023 - 7:30:12 AM
    *
    * @param {string} name - name of the property
-   * @returns {*}
+   * @returns {*} - a primitive type (usually)
    */
   get(name) {
     if (STRING.isEmpty(name)) {
@@ -44,9 +40,8 @@ class PropertySource {
 
   /**
    * Description placeholder
-   * @date 3/16/2023 - 7:32:18 AM
    *
-   * @param {string} name - name of property to set
+   * @param {String} name - name of property to set
    * @param {*} value - value for the name.  can be any type but
    *            prefer base types (string, number, bool)
    */
@@ -66,7 +61,7 @@ class PropertySource {
 
   /**
    * remove all values
-   * @date 3/16/2023 - 7:33:23 AM
+   * @private
    */
   _clear() {
     this._values.clear();

@@ -1,0 +1,16 @@
+{
+  "plugins": ["plugins/markdown"],
+  "sourceType": "module",
+  "source": {
+    "include": ["browser/modules"],
+    "includePattern": ".js$"
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "opts": {
+    "destination": "./jsdoc/modules",
+    "recurse": true
+  }
+}
