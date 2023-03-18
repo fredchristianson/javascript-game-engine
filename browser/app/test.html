@@ -8,10 +8,32 @@ Testing ENV
 
 </body>
 <script type="module">
-    import { ENV} from "../modules/env.js";
-    await ENV.loadUrls('test-env1.json','test-env2.json');
-    console.log(`${ENV.get('test')} should be 'env1'`);
-    
+    import { ASSERT, ENSURE} from "../modules/assert.js";
+
+    function testAssertSuccess(testFunc) {
+        try {
+            testFunc();
+        } catch(ex) {
+            console.error("expected ASSERT to succeed but it failed");
+        }
+    }
+
+    function testAssertFail(testFunc) {
+            try {
+                testFunc();
+                console.error("expected ASSERT to fail but it passed");
+            } catch (ex) {
+            }
+        }
+
+        testAssertSuccess(() => { ASSERT.isTrue(true, "isTrue test with true"); });
+        testAssertFail(() => { ASSERT.isTrue(false, "isTrue test with false"); });
+
+        const ensure1 = ENSURE.inRange(5,[1,10],7,"value is not in range");
+        if (ensure1 != 5) { console.error("ENSURE faile");}
+
+        const ensure2 = ENSURE.inRange(50, [1, 10], 7, "value is not in range");
+        if (ensure2 != 7) { console.error("ENSURE faile"); }
 </script>
 
 </html>

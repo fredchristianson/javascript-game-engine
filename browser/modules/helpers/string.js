@@ -166,8 +166,12 @@ const STRING = {
     if (value === null || typeof value == 'undefined') {
       return '[null]';
     }
+
     if (STRING.isString(value)) {
       return value;
+    }
+    if (typeof value === 'number') {
+      return value.toString();
     }
     if (typeof value.getHTMLElement == 'function') {
       value = value.getHTMLElement();
@@ -187,6 +191,42 @@ const STRING = {
     }
     return toJsonString(value);
 
+  },
+
+  /**
+  * takes an array of values and joins them into a string.
+  * toString on an array returns a JSON array.  This is 
+  * needed for places where the parts should be concatenated. For example
+  * 
+  * ```
+  * logMessage(level, message, message2,message3) {
+  *   if (level < wantedLevel){
+  *        consol.log(STRING.format(message,message2,message3));
+  *   };
+  * }
+  * 
+  * logMessage(DEBUG,`object is invalid ${typeof object} ${object.value}`);
+  * logMessage(DEBUG,"object is invalid",typeof object,object.value);
+  * ```
+  *
+  * The same thing will be logged with both of these logMessage calls.
+  * But the 2nd one will only build message string if the logging level is DEBUG.
+  * 
+  * We don't want to build the string from message arguments
+  * unless validate() fails.
+  * 
+  * @todo add placeholders in the first argument to insert the others.  (e.g. ["message $1 -- $2 end of message","fred",2]);
+  * 
+  * @param {Array<*>}  value - the parts to combine
+  * @return {String} displayable string of the object. '[null]' if param is null
+  */
+  format: function (parts) {
+    if (Array.isArray(value)) {
+      const parts = value.map(part => { return STRING.toString(part); });
+      return parts.join(' ');
+    } else {
+      return STRING.toString(parts);
+    }
   }
 
 };
