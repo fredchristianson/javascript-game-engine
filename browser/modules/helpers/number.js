@@ -7,7 +7,7 @@ const NUMBER = {
  * @return {Boolean} true if null
  */
   isNumber: function (value) {
-    return typeof value === 'number';
+ 
   }
 };
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Environment</title>
+    <title>JSDoc: Namespace: UTIL</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Environment</h1>
+    <h1 class="page-title">Namespace: UTIL</h1>
 
     
 
@@ -28,25 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Environment<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description"><p>Environment name/value property provider.  Multiple sources
-of property values are searched in priority order.</p>
-<ol>
-<li>
-<p>Set with Environment.set()</p>
-</li>
-<li>
-<p>Url parameters: This url http://localhost:4263?env=dev&amp;performance=hi
-sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
-</li>
-<li>
-<p>/games/game/CURRENT-GAME/env.json</p>
-</li>
-<li>
-<p>JSON files loaded with loadUrls(url1,url2,...).  Order of urls is the priority.</p>
-</li>
-</ol></div>
+        <h2>UTIL</h2>
         
     
 </header>
@@ -56,28 +38,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     
         
 
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Environment"><span class="type-signature"></span>new Environment<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 <dl class="details">
@@ -109,7 +70,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line20">line 20</a>
+        <a href="helpers_util.js.html">helpers/util.js</a>, <a href="helpers_util.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -121,24 +82,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -165,7 +109,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     
 
     
-    <h4 class="name" id="isDebug"><span class="type-signature"></span>isDebug<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id=".isEmpty"><span class="type-signature">(static) </span>isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
 
     
@@ -173,7 +117,13 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
 
 
 <div class="description">
-    <p>Return true if environment isDebug is true or environment property mode is 'debug'</p>
+    <p>Return true if the item is empty.</p>
+<ol>
+<li>null or type &quot;undefined&quot; always true</li>
+<li>strings and arrays are empty if length is 0</li>
+<li>Objects are empty if no properties</li>
+<li>Maps are empty if no entries</li>
+</ol>
 </div>
 
 
@@ -184,146 +134,40 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
 
 
 
-
-
-
-
-<dl class="details">
-
+    <h5>Parameters:</h5>
     
 
-    
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line96">line 96</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
+        <th>Type</th>
 
         
 
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
         
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">*</span>
 
 
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="loadGameEnvironment"><span class="type-signature">(async) </span>loadGameEnvironment<span class="signature">(gameName)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Load env.json for gameName</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>gameName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
             
             </td>
 
@@ -331,7 +175,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
 
             
 
-            <td class="description last"><p>the game to load.</p></td>
+            <td class="description last"><p>the object turn into an array</p></td>
         </tr>
 
     
@@ -372,248 +216,7 @@ sets properties for &quot;env&quot;, and &quot;performance&quot;</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line46">line 46</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="loadUrls"><span class="type-signature">(async) </span>loadUrls<span class="signature">(&hellip;urls)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>loads properties from one or more urls.  if multiple
-urls have the same property, the first one has priority.</p>
-<p>If a load fails, the urls is ignored.  It's not an error
-to try to load a url that doesn't exist.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>urls</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                    &lt;repeatable><br>
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>urls to load</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line64">line 64</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="waitForLoad"><span class="type-signature">(async) </span>waitForLoad<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>wait until any loading resource are complete.  return true
-if there were no issues.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="env_env.js.html">env/env.js</a>, <a href="env_env.js.html#line83">line 83</a>
+        <a href="helpers_util.js.html">helpers/util.js</a>, <a href="helpers_util.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -642,9 +245,167 @@ if there were no issues.</p>
 
         
 <div class="param-desc">
-    <ul>
-<li>always true</li>
-</ul>
+    <p>an Array</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".isNullish"><span class="type-signature">(static) </span>isNullish<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Return true if the value is null or type is &quot;undefined&quot;.  Could add null
+symbol or other things in the future.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object test</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_util.js.html">helpers/util.js</a>, <a href="helpers_util.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if the value is null or &quot;undefined&quot;</p>
 </div>
 
 
@@ -656,6 +417,353 @@ if there were no issues.</p>
     <dd>
         
 <span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".join"><span class="type-signature">(static) </span>join<span class="signature">(listA, listB)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Perform a cartesian join of 2 iterables like Array (or extend to arbitrary number with ...lists)</p>
+<p>join([a,b,c],[1,2,3])</p>
+<p>would return</p>
+<p>[ [a,1], [b,2], [c,3]]</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>listA</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the first list</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listB</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the second list</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_util.js.html">helpers/util.js</a>, <a href="helpers_util.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>an Array of arrays</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".toArray"><span class="type-signature">(static) </span>toArray<span class="signature">(value)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Return an array.<br>
+If the item is an array, return it.<br>
+If the item is null, return []
+Otherwise return [item]</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object turn into an array</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_util.js.html">helpers/util.js</a>, <a href="helpers_util.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>an Array</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
 
 
     </dd>

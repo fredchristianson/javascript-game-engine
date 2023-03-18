@@ -8,7 +8,7 @@ const OBJECT = {
  * @return {Boolean} true if null
  */
   isNull: function (value) {
-    return value === null || typeof value == 'undefined';
+  
   },
 
   /**
@@ -18,8 +18,7 @@ const OBJECT = {
    * @return {Boolean} true if value is null or not an Object or has no properties
    */
   isEmpty: function (value) {
-    return value == null || typeof value != 'object' || Array.isArray(value) || Object.keys(value).length == 0;
-
+  
   },
 
   /**
@@ -35,7 +34,7 @@ const OBJECT = {
  * @return {Boolean} true if value is an object
  */
   isObject: function (value) {
-    return !OBJECT.isNull(value) && typeof value == 'object' && !Array.isArray(value);
+   
   },
 
 
@@ -90,17 +89,7 @@ const OBJECT = {
    * @param {Object} newProperties - object to copy properties from 
    */
   addNewProperties: function (value, newProperties) {
-    if (!isObject(value) || !isObject(newProperties)) {
-      return;
-    }
-    for (let [name, newValue] of Object.entries(newProperties)) {
-      const old = value[name];
-      if (old == null) {
-        value[name] = newValue;
-      } else {
-        addNewProperties(old, newValue);
-      }
-    }
+   
   }
 
 };
