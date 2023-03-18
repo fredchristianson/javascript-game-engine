@@ -41,3 +41,6 @@ html, body {
     background-color: hsl(40 100% 50%);
 }
 
+.controls .game, .status .game {
+    margin-left: 4em;
+}

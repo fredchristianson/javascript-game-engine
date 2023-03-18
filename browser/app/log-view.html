@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/log.css">
+</head>
+
+<body>
+    <div id="log-view">
+        <div id="log-controls">
+            <button class="clear">Clear</button>
+            <span>History Size: <input type="number" id="log-history" valu="1000"
+                    placeholder="history (default=1000)" /></span>
+            <span><label><input id="log-lock" type='checkbox' name='checkbox'>Lock</label></span>
+            <span class="levels">
+                <label><input class="level" data-level="debug" type='checkbox' checked name='checkbox'>DEBUG</label>
+                <label><input class="level" data-level="info" type='checkbox' checked name='checkbox'>INFO</label>
+                <label><input class="level" data-level="warn" type='checkbox' checked name='checkbox'>WARN</label>
+                <label><input class="level" data-level="error" type='checkbox' checked name='checkbox'>ERROR</label>
+                <label><input class="level" data-level="assert" type='checkbox' checked name='checkbox'>ASSERT</label>
+                <label><input class="level" data-level="always" type='checkbox' checked name='checkbox'>ALWAYS</label>
+            </span>
+        </div>
+        <div id="log-messages" class="log-messages"></div>
+
+    </div>
+
+</body>
+<script type="module">
+    import { ParentWindow } from "../modules/window.js";
+    import { JSONFormatter, HTMLFormatter } from "../modules/logging/log-formatter.js";
+
+    const window = new ParentWindow();
+    const jsonFormatter = new JSONFormatter();
+    const htmlFormatter = new HTMLFormatter();
+    const logContainer = document.getElementById("log-messages");
+    const clearButton = document.querySelector('#log-controls .clear');
+    const historyValue = document.querySelector('#log-history');
+    const lockCheckbox = document.getElementById('log-lock');
+    const levels = document.querySelector('.levels');
+    function handleMessage(json) {
+        let size = 1000;
+        let inputSize = historyValue.valueAsNumber;
+        if (!isNaN(inputSize) && inputSize > 0) {
+            size = inputSize;
+        }
+        const logMessage = jsonFormatter.parse(json);
+        const element = htmlFormatter.format(logMessage);
+        logContainer.append(element);
+        while (logContainer.childElementCount > size) {
+            logContainer.removeChild(logContainer.firstChild);
+        }
+        if (!lockCheckbox.checked) {
+            document.body.scrollTop = logContainer.offsetHeight;
+        }
+    }
+    clearButton.addEventListener('click', () => {
+        logContainer.replaceChildren([]);
+    });
+
+    levels.addEventListener('input', (event) => {
+        const elem = event.target;
+        const level = elem.dataset.level;
+        const checked = elem.checked;
+        const hideClass = `hide-${level}`;
+        logContainer.classList.toggle(hideClass, !checked);
+        console.debug(`level ${level} is ${checked ? 'visible' : 'hidden'}`);
+    });
+    window.addMessageHandler(handleMessage);
+
+
+</script>
+
+</html>

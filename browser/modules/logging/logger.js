@@ -61,7 +61,9 @@ class Logger {
    *
    * @returns {String} the name;
    */
-  get ModuleName() { return this._moduleName; }
+  get ModuleName() {
+    return this._moduleName;
+  }
 
   /**
    * Updatee the logger's level
@@ -173,8 +175,8 @@ function watchEnvLoggingProperties(logger) {
  * @returns {*}
  */
 function createLogger(moduleName, logLevel = null) {
-  ASSERT.isFalse(STRING.isBlank(moduleName), "createLogger module name must be a string");
-  ASSERT.isTypeOrNull(logLevel, "logLevel must be a LogLevel or null");
+  ASSERT.isFalse(STRING.isBlank(moduleName), 'createLogger module name must be a string');
+  ASSERT.isTypeOrNull(logLevel, 'logLevel must be a LogLevel or null');
   let watchEnv = false;
   if (logLevel === null) {
     logLevel = LOGENV.getConfiguredLogLevel(moduleName);

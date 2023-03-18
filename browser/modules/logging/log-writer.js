@@ -1,7 +1,10 @@
-import { DEFAULT_FORMATTER } from "./log-formatter.js";
-import { LOGLEVELS } from "./log-level.js";
-import { LOGENV } from "./logging-env.js";
-import { TYPE } from "../helpers.js";
+import { DEFAULT_FORMATTER } from './log-formatter.js';
+import { LOGLEVELS } from './log-level.js';
+import { LOGENV } from './logging-env.js';
+import { TYPE } from '../helpers.js';
+import { createObserver } from '../observe.js';
+import { ENV } from '../env.js';
+
 /**
  * An array of LogWriters.  The constructor of LogWriterBase
  * adds writers to the list.
@@ -19,7 +22,6 @@ const logWriters = [];
  * - WindowLogWriter
  * - ApiLogWriter
  *
- * @class 
  * @export
  * 
  */
@@ -28,9 +30,14 @@ class LogWriterBase {
         this._logLevel = level;
         this._formatter = formatter ?? DEFAULT_FORMATTER;
         logWriters.push(this);
+        createObserver(ENV.ChangeObservable, () => {
+            this._configureDefault();
+        });
     }
 
-    get ID() { return this._id; }
+    get ID() {
+        return this._id;
+    }
 
     write(logMessage) {
         if (this._logLevel != null && this._logLevel.isWanted(logMessage.Level)) {
@@ -39,7 +46,7 @@ class LogWriterBase {
         }
     }
     _write(_logMessage, _formattedMessage) {
-        throw new Error("LogWriter must implement _write(logMessage,formattedMessage);");
+        throw new Error('LogWriter must implement _write(logMessage,formattedMessage);');
     }
 
     _configureDefault() {
@@ -56,6 +63,7 @@ class LogWriterBase {
             this._logLevel = level;
             this._configureWriter(conf);
         }
+
     }
 
 
@@ -68,7 +76,9 @@ class LogWriterBase {
         // nothing unless overriden
     }
 
-    _getWriterType() { return "default"; }
+    _getWriterType() {
+        return 'default';
+    }
 }
 
 
@@ -83,7 +93,7 @@ class LogWriterBase {
  * 
  */
 function writeMessage(logMessage) {
-    for (let writer of logWriters) {
+    for (const writer of logWriters) {
         writer.write(logMessage);
     }
 }
