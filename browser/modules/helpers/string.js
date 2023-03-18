@@ -1,4 +1,3 @@
-/** @memberof Helpers */
 
 /** @namespace STRING */
 const STRING = {
