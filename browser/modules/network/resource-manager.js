@@ -56,10 +56,25 @@ class ResourceManagerImpl {
      * @param {String} [moduleName='game.js']
      * @returns {Module}
      */
-    async getGameModule(gameName, moduleName = 'game.js') {
+    async getGameModule(gameName, moduleName = 'module.js') {
         const url = ResourceManagerImpl.getGameResourceUrl(gameName, moduleName);
         const module = await import(url);
         return module;
+
+    }
+
+    /**
+ * Import a module by url.
+ *
+ * @async
+ * @param {String} gameName
+ * @param {String} [moduleName='game.js']
+ * @returns {Module}
+ */
+    async getGameResource(gameName, resourcePath) {
+        const url = ResourceManagerImpl.getGameResourceUrl(gameName, resourcePath);
+        const resource = await this.getResource(url);
+        return resource.text();
 
     }
 

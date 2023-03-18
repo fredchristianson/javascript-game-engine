@@ -151,7 +151,7 @@ const STRING = {
       return val;
     };
 
-    const result = toJsonString(object, deCycle, 2);
+    const result = JSON.stringify(object, deCycle, 2);
     return result;
   },
 
@@ -189,7 +189,7 @@ const STRING = {
         return text;
       }
     }
-    return toJsonString(value);
+    return STRING.toJsonString(value);
 
   },
 

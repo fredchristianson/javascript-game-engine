@@ -31,9 +31,5 @@ async function loadENV(...urls) {
     return ENV;
 }
 
-async function getENV() {
-    await ENV.waitForLoad();
-    return ENV;
-}
 
-export { loadENV, getENV };
+export { loadENV, ENV };

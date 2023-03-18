@@ -3,6 +3,8 @@
 
 */
 import { createLogger } from "../../modules/logging/logger.js";
+import { resourceManager } from '../../modules/net.js';
+import { ENV } from '../../modules/env.js';
 const log = createLogger("GameApp");
 
 class GameApplication {
@@ -12,12 +14,13 @@ class GameApplication {
 
   async run(name) {
     log.info(`GameAppRunning game ${name}`);
-    const gameHtml = await fetch(`/games/${name}/game.html`);
+    const gameHtml = await resourceManager.getGameResource(name, 'game.html'); //await fetch(`/games/${name}/game.html`);
     const world = document.getElementById('world');
-    const html = await gameHtml.text();
+    const html = await gameHtml;
     world.innerHTML = html;
 
-    const gameModule = await import(`/games/${name}/js/game.js`);
+    const gameModule = await resourceManager.getGameModule(name);//  await import(`/games/${name}/js/game.js`);
+    await ENV.loadGameEnvironment(name);
     const game = gameModule.game;
     game.start(this, world);
   }

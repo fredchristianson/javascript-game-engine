@@ -48,7 +48,7 @@
 *   
 */
 
-import { getENV } from '../env.js';
+import { ENV } from '../env.js';
 import { TYPE } from '../helpers.js';
 import { LOGLEVELS } from './log-level.js';
 import { STRING, OBJECT } from '../helpers.js';
@@ -74,9 +74,9 @@ const LOGENV = {
     * @param {string}  value - module name to match
     * @return {LogLevel} the level configured for the module
     */
-    getConfiguredLogLevel: async function (moduleName) {
+    getConfiguredLogLevel: function (moduleName) {
         let level = null;
-        const ENV = await getENV();
+
         const logging = ENV.get('logging');
         if (logging != null && typeof TYPE.isType(logging, Object)) {
             const levels = logging.levels;
@@ -120,8 +120,7 @@ const LOGENV = {
         return writerConf.level ?? defaultConf.level;
     },
 
-    _getWriterConfiguration: async function (writerType) {
-        const ENV = await getENV();
+    _getWriterConfiguration: function (writerType) {
         const logging = ENV.get('logging');
         let conf = {};
         if (logging != null && typeof TYPE.isType(logging, Object)) {

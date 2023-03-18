@@ -91,7 +91,7 @@ const OBJECT = {
    * @param {Object} newProperties - object to copy properties from 
    */
   addNewProperties: function (value, newProperties) {
-    if (!isObject(value) || !isObject(newProperties)) {
+    if (!OBJECT.isObject(value) || !OBJECT.isObject(newProperties)) {
       return;
     }
     for (let [name, newValue] of Object.entries(newProperties)) {
@@ -99,7 +99,7 @@ const OBJECT = {
       if (old == null) {
         value[name] = newValue;
       } else {
-        addNewProperties(old, newValue);
+        OBJECT.addNewProperties(old, newValue);
       }
     }
   }
