@@ -20,9 +20,11 @@
 
 </body>
 <script type="module">
-    import { ENV} from "../modules/env.js";
+    import { loadENV} from "../modules/env.js";
+    import { configureLogOutput} from "../modules/logging.js";
     import { theGameApp } from "./js/game-app.js";
-
+    const ENV = await loadENV('/env-local.json','/env.json');
+    configureLogOutput();
     console.log(`running in mode ${ENV.get('mode','debug')}`)
     theGameApp.run("launcher");
 </script>

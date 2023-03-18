@@ -4,6 +4,8 @@
  * ASSERT and Logging are not available until that is done.
  */
 
+import { STRING } from '../helpers.js';
+
 
 /**
  * loads resources from the server.  It works for files in static locations
@@ -59,6 +61,50 @@ class ResourceManagerImpl {
         const module = await import(url);
         return module;
 
+    }
+
+    /**
+     * Request a URL and return JSON response.
+     *
+     * @async
+     * @param {String} url - url to request
+     * @param {Map|Object} params - name/value pairs to add to the query string
+     * @returns {Object} the JSON object or null if failed
+     */
+    async getJSON(url, params) {
+        if (!OBJECT.isEmpty(params)) {
+            url = URL.addQueryParams(url, params);
+        }
+        const response = await this.getResource(url);
+        if (response != null) {
+            return await response.json();
+        }
+        return null;
+    }
+
+    /**
+     * Post a JSON body to a url
+     *
+     * @async
+     * @param {String} url to use
+     * @param {String | Object} body if this is not a string it will be converted to a JSON string
+     * @returns {Object} the JSON objec returned or null if failed
+     */
+    async postJSON(url, body) {
+        let bodyJSON = body;
+        if (!STRING.isString(body)) {
+            bodyJSON = STRING.toString(body);
+        }
+        const response = await fetch(url, {
+            method: "POST",
+            cache: "no-cache",
+            headers: { "Content-Type": "application/json" },
+            body: bodyJSON
+        });
+        if (response != null) {
+            return await response.json();
+        }
+        return null;
     }
 
 }

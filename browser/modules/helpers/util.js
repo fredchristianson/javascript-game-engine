@@ -26,7 +26,7 @@ const UTIL = {
   * @return {Array} an Array
   */
   toArray: function (item) {
-    if (isNullish(item)) {
+    if (UTIL.isNullish(item)) {
       return [];
     }
     if (Array.isArray(item)) {
@@ -46,7 +46,7 @@ const UTIL = {
   * @return {Array} an Array
   */
   isEmpty: function (item) {
-    if (isNullish(item)) { return true; }
+    if (UTIL.isNullish(item)) { return true; }
     if (typeof item == 'string') {
       return item.length == 0;
     }
@@ -78,8 +78,8 @@ const UTIL = {
   * @return {Array} an Array of arrays
   */
   join: function (listA, listB) {
-    if (isNullish(listA[Symbol.iterator]) ||
-      isNullish(listB[Symbol.iterator])) {
+    if (UTIL.isNullish(listA[Symbol.iterator]) ||
+      UTIL.isNullish(listB[Symbol.iterator])) {
       // cannot use logging so write to the console.
       console.warn("join called with non-iterable");
       return [];
@@ -91,5 +91,5 @@ const UTIL = {
     }, []);
     return result;
   }
-}
+};
 export { UTIL }; 

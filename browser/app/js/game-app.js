@@ -2,14 +2,16 @@
     This singleton is the top-level module that controls everything.
 
 */
+import { createLogger } from "../../modules/logging/logger.js";
+const log = createLogger("GameApp");
 
 class GameApplication {
   constructor() {
-    console.log('GameApplication running');
+    log.debug('GameApplication running');
   }
 
   async run(name) {
-    console.log(`GameAppRunning game ${name}`);
+    log.info(`GameAppRunning game ${name}`);
     const gameHtml = await fetch(`/games/${name}/game.html`);
     const world = document.getElementById('world');
     const html = await gameHtml.text();
