@@ -1,4 +1,4 @@
-export { ResourceManagerImpl } from './network/resource-manager.js';
+import { ResourceManagerImpl } from './network/resource-manager.js';
 
 /**
  * @module Net

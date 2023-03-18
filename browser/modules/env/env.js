@@ -2,7 +2,7 @@ import { UTIL, BOOLEAN, STRING, OBJECT } from '../helpers.js';
 import { PropertySource } from './proptery-source.js';
 import { QueryStringProperties } from './query-string-properties.js';
 import { JsonResourceProperties } from './json-resource-properties.js';
-import { ResourceManager } from '../network/resource-manager.js';
+import { ResourceManager } from '../net.js';
 /**
  * Environment name/value property provider.  Multiple sources 
  * of property values are searched in priority order.

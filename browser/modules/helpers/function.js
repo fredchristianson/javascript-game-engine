@@ -9,7 +9,7 @@ const FUNCTION = {
  * @return {Boolean} true if value is a function
  */
   isFunction: function (value) {
-
+    return (typeof value === 'function');
   },
 
   /**
@@ -24,7 +24,19 @@ const FUNCTION = {
    * @return {Map} map of {names ==> function}.  Empty if the parameter is not an object.
    */
   getMethods: function (object) {
+    const methods = new Map();
+    let proto = object;
 
+    while (proto != null && proto.constructor != Object) {
+      for (let name of Object.getOwnPropertyNames(proto)) {
+        const value = proto[name];
+        if (isFunction(value) && methods[name] == null) {
+          methods.set(name, value);
+        }
+      }
+      proto = Object.getPrototypeOf(proto);
+    }
+    return methods;
   }
 };
 

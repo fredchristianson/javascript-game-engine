@@ -75,7 +75,7 @@ const BOOLEAN = boolean;
  * @export
  * @instance
  */
-const NUMBER = numbers;
+const NUMBER = number;
 
 
 export { STRING, UTIL, TYPE, OBJECT, BOOLEAN, FUNCTION, NUMBER };
