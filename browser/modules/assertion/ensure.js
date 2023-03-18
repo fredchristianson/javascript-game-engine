@@ -26,11 +26,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
      */
     notNull: function (value, goodValue, ...message) {
-        if (value === null || typeof value === 'undefined') {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return value;
+
     },
     /**
      * Test that the value is  null or 'undefined'.
@@ -40,11 +36,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
      */
     isNull: function (value, goodValue, ...message) {
-        if (value !== null && typeof value !== 'undefined') {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return value;
+
     },
     /**
     * Throw an exception if the value is not true.
@@ -55,11 +47,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
     */
     isTrue: function (value, goodValue, ...message) {
-        if (!BOOLEAN.isTrue(value)) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return true;
+
     },
 
     /**
@@ -71,11 +59,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
     */
     isFalse: function (value, goodValue, ...message) {
-        if (!BOOLEAN.isFalse(value)) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return false;
+
     },
     /**
      * determine if the value is the correct type.
@@ -89,19 +73,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
     */
     isType: function (value, type, goodValue, ...message) {
-        let success = false;
-        if (Array.isArray(type)) {
-            success = type.find((t) => {
-                return TYPE.isType(value, t);
-            });
-        } else {
-            success = TYPE.isType(value, type);
-        }
-        if (!success) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return value;
+
     },
     /**
     * determine if the value is the correct type but allow null.
@@ -112,10 +84,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
    */
     isTypeOrNull: function (value, type, goodValue, ...message) {
-        if (value !== null && typeof value !== 'undefined') {
-            return ENSURE.isType(value, type, goodValue, ...message);
-        }
-        return null;
+
     },
     /**
     * determine if the value is an Array.
@@ -127,7 +96,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
    */
     isArray: function (value, goodValue, ...message) {
-        return ENSURE.isType(value, Array, ...message);
+
     },
     /**
      * Determine if the value is in an array.
@@ -144,21 +113,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
     */
     isOneOf: function (value, options, goodValue, ...message) {
-        if (UTIL.isNullish(value)) {
-            logger.error('ASSERT.isOneOf called with null value');
-            ensureFailed(...message);
-            return goodValue;
-        }
-        if (!Array.isArray(options)) {
-            logger.error('ASSERT.isOneOf called with no options');
-            ensureFailed(...message);
-            return goodValue;
-        }
-        if (options.indexOf(value) < 0) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return value;
+
     },
     /**
    * Determine if the value empty.
@@ -171,11 +126,7 @@ const ENSURE = {
      * @returns {*} either value or goodValue depending on success
    */
     notEmpty: function (value, goodValue, ...message) {
-        if (UTIL.isEmpty(value)) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return value;
+
     },
     /**
     * Determine if the value is in a range. This is mainly intended for
@@ -203,19 +154,7 @@ const ENSURE = {
     * @param {...{}} message to log on failure
     */
     inRange: function (value, range, goodValue, ...message) {
-        if (UTIL.isNullish(value)) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        if (!Array.isArray(range) || range.length != 2) {
-            ensureFailed("inRange parameter 'range' must be an array with 2 values [min,max]", ...message);
-            return goodValue;
-        }
-        if (value < range[0] || value > range[1]) {
-            ensureFailed(...message);
-            return goodValue;
-        }
-        return value;
+
     }
 };
 

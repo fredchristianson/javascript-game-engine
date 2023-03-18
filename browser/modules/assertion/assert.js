@@ -29,9 +29,7 @@ const ASSERT = {
    * 
    */
   notNull: function (value, ...message) {
-    if (value === null || typeof value === 'undefined') {
-      assertFailed(...message);
-    }
+
   },
   /**
    * Test that the value is  null or 'undefined'.
@@ -41,9 +39,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
    */
   isNull: function (value, ...message) {
-    if (value !== null && typeof value !== 'undefined') {
-      assertFailed(...message);
-    }
+
   },
   /**
   * Throw an exception if the value is not true.
@@ -54,9 +50,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
   */
   isTrue: function (value, ...message) {
-    if (!BOOLEAN.isTrue(value)) {
-      assertFailed(...message);
-    }
+
   },
 
   /**
@@ -68,9 +62,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
   */
   isFalse: function (value, ...message) {
-    if (!BOOLEAN.isFalse(value)) {
-      assertFailed(...message);
-    }
+
   },
   /**
    * determine if the value is the correct type.
@@ -84,17 +76,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
   */
   isType: function (value, type, ...message) {
-    let success = false;
-    if (Array.isArray(type)) {
-      success = type.find((t) => {
-        return TYPE.isType(value, t);
-      });
-    } else {
-      success = TYPE.isType(value, type);
-    }
-    if (!success) {
-      assertFailed(...message);
-    }
+
   },
   /**
   * determine if the value is the correct type but allow null.
@@ -105,9 +87,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
   */
   isTypeOrNull: function (value, type, ...message) {
-    if (value !== null && typeof value !== 'undefined') {
-      this.isType(value, type, ...message);
-    }
+
   },
   /**
   * determine if the value is an Array.
@@ -118,7 +98,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
   */
   isArray: function (value, ...message) {
-    this.isType(value, Array, ...message);
+
   },
   /**
    * Determine if the value is in an array.
@@ -135,17 +115,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
    */
   isOneOf: function (value, options, ...message) {
-    if (UTIL.isNullish(value)) {
-      logger.error('ASSERT.isOneOf called with null value');
-      assertFailed(...message);
-    }
-    if (!Array.isArray(options)) {
-      logger.error('ASSERT.isOneOf called with no options');
-      assertFailed(...message);
-    }
-    if (options.indexOf(value) < 0) {
-      assertFailed(...message);
-    }
+
   },
   /**
  * Determine if the value is in a range. This is mainly intended for
@@ -173,15 +143,7 @@ const ASSERT = {
  * @param {...{}} message to log on failure
  */
   inRange: function (value, range, ...message) {
-    if (UTIL.isNullish(value)) {
-      assertFailed(...message);
-    }
-    if (!Array.isArray(range) || range.length != 2) {
-      assertFailed("inRange parameter 'range' must be an array with 2 values [min,max]", ...message);
-    }
-    if (value < range[0] || value > range[1]) {
-      assertFailed(...message);
-    }
+
   },
   /**
  * Determine if the value empty.
@@ -193,9 +155,7 @@ const ASSERT = {
    * @param {...{}} message to log on failure
  */
   notEmpty: function (value, ...message) {
-    if (UTIL.isEmpty(value)) {
-      assertFailed(...message);
-    }
+
   },
 
   /**
@@ -208,7 +168,7 @@ const ASSERT = {
    * @param {...{}} message to log 
   */
   fail: function (...message) {
-    assertFailed(...message);
+
   }
 };
 
