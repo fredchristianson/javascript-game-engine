@@ -11,6 +11,19 @@ class TestLogWriter extends LogWriter {
   }
 }
 
+function changeLevel(event) {
+  const levelName = event.target.value;
+  const level = LOGLEVELS.get(levelName);
+  if (level != null) {
+    log.setLevel(level);
+  }
+}
+function reverseMessage(message) {
+  // reverse the message
+  return `---reverse='${message.split('').reverse()
+    .join('')}'---`;
+}
+
 class TestLogging {
   constructor() { }
 
@@ -21,7 +34,9 @@ class TestLogging {
     this._writeButton = worldElement.querySelector('.test-log');
     this._endButton = worldElement.querySelector('button.test-end');
     this._message = worldElement.querySelector('.test-message');
+    this._levelButton = worldElement.querySelector('.test-level-select');
     this._writeButton.addEventListener('click', this.writeMessages.bind(this));
+    this._levelButton.addEventListener('input', changeLevel);
     this._endButton.addEventListener('click', () => {
       this._theGame.run('test-launcher');
     });
@@ -30,7 +45,10 @@ class TestLogging {
 
   writeMessages() {
     const message = this._message.value;
-    log.debug(message);
+    // reverseMessage will only be called if DEBUG level
+    log.debug(message, () => {
+      return reverseMessage(message);
+    });
     log.info(message);
     log.warn(message);
     log.error(message);

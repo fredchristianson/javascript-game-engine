@@ -68,7 +68,7 @@ class Logger {
   /**
    * Updatee the logger's level
    *
-   * @param {LogLevel} level
+   * @param {LogLevel} level new level
    */
   setLevel(level) {
     this._level = level;

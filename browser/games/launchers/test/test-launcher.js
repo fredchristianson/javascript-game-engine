@@ -1,4 +1,4 @@
-import { createLogger, LogWriter } from '../../../modules/logging.js';
+import { createLogger } from '../../../modules/logging.js';
 
 const log = createLogger('TestLauncher');
 
@@ -18,16 +18,10 @@ class TestLauncher {
     for (const button of buttons) {
       button.addEventListener('click', handleButton);
     }
+    log.debug('test launcher running');
   }
 }
 
-class TestWriter extends LogWriter {
-  constructor() {
-    super();
-  }
-
-  _write
-}
 
 export const game = new TestLauncher();
 

@@ -30,9 +30,12 @@ class LogWriterBase {
         this._logLevel = level;
         this._formatter = formatter ?? DEFAULT_FORMATTER;
         logWriters.push(this);
-        createObserver(ENV.ChangeObservable, () => {
-            this._configureDefault();
-        });
+        if (level == null) {
+            // get level from env so need to observe ENV changes
+            createObserver(ENV.ChangeObservable, () => {
+                this._configureDefault();
+            });
+        }
     }
 
     get ID() {
@@ -62,6 +65,9 @@ class LogWriterBase {
             const level = LOGLEVELS.get(conf.level);
             this._logLevel = level;
             this._configureWriter(conf);
+        } else {
+            this._logLevel = LOGLEVELS.NEVER;
+            this._configureWriter({ level: never });
         }
 
     }
