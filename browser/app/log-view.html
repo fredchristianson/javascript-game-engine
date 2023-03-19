@@ -30,7 +30,7 @@
     import { ParentWindow } from "../modules/window.js";
     import { JSONFormatter, HTMLFormatter } from "../modules/logging/log-formatter.js";
 
-    const window = new ParentWindow();
+    const parentWindow = new ParentWindow();
     const jsonFormatter = new JSONFormatter();
     const htmlFormatter = new HTMLFormatter();
     const logContainer = document.getElementById("log-messages");
@@ -66,7 +66,34 @@
         logContainer.classList.toggle(hideClass, !checked);
         console.debug(`level ${level} is ${checked ? 'visible' : 'hidden'}`);
     });
-    window.addMessageHandler(handleMessage);
+    parentWindow.addMessageHandler(handleMessage);
+
+
+    function savePosition(){
+       // let window = window; //this._window;
+        let x = window.screenX;
+        let y = window.screenY;
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        let pos = {x,y,w,h};
+        let value = JSON.stringify(pos);
+        localStorage.setItem('log-view-position',value);
+    };
+
+    function setPosition() {
+        let value = localStorage.getItem('log-view-position');
+        if (value) {
+            let pos = JSON.parse(value);
+            window.resizeTo(pos.w,pos.h);
+            window.moveTo(pos.x,pos.y);
+        }
+    }
+    
+    window.addEventListener('beforeunload', () => {
+                savePosition();
+    });
+
+    setPosition();
 
 
 </script>

@@ -1,39 +1,32 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-Testing ENV
+    <div id="app">
+        <div class="controls">
+            <div class="engine">engine controls</div>
+            <div class="game">game controls</div>
+        </div>
+        <div id='world' class="world game">world</div>
+        <div class="status">
+            <div class="engine">engine status</div>
+            <div class="game">game status</div>
+
+        </div>
+    </div>
 
 </body>
 <script type="module">
-    import { ASSERT, ENSURE} from "../modules/assert.js";
-
-    function testAssertSuccess(testFunc) {
-        try {
-            testFunc();
-        } catch(ex) {
-            console.error("expected ASSERT to succeed but it failed");
-        }
-    }
-
-    function testAssertFail(testFunc) {
-            try {
-                testFunc();
-                console.error("expected ASSERT to fail but it passed");
-            } catch (ex) {
-            }
-        }
-
-        testAssertSuccess(() => { ASSERT.isTrue(true, "isTrue test with true"); });
-        testAssertFail(() => { ASSERT.isTrue(false, "isTrue test with false"); });
-
-        const ensure1 = ENSURE.inRange(5,[1,10],7,"value is not in range");
-        if (ensure1 != 5) { console.error("ENSURE faile");}
-
-        const ensure2 = ENSURE.inRange(50, [1, 10], 7, "value is not in range");
-        if (ensure2 != 7) { console.error("ENSURE faile"); }
+    import { loadENV } from "../modules/env.js";
+    import { configureLogOutput } from "../modules/logging.js";
+    import { theGameApp } from "./js/game-app.js";
+    const ENV = await loadENV('/env-test.json','/env-local.json', '/env.json');
+    await configureLogOutput();
+    console.log(`running in mode ${ENV.get('mode', 'debug')}`)
+    theGameApp.run("test-launcher");
 </script>
 
 </html>

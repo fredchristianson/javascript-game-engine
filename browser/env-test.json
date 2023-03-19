@@ -1,0 +1,14 @@
+{
+  "isDebug": true,
+  "logging": {
+    "levels": {
+      "default": "debug",
+      "test": "debug"
+    },
+    "output": {
+      "console": "debug",
+      "window": "debug",
+      "api": "never"
+    }
+  }
+}

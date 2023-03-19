@@ -24,7 +24,7 @@ class ResourceManagerImpl {
      * @returns {String}
      */
     static getGameResourceUrl(gameName, resourceUrl) {
-        return `/game/${gameName}/${resourceUrl}`;
+        return `/game/${gameName}/resource/${resourceUrl}`;
     }
 
     /**
@@ -56,21 +56,22 @@ class ResourceManagerImpl {
      * @param {String} [moduleName='game.js']
      * @returns {Module}
      */
-    async getGameModule(gameName, moduleName = 'module.js') {
-        const url = ResourceManagerImpl.getGameResourceUrl(gameName, moduleName);
+    async getGameModule(gameName) {
+        //const url = ResourceManagerImpl.getGameResourceUrl(gameName, moduleName);
+        const url = `/game/${gameName}/module`;
         const module = await import(url);
         return module;
 
     }
 
     /**
- * Import a module by url.
- *
- * @async
- * @param {String} gameName
- * @param {String} [moduleName='game.js']
- * @returns {Module}
- */
+     * Import a module by url.
+     *
+     * @async
+     * @param {String} gameName
+     * @param {String} [moduleName='game.js']
+     * @returns {Module}
+     */
     async getGameResource(gameName, resourcePath) {
         const url = ResourceManagerImpl.getGameResourceUrl(gameName, resourcePath);
         const resource = await this.getResource(url);
@@ -111,9 +112,9 @@ class ResourceManagerImpl {
             bodyJSON = STRING.toString(body);
         }
         const response = await fetch(url, {
-            method: "POST",
-            cache: "no-cache",
-            headers: { "Content-Type": "application/json" },
+            method: 'POST',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
             body: bodyJSON
         });
         if (response != null) {

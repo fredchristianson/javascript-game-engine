@@ -70,7 +70,7 @@ class LogWriterBase {
     /**
      * Derived classes can do additional config
      *
-     * @param {Object} conf - the "logging.output[TYPE]" value from ENV
+     * @param {Object} _conf - the "logging.output[TYPE]" value from ENV
      */
     _configureWriter(_conf) {
         // nothing unless overriden
@@ -89,7 +89,7 @@ class LogWriterBase {
  * This should only be used by Logger
  * 
  * @private
- * @param {LogMessage} logMessage
+ * @param {LogMessage} logMessage is the LogMessage to write
  * 
  */
 function writeMessage(logMessage) {
