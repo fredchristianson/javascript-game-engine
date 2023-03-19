@@ -73,8 +73,8 @@
        // let window = window; //this._window;
         let x = window.screenX;
         let y = window.screenY;
-        let w = window.innerWidth;
-        let h = window.innerHeight;
+        let w = window.outerWidth;
+        let h = window.outerHeight;
         let pos = {x,y,w,h};
         let value = JSON.stringify(pos);
         localStorage.setItem('log-view-position',value);

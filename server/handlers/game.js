@@ -84,6 +84,23 @@ exports.getGameModule = async function (req, res) {
     FileHandler.returnFile(req, res, resourcePath);
 };
 
+exports.getGameResource = async function (req, res) {
+    const games = await getGames();
+    console.log(`Get game resource: ${req.path}`);
+    const game = games.find(g => { return g.name == req.params.name; });
+    if (game == null) {
+        res.statusCode = 404;
+        res.end(`Game not found: ${req.params.name}`);
+    }
+    let moduleName = "game.js";
+    if (game.mainModule != null) {
+        moduleName = game.mainModule;
+    }
+    const resourcePath = path.join(game.path, req.path);
+    console.log(`\tresource parth: ${resourcePath}`);
+    FileHandler.returnFile(req, res, resourcePath);
+};
+
 
 exports.getGames = async function (req, res) {
     let games = await getGames();

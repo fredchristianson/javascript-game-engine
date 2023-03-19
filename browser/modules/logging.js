@@ -1,9 +1,12 @@
-import { LogLevel, LOGLEVELS as loglevels } from './logging/log-level.js';
+import { LOGLEVELS as loglevels } from './logging/log-level.js';
 import { createLogger as create } from './logging/logger.js';
 import { ConsoleWriter } from './logging/console-writer.js';
 import { WindowWriter } from './logging/window-writer.js';
 import { ApiWriter } from './logging/api-writer.js';
 import { LogWriterBase } from './logging/log-writer.js';
+export {
+  JSONFormatter, HTMLFormatter, DefaultFormatter
+} from './logging/log-formatter.js';
 
 
 /** @module Logging */
@@ -26,7 +29,6 @@ import { LogWriterBase } from './logging/log-writer.js';
  * @instance
  */
 const LOGLEVELS = loglevels;
-
 
 
 /**
@@ -56,7 +58,7 @@ const defaultConsoleWriter = ConsoleWriter.getDefault();
  *
  * @type {WindowWriter}
  * @instance
-
+ *
  */
 const defaultWindowWriter = WindowWriter.getDefault();
 
@@ -67,7 +69,7 @@ const defaultWindowWriter = WindowWriter.getDefault();
  *
  * @type {ApiWriter}
  * @instance
-
+ *
  * @instance
  */
 const defaultApiWriter = ApiWriter.getDefault();
@@ -88,7 +90,7 @@ function configureLogOutput() {
  * @class
  * @extends {LogWriterBase} 
  * @type {LogWriterBase}
- * */
+ */
 const LogWriter = LogWriterBase;
 
 

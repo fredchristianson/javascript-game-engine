@@ -176,7 +176,7 @@ function watchEnvLoggingProperties(logger) {
  */
 function createLogger(moduleName, logLevel = null) {
   ASSERT.isFalse(STRING.isBlank(moduleName), 'createLogger module name must be a string');
-  ASSERT.isTypeOrNull(logLevel, 'logLevel must be a LogLevel or null');
+  ASSERT.isTypeOrNull(logLevel, LogLevel, 'logLevel must be a LogLevel or null');
   let watchEnv = false;
   if (logLevel === null) {
     logLevel = LOGENV.getConfiguredLogLevel(moduleName);

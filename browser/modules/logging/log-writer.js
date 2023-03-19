@@ -58,7 +58,7 @@ class LogWriterBase {
                 this._configureWriter(conf);
 
             });
-        } else {
+        } else if (conf != null) {
             const level = LOGLEVELS.get(conf.level);
             this._logLevel = level;
             this._configureWriter(conf);
