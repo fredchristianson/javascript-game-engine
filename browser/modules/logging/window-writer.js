@@ -2,7 +2,7 @@
  * @fileoverview A LogWriter that opens a new window to display 
  * log messages
  */
-import { DEFAULT_FORMATTER } from './log-formatter.js';
+import { JSONFormatter } from './log-formatter.js';
 import { LogWriter } from './log-writer.js';
 import { ChildWindow } from '../window.js';
 import { LOGLEVELS } from './log-level.js';
@@ -40,7 +40,7 @@ class WindowWriter extends LogWriter {
      * @param {LogLevel} [level=null] the level of messages to write.  Use ENV if null.
      * @param {*} [formatter=DEFAULT_FORMATTER] The formatter for messages
      */
-    constructor(level = null, formatter = DEFAULT_FORMATTER) {
+    constructor(level = null, formatter = new JSONFormatter()) {
         super(level, formatter);
         this._loggerWindow = new ChildWindow('log-view', 'log-view.html');
     }

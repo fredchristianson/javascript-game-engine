@@ -97,7 +97,7 @@ exports.getGameResource = async function (req, res) {
         moduleName = game.mainModule;
     }
     const resourcePath = path.join(game.path, req.path);
-    console.log(`\tresource parth: ${resourcePath}`);
+    console.log(`\tresource path: ${resourcePath}`);
     FileHandler.returnFile(req, res, resourcePath);
 };
 

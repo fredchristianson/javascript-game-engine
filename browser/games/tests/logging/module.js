@@ -1,4 +1,4 @@
-import { LOGLEVELS, LogWriter, HTMLFormatter, createLogger } from '../../../modules/logging.js';
+import { LOGLEVELS, LogWriter, HTMLFormatter, createLogger } from '/modules/logging.js';
 const log = createLogger('TestLogging', LOGLEVELS.DEBUG);
 
 class TestLogWriter extends LogWriter {
