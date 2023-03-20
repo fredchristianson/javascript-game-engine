@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: logging/log-level.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: logging/log-level.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * Logging levels have a name and a value.
+ * in most cases, a message level value must be less than
+ * a Logger level and a LoggerOutput level to be shown.
+ * The exception is LogLevel ALWAYS (-1).  A message of this value is always written (unless compared to LOG_LEVEL_NEVER).
+ * LogLevel NEVER (-2) messages are never written.
+ */
+
+
+import { STRING, TYPE, NUMBER } from '../helpers.js';
+import { ArgumentException } from '../exception.js';
+
+
+/**
+ * @module Logging
+ * @private
+ */
+
+
+const LEVEL_DEBUG_VALUE = 100;
+const LEVEL_INFO_VALUE = 80;
+const LEVEL_WARN_VALUE = 60;
+const LEVEL_ERROR_VALUE = 40;
+const LEVEL_ASSERT_VALUE = 20;
+const LEVEL_ALWAYS_VALUE = -1;
+const LEVEL_NEVER_VALUE = -2;
+
+export class LogLevel {
+  constructor(name, value) {
+    if (STRING.isEmpty(name)) {
+      throw new ArgumentException('LogLevel requires name');
+    }
+    if (!NUMBER.isNumber(value)) {
+      throw new ArgumentException('LogLevel value must be a number');
+    }
+
+    this._name = name ?? 'unknown';
+    this._value = value ?? 0;
+  }
+
+  get isError() {
+    return this.Value == LEVEL_ERROR_VALUE || this.Value == LEVEL_ASSERT_VALUE;
+  }
+
+  get isWarning() {
+    return this.Value == LEVEL_WARN_VALUE;
+  }
+
+  get Name() {
+    return this._name;
+  }
+  get Value() {
+    return this._value;
+  }
+
+  isWanted(messageLevel) {
+    if (!TYPE.isType(messageLevel, LogLevel)) {
+      throw new ArgumentException('isWanted requires a LogLevel');
+    }
+    if (this._value == LEVEL_NEVER_VALUE || messageLevel.Value == LEVEL_NEVER_VALUE) {
+      return false;
+    }
+
+    if (this._value == LEVEL_ALWAYS_VALUE || messageLevel.Value == LEVEL_ALWAYS_VALUE) {
+      return true;
+    } else {
+      return this._value >= messageLevel.Value;
+    }
+  }
+}
+
+/**
+ * @namespace LOGLEVELS 
+ */
+
+const LOGLEVELS = {
+  /** DEBUG*/
+  DEBUG: new LogLevel('DEBUG', LEVEL_DEBUG_VALUE),
+  /** INFO*/
+  INFO: new LogLevel('INFO', LEVEL_INFO_VALUE),
+  /** WARN */
+  WARN: new LogLevel('WARN', LEVEL_WARN_VALUE),
+  /** ERROR*/
+  ERROR: new LogLevel('ERROR', LEVEL_ERROR_VALUE),
+  /** ASSERT is intended for ASSERT.test() errors*/
+  ASSERT: new LogLevel('ASSERT', LEVEL_ASSERT_VALUE),
+  /** ALWAYS is mainly for temporarily changing messages without needing to enable DEBUG for the entire module*/
+  ALWAYS: new LogLevel('ALWAYS', LEVEL_ALWAYS_VALUE),
+  /** NEVER is an easy to to turn logging off.  search/replace ALWAYS&lt;->NEVER can enable/disable a set of messages */
+  NEVER: new LogLevel('NEVER', LEVEL_NEVER_VALUE),
+  /**
+   * get returns a LOGLEVELS value by name.
+   * 
+   * ```
+   * get('debug')
+   * ```
+   * returns LOGLEVELS.DEBUG;
+   * 
+   * @param {String} name is the name of the level to get.  Name is not case sensitive. "debug" or "DEBUG" are the same.
+   */
+  get: function (name) {
+    if (STRING.isEqualNoCase(name, 'DEBUG')) {
+      return LOGLEVELS.DEBUG;
+    } else if (STRING.isEqualNoCase(name, 'INFO')) {
+      return LOGLEVELS.INFO;
+    } else if (STRING.isEqualNoCase(name, 'WARN')) {
+      return LOGLEVELS.WARN;
+    } else if (STRING.isEqualNoCase(name, 'ERROR')) {
+      return LOGLEVELS.ERROR;
+    } else if (STRING.isEqualNoCase(name, 'ASSERT')) {
+      return LOGLEVELS.ASSERT;
+    } else if (STRING.isEqualNoCase(name, 'ALWAYS')) {
+      return LOGLEVELS.ALWAYS;
+    } else if (STRING.isEqualNoCase(name, 'NEVER')) {
+      return LOGLEVELS.NEVER;
+    }
+    return null;
+  },
+};
+
+export { LOGLEVELS };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li><li><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Logging-ApiWriter.html">ApiWriter</a></li><li><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-Logger.html">Logger</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Logging-WindowWriter.html">WindowWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 09:06:29 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

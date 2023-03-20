@@ -1,17 +1,25 @@
-import { JSONFormatter } from './log-formatter.js';
-import { LogWriterBase } from './log-writer.js';
+/**
+ * @fileoverview A LogWriter that opens a new window to display 
+ * log messages
+ */
+import { DEFAULT_FORMATTER } from './log-formatter.js';
+import { LogWriter } from './log-writer.js';
 import { ChildWindow } from '../window.js';
 import { LOGLEVELS } from './log-level.js';
+
+/**
+ * @module Logging
+ * @private
+ */
 
 let defaultWindowWriter = null;
 
 /**
  * Writes log messages to the browser console.
  *
- * @class WindowWriter
- * @extends {LogWriterBase}
+ * @extends {LogWriter}
  */
-class WindowWriter extends LogWriterBase {
+class WindowWriter extends LogWriter {
     /**
      * returns the a default instance of WindowWriter
      *
@@ -25,8 +33,15 @@ class WindowWriter extends LogWriterBase {
         return defaultWindowWriter;
     }
 
-    constructor(level = null, formatter = null) {
-        super(level, formatter ?? new JSONFormatter());
+    /**
+     * Creates an instance of WindowWriter.
+     *
+     * @constructor
+     * @param {LogLevel} [level=null] the level of messages to write.  Use ENV if null.
+     * @param {*} [formatter=DEFAULT_FORMATTER] The formatter for messages
+     */
+    constructor(level = null, formatter = DEFAULT_FORMATTER) {
+        super(level, formatter);
         this._loggerWindow = new ChildWindow('log-view', 'log-view.html');
     }
 
@@ -42,9 +57,14 @@ class WindowWriter extends LogWriterBase {
     /**
      * Derived classes can do additional config
      *
-     * @param {Object} conf - the "logging.output['window']" value from ENV
+     * @param {Object} _conf - the "logging.output['window']" value from ENV
      */
-    _configureWriter(conf) {
+    _configureWriter(_conf) {
+        /*
+         * _logLevel has already been updated from the _conf.
+         * close the child window if NEVER.
+         * window will be opened if needed later for other levels
+         */
         if (this._logLevel == LOGLEVELS.NEVER) {
             this._loggerWindow.close();
         }

@@ -180,7 +180,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line28">line 28</a>
+        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -229,6 +229,161 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="_fixLength"><span class="type-signature"></span>_fixLength<span class="signature">(message)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>pad or truncate the text to be in the allowed range</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line62">line 62</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
 
         
             
@@ -337,7 +492,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line71">line 71</a>
+        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line86">line 86</a>
     </li></ul></dd>
     
 
@@ -368,6 +523,161 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="format"><span class="type-signature"></span>format<span class="signature">(logMessage)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Format a component.  Derived classes must implement _format();</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>logMessage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LogMessage</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the message to formate.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -383,13 +693,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ApiWriter.html">ApiWriter</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="ConsoleWriter.html">ConsoleWriter</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="LogWriterBase.html">LogWriterBase</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="WindowWriter.html">WindowWriter</a></li><li><a href="module-Logging.DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging.HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging.JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging.LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createLogger">createLogger</a></li><li><a href="global.html#watchEnvLoggingProperties">watchEnvLoggingProperties</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li><li><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Logging-ApiWriter.html">ApiWriter</a></li><li><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-Logger.html">Logger</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Logging-WindowWriter.html">WindowWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 07:13:23 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 09:06:29 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

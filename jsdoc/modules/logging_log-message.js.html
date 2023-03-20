@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: logging/log-message.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: logging/log-message.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This is a container object for components of 
+ * a message being logged
+ * 
+ * - moduleName
+ * - LogLevel
+ * - Array of arguments provided to the Logger
+ * - time 
+ * 
+ * It has additional properties filled in if it is not filtered out
+ * 
+ * - _formattedMessages 
+ * - _stackTrace - if any of the arguments is an Error()
+ */
+
+/** @module Logging */
+import { TYPE, UTIL } from '../helpers.js';
+
+/**
+ * A container for log message properties.
+ *
+ * @private
+ * @class LogMessage
+ * @typedef {LogMessage}
+ */
+class LogMessage {
+    constructor(moduleName, logLevel, messageParts, time, stack) {
+        this._moduleName = moduleName;
+        this._logLevel = logLevel;
+        this._messageParts = UTIL.toArray(messageParts);
+        this._time = time ?? new Date();
+        this._formatedMessages = new Map();
+        this._stackTrace = stack ?? this._getStackTrace(messageParts);
+    }
+
+    getFormatByFormatID(id) {
+        return this._formatedMessages.get(id);
+    }
+
+    setFormattedMessage(id, message) {
+        this._formatedMessages.set(id, message);
+    }
+
+    get ModuleName() {
+        return this._moduleName;
+    }
+    get Level() {
+        return this._logLevel;
+    }
+    get Parts() {
+        return this._messageParts;
+    }
+    get Time() {
+        return this._time;
+    }
+    get StackTrace() {
+        return this._stackTrace;
+    }
+
+    _getStackTrace(messageParts) {
+        if (!Array.isArray(messageParts)) {
+            return null;
+        }
+        const err = messageParts.find((part) => {
+            return TYPE.isType(part, Error);
+        });
+        if (TYPE.isType(err, Error)) {
+            return err.stack;
+        }
+        return null;
+    }
+}
+
+
+/**
+ * Used by Logger to create LogMessage instances
+ *
+ * @param {String} moduleName name of module doing the logging
+ * @param {LogLevel} logLevel level of the message for writers to filter
+ * @param {Array&lt;*>} messageParts array of parts of the message
+ * @param {Date} [time=new Date] time of the message
+ * @returns {LogMessage}
+ */
+function createLogMessage(moduleName, logLevel, messageParts, time = null) {
+    return new LogMessage(moduleName, logLevel, messageParts, time ?? new Date());
+}
+
+export { createLogMessage, LogMessage };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li><li><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Logging-ApiWriter.html">ApiWriter</a></li><li><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-Logger.html">Logger</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Logging-WindowWriter.html">WindowWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 09:06:29 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

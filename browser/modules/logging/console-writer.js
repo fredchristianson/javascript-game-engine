@@ -1,16 +1,20 @@
-import { DEFAULT_FORMATTER } from "./log-formatter.js";
-import { LogWriterBase } from "./log-writer.js";
-import { LogLevel } from "./log-level.js";
+/** @fileoverview A LogWriter that uses console.log()/warn()/error() to write messages*/
 
+import { DEFAULT_FORMATTER } from './log-formatter.js';
+import { LogWriter } from './log-writer.js';
+
+/**
+ * @module Logging
+ * @private
+ */
 let defaultConsoleWriter = null;
 
 /**
  * Writes log messages to the browser console.
  *
- * @class ConsoleWriter
- * @extends {LogWriterBase}
+ * @extends {LogWriter}
  */
-class ConsoleWriter extends LogWriterBase {
+class ConsoleWriter extends LogWriter {
     /**
      * returns the a default instance of ConsoleWriter
      *
@@ -23,6 +27,14 @@ class ConsoleWriter extends LogWriterBase {
         }
         return defaultConsoleWriter;
     }
+
+    /**
+     * Creates an instance of ConsoleWriter.
+     *
+     * @constructor
+     * @param {LogLevel} [level=null] If null, the level is loaded from ENV
+     * @param {DefaultFormatter} [formatter=DEFAULT_FORMATTER] - formatter for messages.  A string format is expected, but anything console.log can write is ok
+     */
     constructor(level = null, formatter = DEFAULT_FORMATTER) {
         super(level, formatter);
     }
@@ -37,7 +49,9 @@ class ConsoleWriter extends LogWriterBase {
             console.log(formattedMessage);
         }
     }
-    _getWriterType() { return "console"; }
+    _getWriterType() {
+        return 'console';
+    }
 
 }
 

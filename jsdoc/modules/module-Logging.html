@@ -67,7 +67,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging_log-formatter.js.html">logging/log-formatter.js</a>, <a href="logging_log-formatter.js.html#line15">line 15</a>
+        <a href="logging_api-writer.js.html">logging/api-writer.js</a>, <a href="logging_api-writer.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -91,28 +91,37 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="module-Logging.DefaultFormatter.html">DefaultFormatter</a></dt>
+            <dt><a href="module-Logging-ApiWriter.html">ApiWriter</a></dt>
             <dd></dd>
         
-            <dt><a href="module-Logging.HTMLFormatter.html">HTMLFormatter</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-Logging.JSONFormatter.html">JSONFormatter</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-Logging.LogFormatter.html">LogFormatter</a></dt>
+            <dt><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></dt>
             <dd></dd>
         
             <dt><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></dt>
             <dd></dd>
         
+            <dt><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></dt>
+            <dd></dd>
+        
             <dt><a href="module-Logging-FormatComponent.html">FormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></dt>
             <dd></dd>
         
             <dt><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></dt>
             <dd></dd>
         
+            <dt><a href="module-Logging-LogFormatter.html">LogFormatter</a></dt>
+            <dd></dd>
+        
             <dt><a href="module-Logging-LogWriter.html">LogWriter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-Logger.html">Logger</a></dt>
             <dd></dd>
         
             <dt><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></dt>
@@ -126,6 +135,9 @@
         
             <dt><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></dt>
             <dd></dd>
+        
+            <dt><a href="module-Logging-WindowWriter.html">WindowWriter</a></dt>
+            <dd></dd>
         </dl>
     
 
@@ -134,93 +146,20 @@
     
 
     
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></dt>
+            <dd></dd>
+        </dl>
+    
 
     
         <h3 class="subsection-title">Members</h3>
 
         
             
-<h4 class="name" id="LOGLEVELS"><span class="type-signature">(constant) </span>LOGLEVELS<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    <p>An object with all of the log levels</p>
-<pre class="prettyprint source"><code>LOGLEVELS.DEBUG
-LOGLEVELS.INFO
-LOGLEVELS.WARN
-LOGLEVELS.ERROR
-LOGLEVELS.ASSERT
-LOGLEVELS.ALWAYS
-LOGLEVELS.NEVER
-</code></pre>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line34">line 34</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="defaultApiWriter"><span class="type-signature">(constant) </span>defaultApiWriter<span class="type-signature"> :<a href="ApiWriter.html">ApiWriter</a></span></h4>
+<h4 class="name" id="defaultApiWriter"><span class="type-signature">(constant) </span>defaultApiWriter<span class="type-signature"> :ApiWriter</span></h4>
 
 
 
@@ -236,7 +175,7 @@ LOGLEVELS.NEVER
     <ul>
         <li>
             
-<span class="param-type"><a href="ApiWriter.html">ApiWriter</a></span>
+<span class="param-type">ApiWriter</span>
 
 
         </li>
@@ -275,7 +214,7 @@ LOGLEVELS.NEVER
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line78">line 78</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -293,7 +232,7 @@ LOGLEVELS.NEVER
 
         
             
-<h4 class="name" id="defaultConsoleWriter"><span class="type-signature">(constant) </span>defaultConsoleWriter<span class="type-signature"> :<a href="ConsoleWriter.html">ConsoleWriter</a></span></h4>
+<h4 class="name" id="defaultConsoleWriter"><span class="type-signature">(constant) </span>defaultConsoleWriter<span class="type-signature"> :ConsoleWriter</span></h4>
 
 
 
@@ -309,7 +248,7 @@ This can be used to change log level or format during runtime.</p>
     <ul>
         <li>
             
-<span class="param-type"><a href="ConsoleWriter.html">ConsoleWriter</a></span>
+<span class="param-type">ConsoleWriter</span>
 
 
         </li>
@@ -348,7 +287,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line55">line 55</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -366,7 +305,7 @@ This can be used to change log level or format during runtime.</p>
 
         
             
-<h4 class="name" id="defaultWindowWriter"><span class="type-signature">(constant) </span>defaultWindowWriter<span class="type-signature"> :<a href="WindowWriter.html">WindowWriter</a></span></h4>
+<h4 class="name" id="defaultWindowWriter"><span class="type-signature">(constant) </span>defaultWindowWriter<span class="type-signature"> :WindowWriter</span></h4>
 
 
 
@@ -382,7 +321,7 @@ This can be used to change log level or format during runtime.</p>
     <ul>
         <li>
             
-<span class="param-type"><a href="WindowWriter.html">WindowWriter</a></span>
+<span class="param-type">WindowWriter</span>
 
 
         </li>
@@ -421,7 +360,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line66">line 66</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -457,7 +396,8 @@ This can be used to change log level or format during runtime.</p>
 
 
 <div class="description">
-    <p>Uses EVN to setup console, window, and API writers</p>
+    <p>Uses EVN to setup console, window, and API writers.
+This should be called once at the beginning of the application</p>
 </div>
 
 
@@ -501,7 +441,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line84">line 84</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -537,7 +477,7 @@ This can be used to change log level or format during runtime.</p>
     
 
     
-    <h4 class="name" id="createLogger"><span class="type-signature"></span>createLogger<span class="signature">(moduleName, logLevel<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Logger.html">Logger</a>}</span></h4>
+    <h4 class="name" id="createLogger"><span class="type-signature"></span>createLogger<span class="signature">(moduleName, logLevel<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Logger}</span></h4>
     
 
     
@@ -545,7 +485,7 @@ This can be used to change log level or format during runtime.</p>
 
 
 <div class="description">
-    <p>Creates a new Logger for a module</p>
+    <p>Create a new Logger</p>
 </div>
 
 
@@ -693,7 +633,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line46">line 46</a>
+        <a href="logging_logger.js.html">logging/logger.js</a>, <a href="logging_logger.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -729,13 +669,431 @@ This can be used to change log level or format during runtime.</p>
     </dt>
     <dd>
         
-<span class="param-type"><a href="Logger.html">Logger</a></span>
+<span class="param-type">Logger</span>
 
 
     </dd>
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~createLogMessage"><span class="type-signature">(inner) </span>createLogMessage<span class="signature">(moduleName, logLevel, messageParts, time<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {LogMessage}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Used by Logger to create LogMessage instances</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>moduleName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>name of module doing the logging</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logLevel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LogLevel</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>level of the message for writers to filter</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>messageParts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;*></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>array of parts of the message</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    new Date
+                
+                </td>
+            
+
+            <td class="description last"><p>time of the message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_log-message.js.html">logging/log-message.js</a>, <a href="logging_log-message.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">LogMessage</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~watchEnvLoggingProperties"><span class="type-signature">(inner) </span>watchEnvLoggingProperties<span class="signature">(logger)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Observes ENV for changes and updates the logger's
+level.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Logger</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a Logger to update if ENV changes</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_logger.js.html">logging/logger.js</a>, <a href="logging_logger.js.html#line180">line 180</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -800,7 +1158,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line15">line 15</a>
+        <a href="logging_log-message.js.html">logging/log-message.js</a>, <a href="logging_log-message.js.html#line16">line 16</a>
     </li></ul></dd>
     
 
@@ -824,28 +1182,37 @@ This can be used to change log level or format during runtime.</p>
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="module-Logging.DefaultFormatter.html">DefaultFormatter</a></dt>
+            <dt><a href="module-Logging-ApiWriter.html">ApiWriter</a></dt>
             <dd></dd>
         
-            <dt><a href="module-Logging.HTMLFormatter.html">HTMLFormatter</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-Logging.JSONFormatter.html">JSONFormatter</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-Logging.LogFormatter.html">LogFormatter</a></dt>
+            <dt><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></dt>
             <dd></dd>
         
             <dt><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></dt>
             <dd></dd>
         
+            <dt><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></dt>
+            <dd></dd>
+        
             <dt><a href="module-Logging-FormatComponent.html">FormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></dt>
             <dd></dd>
         
             <dt><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></dt>
             <dd></dd>
         
+            <dt><a href="module-Logging-LogFormatter.html">LogFormatter</a></dt>
+            <dd></dd>
+        
             <dt><a href="module-Logging-LogWriter.html">LogWriter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-Logger.html">Logger</a></dt>
             <dd></dd>
         
             <dt><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></dt>
@@ -859,6 +1226,9 @@ This can be used to change log level or format during runtime.</p>
         
             <dt><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></dt>
             <dd></dd>
+        
+            <dt><a href="module-Logging-WindowWriter.html">WindowWriter</a></dt>
+            <dd></dd>
         </dl>
     
 
@@ -867,93 +1237,20 @@ This can be used to change log level or format during runtime.</p>
     
 
     
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></dt>
+            <dd></dd>
+        </dl>
+    
 
     
         <h3 class="subsection-title">Members</h3>
 
         
             
-<h4 class="name" id="LOGLEVELS"><span class="type-signature">(constant) </span>LOGLEVELS<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    <p>An object with all of the log levels</p>
-<pre class="prettyprint source"><code>LOGLEVELS.DEBUG
-LOGLEVELS.INFO
-LOGLEVELS.WARN
-LOGLEVELS.ERROR
-LOGLEVELS.ASSERT
-LOGLEVELS.ALWAYS
-LOGLEVELS.NEVER
-</code></pre>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line34">line 34</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="defaultApiWriter"><span class="type-signature">(constant) </span>defaultApiWriter<span class="type-signature"> :<a href="ApiWriter.html">ApiWriter</a></span></h4>
+<h4 class="name" id="defaultApiWriter"><span class="type-signature">(constant) </span>defaultApiWriter<span class="type-signature"> :ApiWriter</span></h4>
 
 
 
@@ -969,7 +1266,7 @@ LOGLEVELS.NEVER
     <ul>
         <li>
             
-<span class="param-type"><a href="ApiWriter.html">ApiWriter</a></span>
+<span class="param-type">ApiWriter</span>
 
 
         </li>
@@ -1008,7 +1305,7 @@ LOGLEVELS.NEVER
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line78">line 78</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -1026,7 +1323,7 @@ LOGLEVELS.NEVER
 
         
             
-<h4 class="name" id="defaultConsoleWriter"><span class="type-signature">(constant) </span>defaultConsoleWriter<span class="type-signature"> :<a href="ConsoleWriter.html">ConsoleWriter</a></span></h4>
+<h4 class="name" id="defaultConsoleWriter"><span class="type-signature">(constant) </span>defaultConsoleWriter<span class="type-signature"> :ConsoleWriter</span></h4>
 
 
 
@@ -1042,7 +1339,7 @@ This can be used to change log level or format during runtime.</p>
     <ul>
         <li>
             
-<span class="param-type"><a href="ConsoleWriter.html">ConsoleWriter</a></span>
+<span class="param-type">ConsoleWriter</span>
 
 
         </li>
@@ -1081,7 +1378,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line55">line 55</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -1099,7 +1396,7 @@ This can be used to change log level or format during runtime.</p>
 
         
             
-<h4 class="name" id="defaultWindowWriter"><span class="type-signature">(constant) </span>defaultWindowWriter<span class="type-signature"> :<a href="WindowWriter.html">WindowWriter</a></span></h4>
+<h4 class="name" id="defaultWindowWriter"><span class="type-signature">(constant) </span>defaultWindowWriter<span class="type-signature"> :WindowWriter</span></h4>
 
 
 
@@ -1115,7 +1412,7 @@ This can be used to change log level or format during runtime.</p>
     <ul>
         <li>
             
-<span class="param-type"><a href="WindowWriter.html">WindowWriter</a></span>
+<span class="param-type">WindowWriter</span>
 
 
         </li>
@@ -1154,7 +1451,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line66">line 66</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -1190,7 +1487,8 @@ This can be used to change log level or format during runtime.</p>
 
 
 <div class="description">
-    <p>Uses EVN to setup console, window, and API writers</p>
+    <p>Uses EVN to setup console, window, and API writers.
+This should be called once at the beginning of the application</p>
 </div>
 
 
@@ -1234,7 +1532,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line84">line 84</a>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -1270,7 +1568,7 @@ This can be used to change log level or format during runtime.</p>
     
 
     
-    <h4 class="name" id="createLogger"><span class="type-signature"></span>createLogger<span class="signature">(moduleName, logLevel<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Logger.html">Logger</a>}</span></h4>
+    <h4 class="name" id="createLogger"><span class="type-signature"></span>createLogger<span class="signature">(moduleName, logLevel<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Logger}</span></h4>
     
 
     
@@ -1278,7 +1576,7 @@ This can be used to change log level or format during runtime.</p>
 
 
 <div class="description">
-    <p>Creates a new Logger for a module</p>
+    <p>Create a new Logger</p>
 </div>
 
 
@@ -1426,7 +1724,7 @@ This can be used to change log level or format during runtime.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line46">line 46</a>
+        <a href="logging_logger.js.html">logging/logger.js</a>, <a href="logging_logger.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -1462,13 +1760,1522 @@ This can be used to change log level or format during runtime.</p>
     </dt>
     <dd>
         
-<span class="param-type"><a href="Logger.html">Logger</a></span>
+<span class="param-type">Logger</span>
 
 
     </dd>
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~createLogMessage"><span class="type-signature">(inner) </span>createLogMessage<span class="signature">(moduleName, logLevel, messageParts, time<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {LogMessage}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Used by Logger to create LogMessage instances</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>moduleName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>name of module doing the logging</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logLevel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LogLevel</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>level of the message for writers to filter</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>messageParts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;*></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>array of parts of the message</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    new Date
+                
+                </td>
+            
+
+            <td class="description last"><p>time of the message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_log-message.js.html">logging/log-message.js</a>, <a href="logging_log-message.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">LogMessage</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~watchEnvLoggingProperties"><span class="type-signature">(inner) </span>watchEnvLoggingProperties<span class="signature">(logger)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Observes ENV for changes and updates the logger's
+level.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Logger</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a Logger to update if ENV changes</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_logger.js.html">logging/logger.js</a>, <a href="logging_logger.js.html#line180">line 180</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-Logging-ApiWriter.html">ApiWriter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-FormatComponent.html">FormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-LogFormatter.html">LogFormatter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-LogWriter.html">LogWriter</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-Logger.html">Logger</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Logging-WindowWriter.html">WindowWriter</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="defaultApiWriter"><span class="type-signature">(constant) </span>defaultApiWriter<span class="type-signature"> :ApiWriter</span></h4>
+
+
+
+
+<div class="description">
+    <p>The default ApiWriter configured from the ENV;</p>
+<p>This can be used to change log level or format during runtime.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">ApiWriter</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="defaultConsoleWriter"><span class="type-signature">(constant) </span>defaultConsoleWriter<span class="type-signature"> :ConsoleWriter</span></h4>
+
+
+
+
+<div class="description">
+    <p>The default console writer configured from the ENV.
+This can be used to change log level or format during runtime.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">ConsoleWriter</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="defaultWindowWriter"><span class="type-signature">(constant) </span>defaultWindowWriter<span class="type-signature"> :WindowWriter</span></h4>
+
+
+
+
+<div class="description">
+    <p>The default WindowWriter configured from the ENV;</p>
+<p>This can be used to change log level or format during runtime.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">WindowWriter</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="configureLogOutput"><span class="type-signature"></span>configureLogOutput<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Uses EVN to setup console, window, and API writers.
+This should be called once at the beginning of the application</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging.js.html">logging.js</a>, <a href="logging.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createLogger"><span class="type-signature"></span>createLogger<span class="signature">(moduleName, logLevel<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Logger}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Create a new Logger</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>moduleName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>name of module. shows up on outupt and used to get level from env.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logLevel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LogLevel</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last"><p>override the configured log level</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_logger.js.html">logging/logger.js</a>, <a href="logging_logger.js.html#line194">line 194</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Logger</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~createLogMessage"><span class="type-signature">(inner) </span>createLogMessage<span class="signature">(moduleName, logLevel, messageParts, time<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {LogMessage}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Used by Logger to create LogMessage instances</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>moduleName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>name of module doing the logging</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logLevel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LogLevel</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>level of the message for writers to filter</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>messageParts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;*></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>array of parts of the message</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    new Date
+                
+                </td>
+            
+
+            <td class="description last"><p>time of the message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_log-message.js.html">logging/log-message.js</a>, <a href="logging_log-message.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">LogMessage</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~watchEnvLoggingProperties"><span class="type-signature">(inner) </span>watchEnvLoggingProperties<span class="signature">(logger)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Observes ENV for changes and updates the logger's
+level.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Logger</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a Logger to update if ENV changes</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="logging_logger.js.html">logging/logger.js</a>, <a href="logging_logger.js.html#line180">line 180</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1490,13 +3297,13 @@ This can be used to change log level or format during runtime.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ApiWriter.html">ApiWriter</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="ConsoleWriter.html">ConsoleWriter</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="LogWriterBase.html">LogWriterBase</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="WindowWriter.html">WindowWriter</a></li><li><a href="module-Logging.DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging.HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging.JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging.LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createLogger">createLogger</a></li><li><a href="global.html#watchEnvLoggingProperties">watchEnvLoggingProperties</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li><li><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Logging-ApiWriter.html">ApiWriter</a></li><li><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-Logger.html">Logger</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Logging-WindowWriter.html">WindowWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 07:13:23 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 09:06:29 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

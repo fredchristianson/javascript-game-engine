@@ -22,11 +22,8 @@
 </body>
 <script type="module">
     import { loadENV } from "../modules/env.js";
-    import { configureLogOutput } from "../modules/logging.js";
     import { theGameApp } from "./js/game-app.js";
     const ENV = await loadENV('/env-test.json','/env-local.json', '/env.json');
-    await configureLogOutput();
-    console.log(`running in mode ${ENV.get('mode', 'debug')}`)
     theGameApp.run("test-launcher");
 </script>
 

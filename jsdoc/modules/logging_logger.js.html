@@ -26,7 +26,18 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LOGLEVELS, LogLevel } from './log-level.js';
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview The primary class used to write log messages.
+ * 
+ * ```
+ *  import {createLogger} from '../modules/logging.js';
+ *  const log = createLogger('my.module.name');
+ *  log.debug("this is a log message.  ",42,{a:"objects can be logged too"});
+ * ```
+ * 
+ */
+
+import { LOGLEVELS, LogLevel } from './log-level.js';
 import { STRING, TYPE } from '../helpers.js';
 import { ArgumentException } from '../exception.js';
 import { createLogMessage } from './log-message.js';
@@ -35,6 +46,12 @@ import { ASSERT } from '../assert.js';
 import { LOGENV } from './logging-env.js';
 import { createObserver } from '../observe.js';
 import { ENV } from '../env.js';
+
+/**
+ *@module Logging
+ * @private
+ */
+
 /**
  * An object that can be used to log message.  It has a method for
  * every log level.
@@ -119,7 +136,7 @@ class Logger {
   /**
    * write a message if the logger's level is DEBUG
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   debug(...message) {
     this.write(LOGLEVELS.DEBUG, ...message);
@@ -129,7 +146,7 @@ class Logger {
   /**
    * write a message if the logger's level is DEBUG or INFO
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   info(...message) {
     this.write(LOGLEVELS.INFO, ...message);
@@ -139,7 +156,7 @@ class Logger {
   /**
    * write a message if the logger's level is DEBUG, INFO, or WARN
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */warn(...message) {
     this.write(LOGLEVELS.WARN, ...message);
   }
@@ -148,7 +165,7 @@ class Logger {
   /**
    * write a message if the logger's level is ERROR or above
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   error(...message) {
     this.write(LOGLEVELS.ERROR, ...message);
@@ -157,7 +174,7 @@ class Logger {
   /**
    * write a message if the logger's level is ASSERT or above
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   assert(...message) {
     this.write(LOGLEVELS.ASSERT, ...message);
@@ -166,7 +183,7 @@ class Logger {
   /**
    * always write the message
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   always(...message) {
     this.write(LOGLEVELS.ALWAYS, ...message);
@@ -175,7 +192,7 @@ class Logger {
   /**
    * never write a message 
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   never(...message) {
     // do nothing
@@ -186,7 +203,7 @@ class Logger {
  * Observes ENV for changes and updates the logger's
  * level.
  *
- * @param {*} logger
+ * @param {Logger} logger - a Logger to update if ENV changes
  */
 function watchEnvLoggingProperties(logger) {
   createObserver(ENV.ChangeObservable, () => {
@@ -197,10 +214,10 @@ function watchEnvLoggingProperties(logger) {
 
 /**
  * Create a new Logger
- *
+ * @instance
  * @param {String} moduleName name of module. shows up on outupt and used to get level from env.
  * @param {LogLevel} [logLevel=null] override the configured log level
- * @returns {*}
+ * @returns {Logger}
  */
 function createLogger(moduleName, logLevel = null) {
   ASSERT.isFalse(STRING.isBlank(moduleName), 'createLogger module name must be a string');
@@ -227,13 +244,13 @@ export { Logger, createLogger };</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ApiWriter.html">ApiWriter</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="ConsoleWriter.html">ConsoleWriter</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="LogWriterBase.html">LogWriterBase</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="WindowWriter.html">WindowWriter</a></li><li><a href="module-Logging.DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging.HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging.JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging.LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createLogger">createLogger</a></li><li><a href="global.html#watchEnvLoggingProperties">watchEnvLoggingProperties</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li><li><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Logging-ApiWriter.html">ApiWriter</a></li><li><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-Logger.html">Logger</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Logging-WindowWriter.html">WindowWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 07:13:23 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 09:06:29 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

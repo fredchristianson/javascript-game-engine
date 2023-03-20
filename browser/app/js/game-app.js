@@ -2,13 +2,14 @@
  *This singleton is the top-level module that controls everything.
  *
  */
-import { createLogger } from '../../modules/logging/logger.js';
+import { createLogger, configureLogOutput } from '../../modules/logging.js';
 import { resourceManager } from '../../modules/net.js';
 import { ENV } from '../../modules/env.js';
 const log = createLogger('GameApp');
 
 class GameApplication {
   constructor() {
+    configureLogOutput();
     log.debug('GameApplication running');
   }
 

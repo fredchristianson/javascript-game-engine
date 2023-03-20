@@ -12,7 +12,10 @@ import { ASSERT } from '../assert.js';
 import { STRING, TYPE } from '../helpers.js';
 import { LOGLEVELS } from './log-level.js';
 
-/** @module Logging */
+/**
+ * @module Logging
+ * @private
+ */
 
 
 /*
@@ -50,17 +53,29 @@ class FormatComponent {
         this._maxLength = len;
     }
 
-    fixLength(message) {
-        if (message.length < this._minLength) {
-            return message + ' '.repeat(this._minLength - message.length);
-        } else if (message.length > this._maxLength) {
-            return message.substring(0, this._maxLength);
+    /**
+     * pad or truncate the text to be in the allowed range
+     *
+     * @param {String} messageComponent - the part of the message to pad/truncate
+     * @returns {String}
+     */
+    _fixLength(messageComponent) {
+        if (messageComponent.length < this._minLength) {
+            return messageComponent + ' '.repeat(this._minLength - messageComponent.length);
+        } else if (messageComponent.length > this._maxLength) {
+            return messageComponent.substring(0, this._maxLength);
         }
-        return message;
+        return messageComponent;
     }
 
+    /**
+     * Format a component.  Derived classes must implement _format();
+     *
+     * @param {LogMessage} logMessage the message to formate. 
+     * @returns {String}
+     */
     format(logMessage) {
-        return this.fixLength(this._format(logMessage));
+        return this._fixLength(this._format(logMessage));
     }
 
     /**
@@ -126,6 +141,7 @@ class LevelFormatComponent extends FormatComponent {
     constructor() {
         super();
     }
+
     _format(logMessage) {
         const len = logMessage.Level.Name.length;
         if (len > this.MinLength) {
@@ -177,7 +193,14 @@ class StringFormatComponent extends FormatComponent {
  * string, or JSON, or anything else.
  *
  */
-export class LogFormatter {
+class LogFormatter {
+    /**
+     * Creates an instance of LogFormatter.
+     *
+     * @constructor
+     * @param {Array<FormatComponent>} [components=null] an optional array of components 
+     * that are used in the formatted message.
+     */
     constructor(components = null) {
         this._id = nextFormatterId++;
         this._components = components ?? [];
@@ -224,7 +247,7 @@ export class LogFormatter {
  *
  * @extends {LogFormatter}
  */
-export class DefaultFormatter extends LogFormatter {
+class DefaultFormatter extends LogFormatter {
     constructor() {
         super([new DateFormatComponent(),
         new TimeFormatComponent(),
@@ -242,7 +265,7 @@ export class DefaultFormatter extends LogFormatter {
  *
  * @extends {LogFormatter}
  */
-export class JSONFormatter extends LogFormatter {
+class JSONFormatter extends LogFormatter {
     constructor() {
         super();
         this._textFormatter = new TextFormatComponent(0, 1000);
@@ -270,7 +293,7 @@ export class JSONFormatter extends LogFormatter {
  *
  * @extends {LogFormatter}
  */
-export class HTMLFormatter extends LogFormatter {
+class HTMLFormatter extends LogFormatter {
     constructor() {
         super();
         this._timeFormatter = new TimeFormatComponent();
@@ -313,4 +336,20 @@ export class HTMLFormatter extends LogFormatter {
     }
 }
 
-export const DEFAULT_FORMATTER = new DefaultFormatter();
+const DEFAULT_FORMATTER = new DefaultFormatter();
+
+export {
+    LogFormatter,
+    DefaultFormatter,
+    JSONFormatter,
+    HTMLFormatter,
+    FormatComponent,
+    DateFormatComponent,
+    TimeFormatComponent,
+    ModuleNameFormatComponent,
+    LevelFormatComponent,
+    TextFormatComponent,
+    StringFormatComponent,
+    DEFAULT_FORMATTER
+
+};

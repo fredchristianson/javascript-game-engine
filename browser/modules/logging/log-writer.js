@@ -1,3 +1,10 @@
+/**
+ * @fileoverview The base class for all LogWriters.  Standard writers are
+ * - ConsoleWriter: writes to the browser console
+ * - ApiWriter: writes to an api (default /api/v1/log)
+ * - WindowWriter: opens a new browser window for log messages
+ */
+
 import { DEFAULT_FORMATTER } from './log-formatter.js';
 import { LOGLEVELS } from './log-level.js';
 import { LOGENV } from './logging-env.js';
@@ -6,11 +13,16 @@ import { createObserver } from '../observe.js';
 import { ENV } from '../env.js';
 
 /**
- * An array of LogWriters.  The constructor of LogWriterBase
+ * @module Logging
+ * @private
+ */
+
+/**
+ * An array of LogWriters.  The constructor of LogWriter
  * adds writers to the list.
  *
  * @private
- * @type {Array.LogWriterBase}
+ * @type {Array.LogWriter}
  * 
  */
 const logWriters = [];
@@ -22,13 +34,20 @@ const logWriters = [];
  * - WindowLogWriter
  * - ApiLogWriter
  *
- * @export
  * 
  */
-class LogWriterBase {
-    constructor(level, formatter) {
+class LogWriter {
+    /**
+     * Creates an instance of LogWriter.
+     *
+     * @constructor
+     * @param {LogLevel} level - the level of messages to write.  
+     * If null, ENV.logging.output is used to configure the level.
+     * @param {LogFormatter} formatter - the way messages are formatted.  Default
+     */
+    constructor(level = null, formatter = DEFAULT_FORMATTER) {
         this._logLevel = level;
-        this._formatter = formatter ?? DEFAULT_FORMATTER;
+        this._formatter = formatter;
         logWriters.push(this);
         if (level == null) {
             // get level from env so need to observe ENV changes
@@ -42,12 +61,24 @@ class LogWriterBase {
         return this._id;
     }
 
+    /**
+     * Writes the LogMessage provided
+     *
+     * @param {LogMessage} logMessage the LogMessage created by a Logger
+     */
     write(logMessage) {
         if (this._logLevel != null && this._logLevel.isWanted(logMessage.Level)) {
-            const formattedMessage = this._formatter.format(logMessage);
+            const formattedMessage = this._formatter?.format(logMessage) ?? null;
             this._write(logMessage, formattedMessage);
         }
     }
+
+    /**
+     * Derived classes should implement this to send the message to their target
+     *
+     * @param {*} _logMessage - the original LogMessage to write
+     * @param {*} _formattedMessage - the formatted log message
+     */
     _write(_logMessage, _formattedMessage) {
         throw new Error('LogWriter must implement _write(logMessage,formattedMessage);');
     }
@@ -104,4 +135,4 @@ function writeMessage(logMessage) {
     }
 }
 
-export { LogWriterBase, writeMessage };
+export { LogWriter, writeMessage };

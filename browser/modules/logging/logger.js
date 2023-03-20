@@ -1,3 +1,14 @@
+/**
+ * @fileoverview The primary class used to write log messages.
+ * 
+ * ```
+ *  import {createLogger} from '../modules/logging.js';
+ *  const log = createLogger('my.module.name');
+ *  log.debug("this is a log message.  ",42,{a:"objects can be logged too"});
+ * ```
+ * 
+ */
+
 import { LOGLEVELS, LogLevel } from './log-level.js';
 import { STRING, TYPE } from '../helpers.js';
 import { ArgumentException } from '../exception.js';
@@ -7,6 +18,12 @@ import { ASSERT } from '../assert.js';
 import { LOGENV } from './logging-env.js';
 import { createObserver } from '../observe.js';
 import { ENV } from '../env.js';
+
+/**
+ *@module Logging
+ * @private
+ */
+
 /**
  * An object that can be used to log message.  It has a method for
  * every log level.
@@ -91,7 +108,7 @@ class Logger {
   /**
    * write a message if the logger's level is DEBUG
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   debug(...message) {
     this.write(LOGLEVELS.DEBUG, ...message);
@@ -101,7 +118,7 @@ class Logger {
   /**
    * write a message if the logger's level is DEBUG or INFO
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   info(...message) {
     this.write(LOGLEVELS.INFO, ...message);
@@ -111,7 +128,7 @@ class Logger {
   /**
    * write a message if the logger's level is DEBUG, INFO, or WARN
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */warn(...message) {
     this.write(LOGLEVELS.WARN, ...message);
   }
@@ -120,7 +137,7 @@ class Logger {
   /**
    * write a message if the logger's level is ERROR or above
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   error(...message) {
     this.write(LOGLEVELS.ERROR, ...message);
@@ -129,7 +146,7 @@ class Logger {
   /**
    * write a message if the logger's level is ASSERT or above
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   assert(...message) {
     this.write(LOGLEVELS.ASSERT, ...message);
@@ -138,7 +155,7 @@ class Logger {
   /**
    * always write the message
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   always(...message) {
     this.write(LOGLEVELS.ALWAYS, ...message);
@@ -147,7 +164,7 @@ class Logger {
   /**
    * never write a message 
    *
-   * @param {...*} message
+   * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   never(...message) {
     // do nothing
@@ -158,7 +175,7 @@ class Logger {
  * Observes ENV for changes and updates the logger's
  * level.
  *
- * @param {*} logger
+ * @param {Logger} logger - a Logger to update if ENV changes
  */
 function watchEnvLoggingProperties(logger) {
   createObserver(ENV.ChangeObservable, () => {
@@ -169,10 +186,10 @@ function watchEnvLoggingProperties(logger) {
 
 /**
  * Create a new Logger
- *
+ * @instance
  * @param {String} moduleName name of module. shows up on outupt and used to get level from env.
  * @param {LogLevel} [logLevel=null] override the configured log level
- * @returns {*}
+ * @returns {Logger}
  */
 function createLogger(moduleName, logLevel = null) {
   ASSERT.isFalse(STRING.isBlank(moduleName), 'createLogger module name must be a string');
