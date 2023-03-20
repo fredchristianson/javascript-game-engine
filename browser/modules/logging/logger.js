@@ -9,11 +9,8 @@
  * 
  */
 
-import { LOGLEVELS, LogLevel } from './log-level.js';
-import { STRING, TYPE } from '../helpers.js';
-import { ArgumentException } from '../exception.js';
-import { createLogMessage } from './log-message.js';
-import { writeMessage } from './log-writer.js';
+import { LogLevel } from './log-level.js';
+import { STRING } from '../helpers.js';
 import { ASSERT } from '../assert.js';
 import { LOGENV } from './logging-env.js';
 import { createObserver } from '../observe.js';
@@ -63,14 +60,7 @@ class Logger {
    * @param {LogLevel} level - only messages at or below this level are logged
    */
   constructor(moduleName, level) {
-    if (!STRING.isString(moduleName)) {
-      throw new ArgumentException('moduleName must be a string');
-    }
-    if (!TYPE.isType(level, LogLevel)) {
-      throw new ArgumentException('level must be type LogLevel');
-    }
-    this._moduleName = moduleName;
-    this._level = level;
+
   }
 
   /**
@@ -79,31 +69,9 @@ class Logger {
    * @returns {String} the name;
    */
   get ModuleName() {
-    return this._moduleName;
+
   }
 
-  /**
-   * Updatee the logger's level
-   *
-   * @param {LogLevel} level new level
-   */
-  setLevel(level) {
-    this._level = level;
-  }
-
-  /**
-   * writes a message at the given level.  Mainly 
-   * called from other Logger methods (debug, info,etc)
-   *
-   * @param {LogLevel} level the level of this message
-   * @param {...*} message parts of the message that will be combined
-   */
-  write(level, ...message) {
-    if (this._level.isWanted(level)) {
-      const logMessage = createLogMessage(this._moduleName, level, message, new Date());
-      writeMessage(logMessage);
-    }
-  }
 
   /**
    * write a message if the logger's level is DEBUG
@@ -111,7 +79,7 @@ class Logger {
    * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   debug(...message) {
-    this.write(LOGLEVELS.DEBUG, ...message);
+
 
   }
 
@@ -121,7 +89,7 @@ class Logger {
    * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   info(...message) {
-    this.write(LOGLEVELS.INFO, ...message);
+
   }
 
 
@@ -129,8 +97,9 @@ class Logger {
    * write a message if the logger's level is DEBUG, INFO, or WARN
    *
    * @param {...*} message - array of arguments to be converted to strings and concatenated
-   */warn(...message) {
-    this.write(LOGLEVELS.WARN, ...message);
+   */
+  warn(...message) {
+
   }
 
 
@@ -140,7 +109,7 @@ class Logger {
    * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   error(...message) {
-    this.write(LOGLEVELS.ERROR, ...message);
+
   }
 
   /**
@@ -149,7 +118,7 @@ class Logger {
    * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   assert(...message) {
-    this.write(LOGLEVELS.ASSERT, ...message);
+
   }
 
   /**
@@ -158,7 +127,7 @@ class Logger {
    * @param {...*} message - array of arguments to be converted to strings and concatenated
    */
   always(...message) {
-    this.write(LOGLEVELS.ALWAYS, ...message);
+
   }
 
   /**
