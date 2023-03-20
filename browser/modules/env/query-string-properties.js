@@ -1,13 +1,12 @@
-
-import { UTIL, STRING } from '../helpers.js';
-import { PropertySource } from './proptery-source.js';
+import { STRING, UTIL } from "../helpers.js";
+import { PropertySource } from "./property-source.js";
 
 /**
  * Gets properties from the document location
- * For example: 
- * 
+ * For example:
+ *
  * :    index.html?mode=debug&logging.levels.default=DEBUG
- *  
+ *
  * sets the properties "mode=debug" and "logging:{levels:{default}}=DEBUG"
  * @class
  * @extends PropertySource
@@ -16,11 +15,11 @@ class QueryStringProperties extends PropertySource {
   constructor() {
     super();
     const query = location.search.substring(1);
-    const pairs = query.split('&');
+    const pairs = query.split("&");
     for (const pair of pairs) {
-      const [name, value] = pair.split('=');
+      const [name, value] = pair.split("=");
       if (!STRING.isEmpty(name) && !STRING.isEmpty.value) {
-        if (name.includes('.')) {
+        if (name.includes(".")) {
           this._setObjectValue(name, value);
         }
         this.set(name, value);
@@ -36,7 +35,7 @@ class QueryStringProperties extends PropertySource {
    * @param {String} value - parameter value
    */
   _setObjectValue(name, value) {
-    const levels = name.split('.');
+    const levels = name.split(".");
     const topName = levels.shift();
     let top = this.get(topName);
     if (top == null) {
@@ -55,6 +54,4 @@ class QueryStringProperties extends PropertySource {
   }
 }
 
-
 export { QueryStringProperties };
-

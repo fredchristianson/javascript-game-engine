@@ -1,4 +1,4 @@
-import { PropertySource } from './proptery-source.js';
+import { PropertySource } from "./property-source.js";
 
 /**
  * Load properties from a JSON URL.  The URL is usually an env file (e.g. env.json)
@@ -14,6 +14,7 @@ class JsonResourceProperties extends PropertySource {
   }
 
   async load() {
+    console.info(`loading environment file ${this._assetUrl}`);
     try {
       const response = await fetch(this._assetUrl);
       if (response != null) {
@@ -24,14 +25,10 @@ class JsonResourceProperties extends PropertySource {
           this.set(name, value);
         }
       }
-    } catch (ex) {
+    } catch (_ex) {
       console.info(`failed to load environment file ${this._assetUrl}`);
     }
   }
-
-
 }
 
-
 export { JsonResourceProperties };
-

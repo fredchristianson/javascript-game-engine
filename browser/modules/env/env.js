@@ -1,19 +1,20 @@
-import { UTIL, BOOLEAN, STRING, OBJECT } from '../helpers.js';
-import { PropertySource } from './proptery-source.js';
-import { QueryStringProperties } from './query-string-properties.js';
-import { JsonResourceProperties } from './json-resource-properties.js';
-import { ResourceManager } from '../net.js';
+import { BOOLEAN, OBJECT, STRING, UTIL } from "../helpers.js";
+import { PropertySource } from "./property-source.js";
+import { QueryStringProperties } from "./query-string-properties.js";
+import { JsonResourceProperties } from "./json-resource-properties.js";
+import { JsonAssetProperties } from "./json-asset-properties.js";
+import { ResourceManager } from "../net.js";
 /**
- * Environment name/value property provider.  Multiple sources 
+ * Environment name/value property provider.  Multiple sources
  * of property values are searched in priority order.
- * 
+ *
  *  1) Set with Environment.set()
- * 
+ *
  *  1) Url parameters: This url http://localhost:4263?env=dev&performance=hi
  *                      sets properties for "env", and "performance"
- * 
+ *
  *  2) /games/game/CURRENT-GAME/env.json
- * 
+ *
  *  3) JSON files loaded with loadUrls(url1,url2,...).  Order of urls is the priority.
  * @class
  */
@@ -24,14 +25,16 @@ class Environment {
     this._queryStringProperties = new QueryStringProperties();
     this._gameProperties = null;
     this._loadedProperties = [];
-    /*
-     * this._localEnvProperties = new JsonAssetProperties("/env-local.json");
-     * this._envProperties = new JsonAssetProperties("/env.json");
-     */
+
+    this._envProperties = new JsonAssetProperties("/env.json");
+    // this._localEnvProperties = new JsonAssetProperties("/env-local.json");
+    // this._envProperties = new JsonAssetProperties("/env.json");
+
     this._propertySources = [
       this._setProperties,
       this._queryStringProperties,
-      this._gameProperties
+      this._gameProperties,
+      this._envProperties,
     ];
     this._loaded = true;
     this._loadPromises = [];
@@ -41,11 +44,12 @@ class Environment {
    * Load env.json for gameName
    *
    * @async
-   * @param {String} gameName - the game to load.  
-   */
+   * @param {String} gameName - the game to load. */
   async loadGameEnvironment(gameName) {
     this._loaded = false;
-    this._gameProperties = new JsonResourceProperties(ResourceManager.getGameResourceUrl(gameName, 'env.json'));
+    this._gameProperties = new JsonResourceProperties(
+      ResourceManager.getGameResourceUrl(gameName, "env.json"),
+    );
     this._loadPromises.push(props.load());
     await Promise.all(this._loadPromises);
     this._loaded = true;
@@ -54,7 +58,7 @@ class Environment {
   /**
    * loads properties from one or more urls.  if multiple
    * urls have the same property, the first one has priority.
-   * 
+   *
    * If a load fails, the urls is ignored.  It's not an error
    * to try to load a url that doesn't exist.
    *
@@ -75,17 +79,20 @@ class Environment {
 
   /**
    * wait until any loading resource are complete.  return true
-   * if there were no issues.  
+   * if there were no issues.
    *
    * @async
    * @returns {Boolean} - always true
    */
   async waitForLoad() {
-
     if (!this._loaded) {
       await Promise.all(this._loadPromises);
     }
     return this._loaded;
+  }
+
+  async setup() {
+    await this._envProperties.load();
   }
 
   /**
@@ -94,28 +101,34 @@ class Environment {
    * @returns {*}
    */
   isDebug() {
-    const debug = this.get('isDebug');
+    const debug = this.get("isDebug");
     if (!UTIL.isNullish(debug)) {
       return BOOLEAN.isTrue(debug);
     }
-    const mode = this.get('mode') ?? this.get('env');
-    return STRING.isEqualNoCase(mode, 'debug');
+    const mode = this.get("mode") ?? this.get("env");
+    return STRING.isEqualNoCase(mode, "debug");
   }
+
   get(name, defaultValue = null) {
     let resultValue = null;
-    for (const source of this._propertySources) {
-      const value = source?.get(name);
-      if (value != null) {
+    // for (const source of this._propertySources) {
+    this._propertySources.forEach((source, i) => {
+      console.log(this._propertySources);
+      console.log({ source, i });
+      if (source) {
+        const value = source?.get(name);
+        console.log({ value });
         if (OBJECT.isObject(resultValue)) {
-          OBJECT.addNewProperties(resultValue, value);
+          OBJECT.merge(resultValue, value);
         } else if (OBJECT.isObject(value)) {
           resultValue = value;
         } else {
           resultValue = value;
-          break;
+          return;
         }
       }
-    }
+    });
+    // }
     return resultValue ?? defaultValue;
   }
 
@@ -125,4 +138,3 @@ class Environment {
 }
 
 export { Environment };
-
