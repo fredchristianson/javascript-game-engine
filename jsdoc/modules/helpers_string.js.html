@@ -34,7 +34,7 @@ const STRING = {
    * Return true if the value is null or "undefined"
    *
    * @param {String} value - the object to test
-   * @return {Boolean} true if null
+   * @returns {Boolean} true if null
    */
   isNull: function (value) {
     return value === null || typeof value == 'undefined';
@@ -46,7 +46,7 @@ const STRING = {
    * If it has whitespace, it is not empty.
    *
    * @param {String} value - the object to test
-   * @return {Boolean} true if empty or not a string
+   * @returns {Boolean} true if empty or not a string
    */
   isEmpty: function (value) {
     return (
@@ -55,12 +55,12 @@ const STRING = {
   },
 
   /**
- * Return true if the value is not a string or is empty or only has whitespace.
- * If it has whitespace, it is not empty.
- *
- * @param {String} value - the object to test
- * @return {Boolean} true if empty or not a string or only has whitespace
- */
+   * Return true if the value is not a string or is empty or only has whitespace.
+   * If it has whitespace, it is not empty.
+   *
+   * @param {String} value - the object to test
+   * @returns {Boolean} true if empty or not a string or only has whitespace
+   */
   isBlank: function (value) {
     return (value != null &amp;&amp;
       typeof value == 'string' &amp;&amp;
@@ -73,29 +73,29 @@ const STRING = {
    * Return true if the value is a string and not empty.
    *
    * @param {String} value - the object to test
-   * @return {Boolean} true if is a string and not empty
+   * @returns {Boolean} true if is a string and not empty
    */
   isNotEmpty: function (value) {
     return (value != null &amp;&amp; typeof value == 'string' &amp;&amp; value.length > 0);
   },
 
   /**
- * Return true if the value is a string
- *
- * @param {String} value - the object to test
- * @return {Boolean} true if is a string 
- */
+   * Return true if the value is a string
+   *
+   * @param {String} value - the object to test
+   * @returns {Boolean} true if is a string 
+   */
   isString: function (value) {
     return typeof value == 'string';
   },
 
   /**
-* Return true if 2 strings are equal
-*
-* @param {String} first - first string
-* @param {String} second - second string
-* @return {Boolean} true if params are both strings and equal
-*/
+   * Return true if 2 strings are equal
+   *
+   * @param {String} first - first string
+   * @param {String} second - second string
+   * @returns {Boolean} true if params are both strings and equal
+   */
   isEqual: function (first, second) {
     if (!STRING.isString(first) || !STRING.isString(second)) {
       return false;
@@ -104,12 +104,12 @@ const STRING = {
   },
 
   /**
- * Return true if 2 strings are equal ignoring case
- *
- * @param {String} first - first string
- * @param {String} second - second string
- * @return {Boolean} true if params are both strings and equal
- */
+   * Return true if 2 strings are equal ignoring case
+   *
+   * @param {String} first - first string
+   * @param {String} second - second string
+   * @returns {Boolean} true if params are both strings and equal
+   */
   isEqualNoCase: function (first, second) {
     if (!STRING.isString(first) || !STRING.isString(second)) {
       return false;
@@ -118,12 +118,12 @@ const STRING = {
   },
 
   /**
-  * Return true if the first string starts with the second
-  *
-  * @param {String} first - first string
-  * @param {String} second - second string
-  * @return {Boolean} true first starts with second
-  */
+   * Return true if the first string starts with the second
+   *
+   * @param {String} first - first string
+   * @param {String} second - second string
+   * @returns {Boolean} true first starts with second
+   */
   startsWithNoCase: function (value, start) {
     if (
       !STRING.isString(value) ||
@@ -136,11 +136,11 @@ const STRING = {
   },
 
   /**
-  * Creates a string of an html element including the tag, id,  and classes.
-  *
-  * @param {HTMLElement} htmlElement - the HTMLElement to print
-  * @return {String} displayable string of the element.  Empty string if not an HTMLElement
-  */
+   * Creates a string of an html element including the tag, id,  and classes.
+   *
+   * @param {HTMLElement} htmlElement - the HTMLElement to print
+   * @returns {String} displayable string of the element.  Empty string if not an HTMLElement
+   */
   htmlElementToString: function (item) {
     const parts = [];
     const tag = item.tagName;
@@ -161,12 +161,12 @@ const STRING = {
   },
 
   /**
-  * Creates a JSON string of an Object.  Uses JSON.stringify with a function to
-  * remove cycles.
-  *
-  * @param {Object} object - the object to stringify
-  * @return {String} displayable string of the object
-  */
+   * Creates a JSON string of an Object.  Uses JSON.stringify with a function to
+   * remove cycles.
+   *
+   * @param {Object} object - the object to stringify
+   * @returns {String} displayable string of the object
+   */
   toJsonString: function (object) {
     const seen = [];
     const deCycle = function (key, val) {
@@ -179,17 +179,17 @@ const STRING = {
       return val;
     };
 
-    const result = toJsonString(object, deCycle, 2);
+    const result = JSON.stringify(object, deCycle, 2);
     return result;
   },
 
 
   /**
-  * Creates a displayable string of different types of parameters
-  *
-  * @param {*}  value - the object to stringify
-  * @return {String} displayable string of the object. '[null]' if param is null
-  */
+   * Creates a displayable string of different types of parameters
+   *
+   * @param {*}  value - the object to stringify
+   * @returns {String} displayable string of the object. '[null]' if param is null
+   */
   toString: function (value) {
     if (value === null || typeof value == 'undefined') {
       return '[null]';
@@ -207,6 +207,14 @@ const STRING = {
     if (value instanceof HTMLElement) {
       return htmlElementToString(value);
     }
+    if (typeof value == 'function') {
+      try {
+        const result = value();
+        return STRING.toString(result);
+      } catch (ex) {
+        return `exception: ${ex.message}`;
+      }
+    }
     if (typeof value.toString == 'function') {
       const text = value.toString();
       if (text != '[object Object]') {
@@ -217,40 +225,43 @@ const STRING = {
         return text;
       }
     }
-    return toJsonString(value);
+
+    return STRING.toJsonString(value);
 
   },
 
   /**
-  * takes an array of values and joins them into a string.
-  * toString on an array returns a JSON array.  This is 
-  * needed for places where the parts should be concatenated. For example
-  * 
-  * ```
-  * logMessage(level, message, message2,message3) {
-  *   if (level &lt; wantedLevel){
-  *        consol.log(STRING.format(message,message2,message3));
-  *   };
-  * }
-  * 
-  * logMessage(DEBUG,`object is invalid ${typeof object} ${object.value}`);
-  * logMessage(DEBUG,"object is invalid",typeof object,object.value);
-  * ```
-  *
-  * The same thing will be logged with both of these logMessage calls.
-  * But the 2nd one will only build message string if the logging level is DEBUG.
-  * 
-  * We don't want to build the string from message arguments
-  * unless validate() fails.
-  * 
-  * @todo add placeholders in the first argument to insert the others.  (e.g. ["message $1 -- $2 end of message","fred",2]);
-  * 
-  * @param {Array&lt;*>}  value - the parts to combine
-  * @return {String} displayable string of the object. '[null]' if param is null
-  */
+   * takes an array of values and joins them into a string.
+   * toString on an array returns a JSON array.  This is 
+   * needed for places where the parts should be concatenated. For example
+   * 
+   * ```
+   * logMessage(level, message, message2,message3) {
+   *   if (level &lt; wantedLevel){
+   *        consol.log(STRING.format(message,message2,message3));
+   *   };
+   * }
+   * 
+   * logMessage(DEBUG,`object is invalid ${typeof object} ${object.value}`);
+   * logMessage(DEBUG,"object is invalid",typeof object,object.value);
+   * ```
+   *
+   * The same thing will be logged with both of these logMessage calls.
+   * But the 2nd one will only build message string if the logging level is DEBUG.
+   * 
+   * We don't want to build the string from message arguments
+   * unless validate() fails.
+   * 
+   * @todo add placeholders in the first argument to insert the others.  (e.g. ["message $1 -- $2 end of message","fred",2]);
+   * 
+   * @param {Array&lt;*>}  value - the parts to combine
+   * @returns {String} displayable string of the object. '[null]' if param is null
+   */
   format: function (parts) {
     if (Array.isArray(value)) {
-      const parts = value.map(part => { return STRING.toString(part); });
+      const parts = value.map((part) => {
+        return STRING.toString(part);
+      });
       return parts.join(' ');
     } else {
       return STRING.toString(parts);
@@ -258,7 +269,6 @@ const STRING = {
   }
 
 };
-
 
 
 export { STRING };</code></pre>
@@ -271,13 +281,13 @@ export { STRING };</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ApiWriter.html">ApiWriter</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="ConsoleWriter.html">ConsoleWriter</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="LogWriterBase.html">LogWriterBase</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="WindowWriter.html">WindowWriter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createLogger">createLogger</a></li><li><a href="global.html#watchEnvLoggingProperties">watchEnvLoggingProperties</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ApiWriter.html">ApiWriter</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="ConsoleWriter.html">ConsoleWriter</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="LogWriterBase.html">LogWriterBase</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="WindowWriter.html">WindowWriter</a></li><li><a href="module-Logging.DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging.HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging.JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging.LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createLogger">createLogger</a></li><li><a href="global.html#watchEnvLoggingProperties">watchEnvLoggingProperties</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Mar 18 2023 17:41:12 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 07:13:23 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

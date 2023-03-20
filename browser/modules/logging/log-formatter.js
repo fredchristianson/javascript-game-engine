@@ -1,7 +1,19 @@
+/** 
+ *  @fileOverview These classes converts a LogMessage into the format 
+ * a LogWriter outputs.  It includes implementations
+ *
+ * - DefaultFormatter to output a string 
+ * - HTMLFormatter to create a <div> with <spans> for each component
+ * - JSONFormatter to create a JSON object
+ */
+
 import { LogMessage } from './log-message.js';
 import { ASSERT } from '../assert.js';
 import { STRING, TYPE } from '../helpers.js';
 import { LOGLEVELS } from './log-level.js';
+
+/** @module Logging */
+
 
 /*
  * formatterId is used to cache formatted messages.
@@ -12,8 +24,6 @@ let nextFormatterId = 1;
 
 /**
  * Base class to format part of a log message (time, date, module, etc)
- *
- * @class FormatComponent
  */
 class FormatComponent {
     /**
@@ -66,7 +76,6 @@ class FormatComponent {
 /**
  * Format LogMessage.Time  as a date
  *
- * @class DateFormatComponent
  * @extends {FormatComponent}
  */
 class DateFormatComponent extends FormatComponent {
@@ -81,7 +90,6 @@ class DateFormatComponent extends FormatComponent {
 /**
  * Format LogMessage.Time  as a time
  *
- * @class DateFormatComponent
  * @extends {FormatComponent}
  */
 class TimeFormatComponent extends FormatComponent {
@@ -97,7 +105,6 @@ class TimeFormatComponent extends FormatComponent {
  * Format the module name.  The minimum with changes to match the longest
  * module name seen.
  *
- * @class DateFormatComponent
  * @extends {FormatComponent}
  */
 class ModuleNameFormatComponent extends FormatComponent {
@@ -113,8 +120,6 @@ class ModuleNameFormatComponent extends FormatComponent {
 /**
  * write the descriptive name of the Level ("DEBUG","WARN",etc)
  *
- * @class LevelFormatComponent
- * @typedef {LevelFormatComponent}
  * @extends {FormatComponent}
  */
 class LevelFormatComponent extends FormatComponent {
@@ -134,7 +139,6 @@ class LevelFormatComponent extends FormatComponent {
  * Format the message parts of the LogMessage.  This is an 
  * array of objects.  They are all converted to strings then joined.
  *
- * @class TextFormatComponent
  */
 class TextFormatComponent extends FormatComponent {
     constructor() {
@@ -172,9 +176,6 @@ class StringFormatComponent extends FormatComponent {
  * The base class to format a LogMessage.  The result may be a displayable 
  * string, or JSON, or anything else.
  *
- * @export
- * @class LogFormatter
- * @typedef {LogFormatter}
  */
 export class LogFormatter {
     constructor(components = null) {
@@ -217,6 +218,12 @@ export class LogFormatter {
 
 }
 
+/**
+ * A default log message format
+ *  DATE TIME - LEVEL: MODULE: message
+ *
+ * @extends {LogFormatter}
+ */
 export class DefaultFormatter extends LogFormatter {
     constructor() {
         super([new DateFormatComponent(),
@@ -230,6 +237,11 @@ export class DefaultFormatter extends LogFormatter {
     }
 }
 
+/**
+ * Creates a JSON object of the message parts
+ *
+ * @extends {LogFormatter}
+ */
 export class JSONFormatter extends LogFormatter {
     constructor() {
         super();
@@ -256,9 +268,6 @@ export class JSONFormatter extends LogFormatter {
  * Format the message to be inserted into a DOM element.  The result is a div HTMLElement
  * with a span for each component.
  *
- * @export
- * @class HTMLFormatter
- * @typedef {HTMLFormatter}
  * @extends {LogFormatter}
  */
 export class HTMLFormatter extends LogFormatter {
