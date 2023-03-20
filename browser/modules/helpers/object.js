@@ -1,14 +1,13 @@
-
 /** @namespace OBJECT */
 const OBJECT = {
   /**
- * Return true if the value is null or "undefined"
- *
- * @param {*} value - the object to test
- * @return {Boolean} true if null
- */
+   * Return true if the value is null or "undefined"
+   *
+   * @param {*} value - the object to test
+   * @return {Boolean} true if null
+   */
   isNull: function (value) {
-    return value === null || typeof value == 'undefined';
+    return value == undefined;
   },
 
   /**
@@ -18,36 +17,37 @@ const OBJECT = {
    * @return {Boolean} true if value is null or not an Object or has no properties
    */
   isEmpty: function (value) {
-    return value == null || typeof value != 'object' || Object.keys(value).length == 0;
+    return value == null || typeof value != "object" ||
+      Object.keys(value).length == 0;
   },
 
   /**
- * Return true if the value is 
- *    1) not null null or "undefined" 
- *    2) typeof == 'object'
- *    3) is not an Array or Map since caller shouldn't treat those like Object
- *
- * Only Array and Map are considered "not Objects" even thought the are 'object'.
- * Typed arrays like Int8Array return true;
- * 
- * @param {Object} value - the object to test
- * @return {Boolean} true if value is an object
- */
+   * Return true if the value is
+   *    1) not null null or "undefined"
+   *    2) typeof == 'object'
+   *    3) is not an Array or Map since caller shouldn't treat those like Object
+   *
+   * Only Array and Map are considered "not Objects" even thought the are 'object'.
+   * Typed arrays like Int8Array return true;
+   *
+   * @param {Object} value - the object to test
+   * @return {Boolean} true if value is an object
+   */
   isObject: function (value) {
-    // an array is an object, but when the caller wants an object, 
+    // an array is an object, but when the caller wants an object,
     // a name/value property container is what they want, not an array
-    return !this.isNull(value) && typeof value == 'object' && !Array.isArray(value) && !(value instanceof Map);
+    return !this.isNull(value) && typeof value == "object" &&
+      !Array.isArray(value) && !(value instanceof Map);
   },
 
-
   /**
-   * Recursively copies all properties from the newProperties object 
+   * Recursively copies all properties from the newProperties object
    * into the value object if they do not already exist.
-   * If these 2 objects are the parameters 
-   * 
+   * If these 2 objects are the parameters
+   *
    * OBJECT.addNewProperties(a,b)
-   * 
-   * const a = { 
+   *
+   * const a = {
    *  mode:"deubg",
    *  logging: {
    *    level: {
@@ -57,8 +57,8 @@ const OBJECT = {
    *    }
    *  }
    * }
-   * 
-   * const b = { 
+   *
+   * const b = {
    *  mode:"prod",
    *  logging: {
    *    level: {
@@ -68,11 +68,11 @@ const OBJECT = {
    *    }
    *  },
    *  quality: "high"
-   * }   
-   * 
+   * }
+   *
    * the result value of a will be
-   * 
-   * { 
+   *
+   * {
    *  mode:"deubg",
    *  logging: {
    *    level: {
@@ -83,27 +83,26 @@ const OBJECT = {
    *  },
    *  quality: "high"
    * }
-   * 
-   * The deep value "logging.level.ui" and the top-level "quality" are 
+   *
+   * The deep value "logging.level.ui" and the top-level "quality" are
    * added.  All other values in b were already in a so are not added.
-   * 
+   *
    * @param {Object} value - the object to add properties to
-   * @param {Object} newProperties - object to copy properties from 
+   * @param {Object} newProperties - object to copy properties from
    */
-  addNewProperties: function (value, newProperties) {
-    if (!isObject(value) || !isObject(newProperties)) {
+  merge: function (value, newProperties) {
+    if (!this.isObject(value) || !this.isObject(newProperties)) {
       return;
     }
-    for (let [name, newValue] of Object.entries(newProperties)) {
+    for (const [name, newValue] of Object.entries(newProperties)) {
       const old = value[name];
-      if (old == null) {
+      if (!old) {
         value[name] = newValue;
-      } else {
-        addNewProperties(old, newValue);
+      } else if (this.isObject(newValue)) {
+        this.merge(old, newValue);
       }
     }
-  }
-
+  },
 };
 
 export { OBJECT };
