@@ -1,5 +1,6 @@
 # JavaScript Game Engine
 
+[Module Documentation (jsdocs)](https://fredchristianson.github.io/javascript-game-engine/).
 
 **Requires**
 
