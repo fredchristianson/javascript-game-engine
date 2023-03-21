@@ -1,0 +1,71 @@
+<style>
+    .test-messages {
+        background-color: white;
+        color: #444;
+        height: 600px;
+        overflow: auto;
+    }
+    .log {
+        width: 100%;
+            display: grid;
+            grid-template-areas:
+                'time date level module text';
+            grid-template-columns: min-content min-content 6em 15em 1fr;
+
+    }
+
+    .test-messages .log.level-warn {
+    background-color: hsl(50, 80%, 50%);
+    }
+    .test-messages .log.level-error, .test-messages .log.level-assert {
+    background-color: hsl(0, 30%, 50%);
+    color: white;
+    }
+    .test-messages .log.level-always {
+    background-color: hsl(100, 80%, 50%);
+    }
+    .test-messages .log > span {
+    margin-right: 2em;
+    }
+    .test-messages .log .time {
+    font-size: 12px;
+    grid-area: time;
+    white-space: nowrap;
+    }
+    .test-messages .log .date {
+    font-size: 12px;
+    grid-area: date;
+    white-space: nowrap;
+    }
+    .test-messages .log .level {
+    grid-area: level;
+    overflow: hidden;
+    }
+    .test-messages .log .module {
+    grid-area: module;
+    overflow: hidden;
+    }
+    .test-messages .log .message {
+    grid-area: text;
+    }
+</style>
+
+<div class="game-launcher">
+<h1>Logging Tests</h1>
+
+<div style='display:flex'>
+    <input class="test-message" value="test message" style="width: 20em"/>
+    <button class="test-log">Write Log</button>
+    <select class="test-level-select">
+        <option value="DEBUG">DEBUG</option>>
+        <option value="INFO">INFO</option>>
+        <option value="WARN">WARN</option>>
+        <option value="ERROR">ERROR</option>>
+        <option value="ASSERT">ASSERT</option>>
+        <option value="ALWAYS">ALWAYS</option>>
+        <option value="NEVER">NEVER</option>>
+    </select>
+</div>
+<div class="test-messages"></div>
+<div><button class='test-end'>End</button></div>
+</div>

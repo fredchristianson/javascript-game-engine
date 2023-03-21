@@ -54,6 +54,54 @@ exports.getGameResource = async function (req, res) {
     FileHandler.returnFile(req, res, resourcePath);
 };
 
+async function findFirstFile(gamePath, names) {
+    for (let name of names) {
+        const filePath = path.join(gamePath, name);
+        try {
+            fs.accessSync(filePath, fs.constants.R_OK);
+            console.log("Found: " + filePath);
+            return filePath;
+        } catch (ex) {
+            console.log("Not found: " + filePath);
+        }
+    }
+}
+exports.getGameModule = async function (req, res) {
+    const games = await getGames();
+    console.log(`Get game module: ${req.params.name}`);
+    const game = games.find(g => { return g.name == req.params.name; });
+    if (game == null) {
+        res.statusCode = 404;
+        res.end(`Game not found: ${req.params.name}`);
+    }
+    let moduleName = "game.js";
+    if (game.mainModule != null) {
+        moduleName = game.mainModule;
+    }
+    console.log(`\tmodule: ${moduleName}`);
+    const pathExists = await findFirstFile(game.path, [moduleName, `${game.type}.js`, `game.js`, `module.js`]);
+    const resourcePath = pathExists;
+    FileHandler.returnFile(req, res, resourcePath);
+};
+
+exports.getGameResource = async function (req, res) {
+    const games = await getGames();
+    console.log(`Get game resource: ${req.path}`);
+    const game = games.find(g => { return g.name == req.params.name; });
+    if (game == null) {
+        res.statusCode = 404;
+        res.end(`Game not found: ${req.params.name}`);
+    }
+    let moduleName = "game.js";
+    if (game.mainModule != null) {
+        moduleName = game.mainModule;
+    }
+    const resourcePath = path.join(game.path, req.path);
+    console.log(`\tresource path: ${resourcePath}`);
+    FileHandler.returnFile(req, res, resourcePath);
+};
+
+
 exports.getGames = async function (req, res) {
     let games = await getGames();
     if (typeof req.params.type == 'string') {

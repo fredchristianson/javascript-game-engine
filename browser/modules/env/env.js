@@ -3,6 +3,7 @@ import { PropertySource } from './proptery-source.js';
 import { QueryStringProperties } from './query-string-properties.js';
 import { JsonResourceProperties } from './json-resource-properties.js';
 import { ResourceManager } from '../net.js';
+import { createObservable } from '../observe.js';
 /**
  * Environment name/value property provider.  Multiple sources 
  * of property values are searched in priority order.
@@ -19,24 +20,18 @@ import { ResourceManager } from '../net.js';
  */
 class Environment {
   constructor() {
+    this._changeObservable = createObservable(this);
     this._loaded = false;
     this._setProperties = new PropertySource();
     this._queryStringProperties = new QueryStringProperties();
     this._gameProperties = null;
     this._loadedProperties = [];
-    /*
-     * this._localEnvProperties = new JsonAssetProperties("/env-local.json");
-     * this._envProperties = new JsonAssetProperties("/env.json");
-     */
-    this._propertySources = [
-      this._setProperties,
-      this._queryStringProperties,
-      this._gameProperties
-    ];
+
     this._loaded = true;
     this._loadPromises = [];
   }
 
+  get ChangeObservable() { return this._changeObservable; }
   /**
    * Load env.json for gameName
    *
@@ -46,9 +41,10 @@ class Environment {
   async loadGameEnvironment(gameName) {
     this._loaded = false;
     this._gameProperties = new JsonResourceProperties(ResourceManager.getGameResourceUrl(gameName, 'env.json'));
-    this._loadPromises.push(props.load());
+    this._loadPromises.push(this._gameProperties.load());
     await Promise.all(this._loadPromises);
     this._loaded = true;
+    this._changeObservable.changed({ gameUpdated: true });
   }
 
   /**
@@ -67,10 +63,11 @@ class Environment {
       const props = new JsonResourceProperties(url);
       this._loadPromises.push(props.load());
       this._loadedProperties.push(props);
-      this._propertySources.push(props);
     }
     await Promise.all(this._loadPromises);
     this._loaded = true;
+    this._changeObservable.changed({ UrlsAdded: true, urls: urls });
+
   }
 
   /**
@@ -103,7 +100,13 @@ class Environment {
   }
   get(name, defaultValue = null) {
     let resultValue = null;
-    for (const source of this._propertySources) {
+    const sources = [
+      this._setProperties,
+      this._queryStringProperties,
+      this._gameProperties,
+      ...this._loadedProperties
+    ];
+    for (const source of sources) {
       const value = source?.get(name);
       if (value != null) {
         if (OBJECT.isObject(resultValue)) {
@@ -121,6 +124,8 @@ class Environment {
 
   set(name, value) {
     this._setProperties.set(name, value);
+    this._changeObservable.changed({ name: name, value: value });
+
   }
 }
 

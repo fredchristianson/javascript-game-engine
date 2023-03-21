@@ -1,0 +1,78 @@
+#log-view {
+  --control-height: 3em;
+}
+#log-view #log-controls {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: var(--control-height);
+  background-color: #aaa;
+  padding: 8px;
+}
+#log-view #log-controls button,
+#log-view #log-controls span {
+  display: inline-block;
+  margin-right: 3em;
+}
+#log-view .log-messages {
+  padding-top: calc(var(--control-height) + 2em);
+}
+#log-view .log-messages.hide-debug .level-debug {
+  display: none;
+}
+#log-view .log-messages.hide-info .level-info {
+  display: none;
+}
+#log-view .log-messages.hide-warn .level-warn {
+  display: none;
+}
+#log-view .log-messages.hide-error .level-error {
+  display: none;
+}
+#log-view .log-messages.hide-assert .level-assert {
+  display: none;
+}
+#log-view .log-messages.hide-always .level-always {
+  display: none;
+}
+#log-view .log-messages .log {
+  display: grid;
+  grid-template-areas: "time date level module text";
+  grid-template-columns: min-content min-content 6em 15em 1fr;
+  border-bottom: 1px solid #aaa;
+}
+#log-view .log-messages .log.level-warn {
+  background-color: hsl(50, 80%, 50%);
+}
+#log-view .log-messages .log.level-error, #log-view .log-messages .log.level-assert {
+  background-color: hsl(0, 30%, 50%);
+  color: white;
+}
+#log-view .log-messages .log.level-always {
+  background-color: hsl(100, 80%, 50%);
+}
+#log-view .log-messages .log > span {
+  margin-right: 2em;
+}
+#log-view .log-messages .log .time {
+  font-size: 12px;
+  grid-area: time;
+  white-space: nowrap;
+}
+#log-view .log-messages .log .date {
+  font-size: 12px;
+  grid-area: date;
+  white-space: nowrap;
+}
+#log-view .log-messages .log .level {
+  grid-area: level;
+  overflow: hidden;
+}
+#log-view .log-messages .log .module {
+  grid-area: module;
+  overflow: hidden;
+}
+#log-view .log-messages .log .message {
+  grid-area: text;
+}/*# sourceMappingURL=log.css.map */

@@ -1,0 +1,94 @@
+#test-select {
+  height: 100%;
+  overflow: hidden;
+}
+#test-select h1 {
+  margin-left: 20%;
+}
+#test-select .tests {
+  position: relative;
+  margin-left: 20%;
+  height: 60%;
+  width: 60%;
+  background-color: #aaa;
+  overflow: auto;
+}
+#test-select .tests li {
+  list-style: none;
+  margin-bottom: 0.5em;
+}
+#test-select .tests li button {
+  min-width: 20em;
+}
+
+#test-run {
+  height: 100%;
+  overflow: hidden;
+}
+#test-run .runner {
+  height: 100%;
+  overflow: auto;
+  display: grid;
+  grid-template-areas: "controls controls" "summary summary" "results  game";
+  grid-template-rows: 3em min-content 1fr;
+  grid-template-columns: 2fr 1fr;
+}
+#test-run .runner .controls {
+  grid-area: controls;
+  background-color: #aaa;
+}
+#test-run .runner .summary {
+  padding: 2em;
+  grid-area: summary;
+  background-color: white;
+  color: hsl(200, 50%, 50%);
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-areas: "name success" "running fail";
+  grid-template-columns: 1fr 20em;
+  grid-template-rows: min-content min-content;
+}
+#test-run .runner .summary .name {
+  grid-area: name;
+}
+#test-run .runner .summary .success {
+  grid-area: success;
+}
+#test-run .runner .summary .fail {
+  grid-area: fail;
+}
+#test-run .runner .summary .running {
+  grid-area: running;
+}
+#test-run .runner .summary label {
+  width: 10em;
+  display: inline-block;
+  color: hsl(200, 50%, 30%);
+}
+#test-run .runner .status {
+  display: block;
+  grid-area: results;
+  background-color: hsl(0, 0%, 100%);
+  color: #fff;
+  min-width: 800px;
+  overflow: auto;
+}
+#test-run .runner .status > div {
+  padding: 2px;
+  border-bottom: 1px solid #000;
+}
+#test-run .runner .status .test-started {
+  background-color: hsl(62, 49%, 27%);
+}
+#test-run .runner .status .success {
+  background-color: hsl(133, 50%, 50%);
+}
+#test-run .runner .status .fail {
+  background-color: hsl(8, 69%, 45%);
+}
+#test-run .runner .status ul {
+  margin: 0.2em;
+}
+#test-run .runner .game-area {
+  background-color: #000;
+}/*# sourceMappingURL=test.css.map */
