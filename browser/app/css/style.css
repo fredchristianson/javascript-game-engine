@@ -17,6 +17,7 @@ html, body {
     grid-template-rows: auto 1fr auto;
 }
 
+
 .controls {
     grid-area: controls;
     display: flex;
@@ -25,8 +26,13 @@ html, body {
 
 .world {
     grid-area: world;
+    padding: 100px;
 }
 
+.world > div {
+    width: 80%;
+    margin: auto auto;
+}
 .status {
     grid-area: status;
     display: flex;
@@ -41,3 +47,6 @@ html, body {
     background-color: hsl(40 100% 50%);
 }
 
+.controls .game, .status .game {
+    margin-left: 4em;
+}

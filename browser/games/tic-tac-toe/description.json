@@ -1,4 +1,5 @@
 {
-  "name": "Hello World",
+  "name": "tic-tac-toe",
+  "title": "Tic-Tac-Toe",
   "type": "game"
 }

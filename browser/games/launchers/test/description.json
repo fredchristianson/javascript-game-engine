@@ -1,0 +1,6 @@
+{
+  "name": "test-launcher",
+  "title": "Launch Tests",
+  "type": "launcher",
+  "mainModule": "test-launcher.js"
+}

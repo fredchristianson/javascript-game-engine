@@ -1,4 +1,5 @@
 {
-  "name": "Hello World",
+  "name": "hello-world",
+  "title": "Hello World",
   "type": "game"
 }

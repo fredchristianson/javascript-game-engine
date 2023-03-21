@@ -32,6 +32,8 @@
  * ASSERT and Logging are not available until that is done.
  */
 
+import { STRING } from '../helpers.js';
+
 
 /**
  * loads resources from the server.  It works for files in static locations
@@ -50,7 +52,7 @@ class ResourceManagerImpl {
      * @returns {String}
      */
     static getGameResourceUrl(gameName, resourceUrl) {
-        return `/game/${gameName}/${resourceUrl}`;
+        return `/game/${gameName}/resource/${resourceUrl}`;
     }
 
     /**
@@ -82,11 +84,71 @@ class ResourceManagerImpl {
      * @param {String} [moduleName='game.js']
      * @returns {Module}
      */
-    async getGameModule(gameName, moduleName = 'game.js') {
-        const url = ResourceManagerImpl.getGameResourceUrl(gameName, moduleName);
+    async getGameModule(gameName) {
+        //const url = ResourceManagerImpl.getGameResourceUrl(gameName, moduleName);
+        const url = `/game/${gameName}/module`;
         const module = await import(url);
         return module;
 
+    }
+
+    /**
+     * Import a module by url.
+     *
+     * @async
+     * @param {String} gameName
+     * @param {String} [moduleName='game.js']
+     * @returns {Module}
+     */
+    async getGameResource(gameName, resourcePath) {
+        const url = ResourceManagerImpl.getGameResourceUrl(gameName, resourcePath);
+        const resource = await this.getResource(url);
+        return resource.text();
+
+    }
+
+    /**
+     * Request a URL and return JSON response.
+     *
+     * @async
+     * @param {String} url - url to request
+     * @param {Map|Object} params - name/value pairs to add to the query string
+     * @returns {Object} the JSON object or null if failed
+     */
+    async getJSON(url, params) {
+        if (!OBJECT.isEmpty(params)) {
+            url = URL.addQueryParams(url, params);
+        }
+        const response = await this.getResource(url);
+        if (response != null) {
+            return await response.json();
+        }
+        return null;
+    }
+
+    /**
+     * Post a JSON body to a url
+     *
+     * @async
+     * @param {String} url to use
+     * @param {String | Object} body if this is not a string it will be converted to a JSON string
+     * @returns {Object} the JSON objec returned or null if failed
+     */
+    async postJSON(url, body) {
+        let bodyJSON = body;
+        if (!STRING.isString(body)) {
+            bodyJSON = STRING.toString(body);
+        }
+        const response = await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: bodyJSON
+        });
+        if (response != null) {
+            return await response.json();
+        }
+        return null;
     }
 
 }
@@ -101,13 +163,13 @@ export { ResourceManagerImpl };</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Net.html">Net</a></li></ul><h3>Namespaces</h3><ul><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ASSERT.html">ASSERT</a></li><li><a href="module-Env.html">Env</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Logging.html">Logging</a></li><li><a href="module-Net.html">Net</a></li><li><a href="module-Observe.html">Observe</a></li></ul><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="ASSERT.html">ASSERT</a></li><li><a href="BOOLEAN.html">BOOLEAN</a></li><li><a href="ENSURE.html">ENSURE</a></li><li><a href="FUNCTION.html">FUNCTION</a></li><li><a href="LOGENV.html">LOGENV</a></li><li><a href="NUMBER.html">NUMBER</a></li><li><a href="OBJECT.html">OBJECT</a></li><li><a href="STRING.html">STRING</a></li><li><a href="TYPE.html">TYPE</a></li><li><a href="UTIL.html">UTIL</a></li><li><a href="module-Logging-LOGLEVELS.html">LOGLEVELS</a></li></ul><h3>Classes</h3><ul><li><a href="APIException.html">APIException</a></li><li><a href="ApiException_.html">ApiException</a></li><li><a href="ArgumentException.html">ArgumentException</a></li><li><a href="AssertionException.html">AssertionException</a></li><li><a href="Environment.html">Environment</a></li><li><a href="JsonResourceProperties.html">JsonResourceProperties</a></li><li><a href="Observable.html">Observable</a></li><li><a href="Observer.html">Observer</a></li><li><a href="PropertySource.html">PropertySource</a></li><li><a href="QueryStringProperties.html">QueryStringProperties</a></li><li><a href="ResourceManagerImpl.html">ResourceManagerImpl</a></li><li><a href="module-Logging-ApiWriter.html">ApiWriter</a></li><li><a href="module-Logging-ConsoleWriter.html">ConsoleWriter</a></li><li><a href="module-Logging-DateFormatComponent.html">DateFormatComponent</a></li><li><a href="module-Logging-DefaultFormatter.html">DefaultFormatter</a></li><li><a href="module-Logging-FormatComponent.html">FormatComponent</a></li><li><a href="module-Logging-HTMLFormatter.html">HTMLFormatter</a></li><li><a href="module-Logging-JSONFormatter.html">JSONFormatter</a></li><li><a href="module-Logging-LevelFormatComponent.html">LevelFormatComponent</a></li><li><a href="module-Logging-LogFormatter.html">LogFormatter</a></li><li><a href="module-Logging-LogWriter.html">LogWriter</a></li><li><a href="module-Logging-Logger.html">Logger</a></li><li><a href="module-Logging-ModuleNameFormatComponent.html">ModuleNameFormatComponent</a></li><li><a href="module-Logging-StringFormatComponent.html">StringFormatComponent</a></li><li><a href="module-Logging-TextFormatComponent.html">TextFormatComponent</a></li><li><a href="module-Logging-TimeFormatComponent.html">TimeFormatComponent</a></li><li><a href="module-Logging-WindowWriter.html">WindowWriter</a></li><li><a href="module-Net-ResourceManager.html">ResourceManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Mar 18 2023 09:41:57 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 20 2023 09:10:56 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

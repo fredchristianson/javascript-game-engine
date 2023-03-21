@@ -1,0 +1,128 @@
+#test-select {
+    height: 100%;
+    overflow: hidden;
+
+    h1 {
+        margin-left: 20%;
+    }
+
+    .tests {
+        position: relative;
+        margin-left: 20%;
+        height: 60%;
+        width: 60%;
+        background-color: #aaa;
+        overflow: auto;
+
+        li {
+            list-style: none;
+            margin-bottom: 0.5em;
+
+            button {
+                min-width: 20em;
+            }
+        }
+    }
+
+
+}
+
+#test-run {
+    height: 100%;
+    overflow: hidden;
+
+    .runner {
+        height: 100%;
+        overflow: auto;
+        display: grid;
+        grid-template-areas:
+            'controls controls'
+            'summary summary'
+            'results  game';
+
+        grid-template-rows: 3em min-content 1fr;
+        grid-template-columns: 2fr 1fr;
+
+        .controls {
+            grid-area: controls;
+            background-color: #aaa;
+        }
+
+        .summary {
+            padding: 2em;
+            grid-area: summary;
+            background-color: white;
+            color: hsl(200 50% 50%);
+            border-bottom: 1px solid black;
+
+
+            display: grid;
+            grid-template-areas:
+                'name success'
+                'running fail';
+            grid-template-columns: 1fr 20em;
+            grid-template-rows: min-content min-content;
+
+            .name {
+                grid-area: name;
+            }
+
+            .success {
+                grid-area: success;
+            }
+
+            .fail {
+                grid-area: fail;
+            }
+
+            .running {
+                grid-area: running;
+            }
+
+            label {
+                width: 10em;
+                display: inline-block;
+                color: hsl(200 50% 30%)
+            }
+        }
+
+        .status {
+            display: block;
+            grid-area: results;
+            background-color: hsl(0, 0%, 100%);
+            color: #fff;
+            min-width: 800px;
+            overflow: auto;
+
+            >div {
+                padding: 2px;
+                border-bottom: 1px solid #000;
+            }
+
+            .test-started {
+                background-color: hsl(62, 49%, 27%);
+
+            }
+
+            .success {
+                background-color: hsl(133, 50%, 50%);
+            }
+
+            .fail {
+                background-color: hsl(8, 69%, 45%);
+            }
+
+            ul {
+                margin: .2em;
+
+                li {}
+            }
+
+        }
+
+        .game-area {
+            background-color: #000;
+
+        }
+    }
+}

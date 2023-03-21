@@ -10,7 +10,7 @@
     "dictionaries": ["jsdoc", "closure"]
   },
   "opts": {
-    "destination": "./jsdoc/modules",
+    "destination": "./docs/modules",
     "recurse": true
   }
 }
