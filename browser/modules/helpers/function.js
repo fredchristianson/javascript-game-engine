@@ -3,11 +3,11 @@
 const FUNCTION = {
 
   /**
- * Return true if the value is a function
- *
- * @param {*} value - the object to test
- * @return {Boolean} true if value is a function
- */
+   * Return true if the value is a function
+   *
+   * @param {*} value - the object to test
+   * @returns {Boolean} true if value is a function
+   */
   isFunction: function (value) {
     return (typeof value === 'function');
   },
@@ -21,16 +21,16 @@ const FUNCTION = {
    *   3) functions in base classes that have not been overriden 
    * 
    * @param {Object} object - the object to get functions of
-   * @return {Map} map of {names ==> function}.  Empty if the parameter is not an object.
+   * @returns {Map} map of {names ==> function}.  Empty if the parameter is not an object.
    */
   getMethods: function (object) {
     const methods = new Map();
     let proto = object;
 
     while (proto != null && proto.constructor != Object) {
-      for (let name of Object.getOwnPropertyNames(proto)) {
+      for (const name of Object.getOwnPropertyNames(proto)) {
         const value = proto[name];
-        if (isFunction(value) && methods[name] == null) {
+        if (FUNCTION.isFunction(value) && methods[name] == null) {
           methods.set(name, value);
         }
       }

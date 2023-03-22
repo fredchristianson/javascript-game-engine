@@ -1,10 +1,13 @@
+import { ChildWindow } from '/modules/window.js';
 import { LOGLEVELS, LogWriter, HTMLFormatter, createLogger } from '/modules/logging.js';
+import { test } from './tests/custom-log-writer.js';
+
 const log = createLogger('TestLogging', LOGLEVELS.DEBUG);
 
 class TestLogWriter extends LogWriter {
   constructor(htmlContainer) {
     super(LOGLEVELS.DEBUG, new HTMLFormatter());
-    this._container = htmlContainer;
+    this._container = htmlContainer.first('body');
   }
   _write(_logMessage, formattedMessage) {
     this._container.append(formattedMessage);
@@ -27,7 +30,7 @@ function reverseMessage(message) {
 class TestLogging {
   constructor() { }
 
-  start(theGame, worldElement) {
+  async start(theGame, worldElement) {
     this._theGame = theGame;
     this._worldElement = worldElement;
 
@@ -40,7 +43,9 @@ class TestLogging {
     this._endButton.addEventListener('click', () => {
       this._theGame.run('test-launcher');
     });
-    this._htmlWriter = new TestLogWriter(worldElement.querySelector('.test-messages'));
+
+    this._childWindow = new ChildWindow('TestLogging');
+    this._htmlWriter = new TestLogWriter(await this._childWindow.getDocument());
   }
 
   writeMessages() {
@@ -57,6 +62,6 @@ class TestLogging {
   }
 }
 
-export const game = new TestLogging();
 
-export default game;
+export const tests = [test];
+

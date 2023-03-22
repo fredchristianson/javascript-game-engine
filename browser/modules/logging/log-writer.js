@@ -57,6 +57,13 @@ class LogWriter {
         }
     }
 
+    close() {
+        const index = logWriters.indexOf(this);
+        if (index != -1) {
+            logWriters.splice(index, 1);
+        }
+    }
+
     get ID() {
         return this._id;
     }

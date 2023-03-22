@@ -34,9 +34,8 @@ const STRING = {
    * @returns {Boolean} true if empty or not a string or only has whitespace
    */
   isBlank: function (value) {
-    return (value != null &&
-      typeof value == 'string' &&
-      value.length > 0 &&
+    return (value === null ||
+      typeof value != 'string' ||
       /\S/.test(value) === false);
   },
 
@@ -166,25 +165,20 @@ const STRING = {
     if (value === null || typeof value == 'undefined') {
       return '[null]';
     }
-
     if (STRING.isString(value)) {
       return value;
-    }
-    if (typeof value === 'number') {
-      return value.toString();
     }
     if (typeof value.getHTMLElement == 'function') {
       value = value.getHTMLElement();
     }
     if (value instanceof HTMLElement) {
-      return htmlElementToString(value);
+      return STRING.htmlElementToString(value);
     }
     if (typeof value == 'function') {
       try {
-        const result = value();
-        return STRING.toString(result);
+        return STRING.toString(value());
       } catch (ex) {
-        return `exception: ${ex.message}`;
+        return `function failed: ${ex.message}`;
       }
     }
     if (typeof value.toString == 'function') {
@@ -197,47 +191,8 @@ const STRING = {
         return text;
       }
     }
-
     return STRING.toJsonString(value);
 
-  },
-
-  /**
-   * takes an array of values and joins them into a string.
-   * toString on an array returns a JSON array.  This is 
-   * needed for places where the parts should be concatenated. For example
-   * 
-   * ```
-   * logMessage(level, message, message2,message3) {
-   *   if (level < wantedLevel){
-   *        consol.log(STRING.format(message,message2,message3));
-   *   };
-   * }
-   * 
-   * logMessage(DEBUG,`object is invalid ${typeof object} ${object.value}`);
-   * logMessage(DEBUG,"object is invalid",typeof object,object.value);
-   * ```
-   *
-   * The same thing will be logged with both of these logMessage calls.
-   * But the 2nd one will only build message string if the logging level is DEBUG.
-   * 
-   * We don't want to build the string from message arguments
-   * unless validate() fails.
-   * 
-   * @todo add placeholders in the first argument to insert the others.  (e.g. ["message $1 -- $2 end of message","fred",2]);
-   * 
-   * @param {Array<*>}  value - the parts to combine
-   * @returns {String} displayable string of the object. '[null]' if param is null
-   */
-  format: function (parts) {
-    if (Array.isArray(value)) {
-      const parts = value.map((part) => {
-        return STRING.toString(part);
-      });
-      return parts.join(' ');
-    } else {
-      return STRING.toString(parts);
-    }
   }
 
 };

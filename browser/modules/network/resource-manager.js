@@ -4,7 +4,8 @@
  * ASSERT and Logging are not available until that is done.
  */
 
-import { STRING } from '../helpers.js';
+import { STRING, OBJECT } from '../helpers.js';
+import { URL } from './url.js';
 
 
 /**
@@ -52,8 +53,8 @@ class ResourceManagerImpl {
      * Import a module by url.
      *
      * @async
-     * @param {String} gameName
-     * @param {String} [moduleName='game.js']
+     * @param {String} gameName the name of the game
+     * @param {String} [moduleName='game.js'] the moduleName to get
      * @returns {Module}
      */
     async getGameModule(gameName) {
@@ -68,14 +69,17 @@ class ResourceManagerImpl {
      * Import a module by url.
      *
      * @async
-     * @param {String} gameName
-     * @param {String} [moduleName='game.js']
+     * @param {String} gameName name of the game
+     * @param {String} resourcePath can be a path in the game foler, or "html" for the top-level html file, or "css" for the top-level css file
      * @returns {Module}
      */
     async getGameResource(gameName, resourcePath) {
         const url = ResourceManagerImpl.getGameResourceUrl(gameName, resourcePath);
-        const resource = await this.getResource(url);
-        return resource.text();
+        const response = await this.getResource(url);
+        if (response && response.ok) {
+            return response.text();
+        }
+        return null;
 
     }
 
@@ -92,7 +96,7 @@ class ResourceManagerImpl {
             url = URL.addQueryParams(url, params);
         }
         const response = await this.getResource(url);
-        if (response != null) {
+        if (response != null && response.ok) {
             return await response.json();
         }
         return null;

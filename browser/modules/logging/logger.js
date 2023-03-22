@@ -164,9 +164,9 @@ class Logger {
   /**
    * never write a message 
    *
-   * @param {...*} message - array of arguments to be converted to strings and concatenated
+   * @param {...*} _message - array of arguments to be converted to strings and concatenated
    */
-  never(...message) {
+  never(..._message) {
     // do nothing
   }
 }

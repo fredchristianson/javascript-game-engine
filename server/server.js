@@ -43,6 +43,7 @@ router.addHandler(METHODS.POST, "/api/v1/log", LogHandler.log);
 router.addHandler(METHODS.GET, "/api/v1/games", GameHandler.getGames);
 router.addHandler(METHODS.GET, "/game/:name/resource", GameHandler.getGameResource);
 router.addHandler(METHODS.GET, "/game/:name/module", GameHandler.getGameModule);
+router.addHandler(METHODS.GET, "/game/:name", GameHandler.getGameResource);
 router.addHandler(METHODS.GET, "/", FileHandler.getResource);
 
 

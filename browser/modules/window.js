@@ -1,11 +1,12 @@
 /* 
-* DO NOT LOG in this class.  
-* Logging uses this class for output and it will loop.
-*/
+ * DO NOT LOG in this class.  
+ * Logging uses this class for output and it will loop.
+ */
+
 
 const childWindows = [];
-window.addEventListener("beforeunload", () => {
-    for (let window of childWindows) {
+window.addEventListener('beforeunload', () => {
+    for (const window of childWindows) {
         window.close();
     }
 });
@@ -27,18 +28,18 @@ class Window {
     sendMessage(type, data) {
         if (this._window != null) {
             const message = JSON.stringify({ type, data });
-            this._window.postMessage(message, "*");
+            this._window.postMessage(message, '*');
         }
     }
 
     _handleMessage(event) {
         try {
             const message = JSON.parse(event.data);
-            for (let handler of this._messageHandlers) {
+            for (const handler of this._messageHandlers) {
                 handler(message.data);
             }
         } catch (ex) {
-            console.error("failed to parse window message:", event.data, ex);
+            console.error('failed to parse window message:', event.data, ex);
         }
     }
 }
@@ -48,25 +49,30 @@ export class ChildWindow extends Window {
         super();
         this._name = name;
         this._url = url;
+        this._isLoaded = false;
         childWindows.push(this);
 
     }
 
     async open() {
-        return new Promise((resolve, reject) => {
-            if (this._window == null || this._window.closed) {
+        if (this._window == null || this._window.closed) {
+            this._isLoaded = new Promise((resolve, _reject) => {
                 this._window = window.open(
                     this._url,
                     this._name,
-                    `toolbar=false,resizeable=yes`
+                    'toolbar=false,resizeable=yes'
                 );
-                this._window.addEventListener("load", () => {
+                this._window.addEventListener('load', () => {
                     resolve();
                 });
-            } else {
-                resolve();
-            }
-        });
+            });
+            await this._isLoaded;
+        }
+    }
+
+    async getDocument() {
+        await this.open();
+        return this._window?.document;
     }
 
     close() {

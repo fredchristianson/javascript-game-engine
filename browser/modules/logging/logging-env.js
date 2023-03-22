@@ -139,17 +139,15 @@ const LOGENV = {
         return conf;
     },
 
-    _getLevelConfiguration: function (writerType) {
+    _getLevelConfiguration: function () {
         const logging = ENV.get('logging');
-        let conf = {};
+
         if (logging != null && typeof TYPE.isType(logging, Object)) {
             const levels = logging.levels;
-            if (TYPE.isType(levels, Object)) {
-                conf = levels[writerType];
-            }
+            return levels;
         }
 
-        return conf;
+        return null;
     }
 };
 

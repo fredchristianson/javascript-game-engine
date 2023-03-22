@@ -95,6 +95,13 @@
 
     setPosition();
 
+    async function requestScreenPosition() {
+        // browser will ask user to allow multi-monitor permissions
+        // so we can restore the position
+        const screenDetails = await window.getScreenDetails();
+    }
+
+    setTimeout(()=>{requestScreenPosition();},5000);
 
 </script>
 

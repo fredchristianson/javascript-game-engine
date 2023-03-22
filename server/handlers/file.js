@@ -26,7 +26,7 @@ function getContentType(url) {
 function returnFile(req, res, filePath) {
     if (filePath == null) {
         res.statusCode = 404;
-        res.end("File not found: " + path);
+        res.end("File not found: " + req.path);
         return;
     }
 

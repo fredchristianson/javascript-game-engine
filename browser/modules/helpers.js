@@ -1,17 +1,18 @@
-/* Do not import other modules in these helpers.
+/*
+ * Do not import other modules in these helpers.
  * Any module that uses helpers will casue
  * an import cycle if these module import other modules.
  */
 
 /** @module Helpers */
 
-import { STRING as string } from "./helpers/string.js";
-import { UTIL as util } from "./helpers/util.js";
-import { TYPE as type } from "./helpers/type.js";
-import { OBJECT as object } from "./helpers/object.js";
-import { BOOLEAN as boolean } from "./helpers/boolean.js";
-import { FUNCTION as func } from "./helpers/function.js";
-import { NUMBER as number } from "./helpers/number.js";
+import { STRING as string } from './helpers/string.js';
+import { UTIL as util } from './helpers/util.js';
+import { TYPE as type } from './helpers/type.js';
+import { OBJECT as object } from './helpers/object.js';
+import { BOOLEAN as boolean } from './helpers/boolean.js';
+import { FUNCTION as func } from './helpers/function.js';
+import { NUMBER as number } from './helpers/number.js';
 
 /**
  * Collection of functions for working with strings.
