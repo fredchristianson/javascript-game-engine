@@ -66,12 +66,19 @@ export class TestResult {
             await this._function(this);
             log.debug('finished test ', this._name);
         } catch (ex) {
-            log.error('TestResult failed', this._name, ex);
+            log.error('AutoTestResult failed', this._name, ex);
             this._success = false;
         }
         this._complete = true;
         this._resolveResult(this);
         return this._success;
+    }
+
+    error(message = NO_MESSAGE) {
+        this._errors.push(message);
+        this._success = false;
+        this._resolveRun(this);
+        this._resolveResult(this);
     }
 
     expectTrue(value, message = NO_MESSAGE) {
@@ -90,8 +97,4 @@ export class TestResult {
             this._errors.push(message ?? 'test fail');
         }
     }
-}
-
-export function createTestRunner(module) {
-    return new TestRunner(module);
 }

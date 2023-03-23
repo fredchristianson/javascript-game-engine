@@ -45,7 +45,7 @@ export function combine(...args) {
 
 export function addQueryParams(url, queryParams) {
   if (UTIL.isNullish(queryParams)) {
-    return; // nothing to append
+    return ''; // nothing to append
   }
   ASSERT.isType(url, 'string');
   ASSERT.isType(queryParams, Object, 'queryParams must be an object');
@@ -58,4 +58,16 @@ export function addQueryParams(url, queryParams) {
   return url + parts.join('');
 }
 
-export const URL = { appendPath, combine, addQueryParams };
+export function removeLastComponent(url) {
+  ASSERT.isType(url, 'string', 'removeLastComponent requires a string');
+  if (UTIL.isNullish(url)) {
+    return '';
+  }
+  const idx = url.lastIndexOf('/');
+  if (idx >= 0) {
+    return url.substring(0, idx + 1);
+  }
+  return url;
+}
+
+export const URL = { appendPath, combine, addQueryParams, removeLastComponent };

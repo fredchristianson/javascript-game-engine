@@ -4,12 +4,10 @@ import { AssertionException } from '../exception.js';
 
 
 /**
- * @function
  * Log a message and throw an error if a test fails
  * 
- * @todo use the Logging module instead of console when the Logging module is implemented
  * @private
- * @param {...{}} message
+ * @param {...{}} message to write to the logs
  */
 function assertFailed(...message) {
   const exceptionMessage = message.join(' ');
@@ -127,6 +125,16 @@ const ASSERT = {
    * @param {*} value - the value to test
    * @param {...{}} message to log on failure
    */
+  isObject: function (value, ...message) {
+    this.isType(value, Object, ...message);
+  },  /**
+   * determine if the value is an Array.
+   * this is the same as isType(value,Array,message)
+   * 
+   * @throws AssertionException if value is null
+   * @param {*} value - the value to test
+   * @param {...{}} message to log on failure
+   */
   isArray: function (value, ...message) {
     this.isType(value, Array, ...message);
   },
@@ -140,7 +148,7 @@ const ASSERT = {
    * 
    * @throws AssertionException if value is null
    * @param {*} value - the value to test
-   * @param {Array<*>} array - an array of allowed values.
+   * @param {Array<*>} options - an array of allowed values.
    * @param {string | class | Array} type or types the value must match
    * @param {...{}} message to log on failure
    */
@@ -179,7 +187,7 @@ const ASSERT = {
    * 
    * @throws AssertionException if value is null
    * @param {*} value - the value to test
-   * @param {Array} array of 2 values with min and max range ([min,max]);
+   * @param {Array} range array of 2 values with min and max range ([min,max]);
    * @param {...{}} message to log on failure
    */
   inRange: function (value, range, ...message) {

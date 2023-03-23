@@ -69,40 +69,7 @@
     parentWindow.addMessageHandler(handleMessage);
 
 
-    function savePosition(){
-       // let window = window; //this._window;
-        let x = window.screenX;
-        let y = window.screenY;
-        let w = window.outerWidth;
-        let h = window.outerHeight;
-        let pos = {x,y,w,h};
-        let value = JSON.stringify(pos);
-        localStorage.setItem('log-view-position',value);
-    };
-
-    function setPosition() {
-        let value = localStorage.getItem('log-view-position');
-        if (value) {
-            let pos = JSON.parse(value);
-            window.resizeTo(pos.w,pos.h);
-            window.moveTo(pos.x,pos.y);
-        }
-    }
-    
-    window.addEventListener('beforeunload', () => {
-                savePosition();
-    });
-
-    setPosition();
-
-    async function requestScreenPosition() {
-        // browser will ask user to allow multi-monitor permissions
-        // so we can restore the position
-        const screenDetails = await window.getScreenDetails();
-    }
-
-    setTimeout(()=>{requestScreenPosition();},5000);
-
+ 
 </script>
 
 </html>

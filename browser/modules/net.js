@@ -14,15 +14,6 @@ import { ResourceManagerImpl } from './network/resource-manager.js';
  */
 const resourceManager = new ResourceManagerImpl();
 
-
-/**
- * The external name for the class ResourceManagerImpl
- *
- * @class
- * @extends {ResourceManagerImpl} 
- * @type {ResourceManagerImpl}
- * 
- */
-const ResourceManager = ResourceManagerImpl;
-
-export { ResourceManager, resourceManager };
+export { URL } from './network/url.js';
+export { ResourceManagerImpl as ResourceManager } from './network/resource-manager.js';
+export { resourceManager };

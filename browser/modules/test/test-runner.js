@@ -33,7 +33,8 @@ class TestRunner {
         } else {
             this._name = 'unnamed';
         }
-
+        this._successCount = 0;
+        this._failureCount = 0;
     }
 
     cancel() {
@@ -82,7 +83,12 @@ class TestRunner {
     async _runSuites() {
         for (const suite of this._testSuites) {
             if (!this.IsCancelled) {
-                await suite.run();
+                try {
+                    // eslint-disable-next-line no-await-in-loop
+                    await suite.run();
+                } catch (ex) {
+                    log.error(`Test ${suite.Name} failed`, ex);
+                }
             }
         }
     }
@@ -91,7 +97,6 @@ class TestRunner {
         ASSERT.isType(testSuites, Array, 'tests parameter must be an array');
         log.info('TestRunner building tests');
         try {
-            const modules = [module];
             const testImplementations = [];
             this._collectTestImplementations(module, testImplementations);
             testSuites.push(...testImplementations.map((implementation) => {

@@ -1,5 +1,4 @@
 
-/** @namespace FUNCTION */
 const FUNCTION = {
 
   /**
@@ -10,6 +9,17 @@ const FUNCTION = {
    */
   isFunction: function (value) {
     return (typeof value === 'function');
+  },
+
+  /**
+   * Return true if the object has a function with the name
+   *
+   * @param {Object} object - the object to test
+   * @param {string} name - the method name to look for
+   * @returns {Boolean} true if object has the method
+   */
+  hasMethod: function (object, name) {
+    return (typeof object == 'object') && (typeof object[name] == 'function');
   },
 
   /**

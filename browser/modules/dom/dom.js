@@ -1,6 +1,6 @@
 import { HTML, NullElement } from './html.js';
 import { ASSERT } from '../assert.js';
-import { TYPE, UTIL, STRING } from '../helpers.js';
+import { TYPE, UTIL, STRING, FUNCTION } from '../helpers.js';
 import { createLogger } from '../logging.js';
 import { DOMElementType, setDOMSymbol } from './dom-common.js';
 import { EventGroup } from '../event/event-group.js';
@@ -13,15 +13,32 @@ function createShadowRoot(shadowHostElement) {
         return shadowHostElement.attachShadow({ mode: 'open' });
     } else if (shadowHostElement instanceof DOMElementType) {
         return shadowHostElement.HTMLElement.attachShadow({ mode: 'open' });
+    } else if (FUNCTION.hasMethod(shadowHostElement, 'attachShadow')) {
+        try {
+            // elements from other windows fail the first test.  try if the method exists
+            return shadowHostElement.attachShadow({ mode: 'open' });
+        } catch (ex) {
+            log.error('cannot create shadow host for ', shadowHostElement);
+        }
     }
     throw new ArgumentException('createShadowRoot needs and HTMLElement or DOMElement parameter');
+}
+
+function isHTMLElement(value) {
+    /*
+     * elements from other windows do not match by type.
+     * treat anything with a querySelector as an element
+     */
+    return value == document ||
+        FUNCTION.hasMethod(value, 'querySelector');
+    //return TYPE.isType(root, [HTMLElement, HTMLHtmlElement, Document, DocumentFragment]) || root == document
 }
 
 class DOMBase {
     constructor(root) {
         ASSERT.notNull(root, 'DOM constructor must have an HTMLElement parameter');
         setDOMSymbol(this);
-        if (TYPE.isType(root, [HTMLElement, Document, DocumentFragment]) || root == document) {
+        if (isHTMLElement(root)) {
             this._htmlElement = root;
             this._root = new HTML.DOMElement(root);
         } else {

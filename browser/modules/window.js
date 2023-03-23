@@ -1,7 +1,6 @@
-/* 
- * DO NOT LOG in this class.  
- * Logging uses this class for output and it will loop.
- */
+// importing from ./logging.js causes loop.  get from logger.js
+import { createLogger } from './logging/logger.js';
+const log = createLogger('Window');
 
 
 const childWindows = [];
@@ -47,14 +46,21 @@ class Window {
 export class ChildWindow extends Window {
     constructor(name, url) {
         super();
-        this._name = name;
+        this._name = name ?? 'unnamed';
         this._url = url;
         this._isLoaded = false;
+        this._unloaded = true;
         childWindows.push(this);
 
     }
 
     async open() {
+        const other = childWindows.find((child) => {
+            return child._name == this._name;
+        });
+        if (other != null) {
+            this._window = other._window;
+        }
         if (this._window == null || this._window.closed) {
             this._isLoaded = new Promise((resolve, _reject) => {
                 this._window = window.open(
@@ -62,11 +68,80 @@ export class ChildWindow extends Window {
                     this._name,
                     'toolbar=false,resizeable=yes'
                 );
-                this._window.addEventListener('load', () => {
-                    resolve();
-                });
+                this._addListeners(resolve, _reject);
+
+
             });
             await this._isLoaded;
+        }
+    }
+
+    _addListeners(resolve, _reject) {
+        this._window.addEventListener('load', () => {
+            log.debug(`loaded window for ${this._url}`);
+            this._unloaded = false;
+            /*
+             * this._window.addEventListener('beforeunload', () => {
+             *     this._saveScreenPosition();
+             * });
+             */
+
+            this._setScreenPosition();
+            this._window.getScreenDetails()
+                .then(() => {
+                    //user allowed multiscreen
+                    resolve();
+                })
+                .catch(() => {
+                    // user did not allow multiscreen.  not a problem.
+                    resolve();
+                });
+
+        });
+        this._window.onunload = () => {
+            log.debug(`unloading ${this._url}`);
+            this._saveScreenPosition();
+            this._unloaded = true;
+        };
+    }
+
+    _setScreenPosition() {
+        log.debug('set screen postion');
+
+        const value = localStorage.getItem(`log-view-position-${this._name}`);
+        if (value) {
+            setTimeout(() => {
+                log.debug('got  postion', value);
+                const pos = JSON.parse(value);
+                if (pos.w > 100 && pos.h > 100) {
+                    this._window.resizeTo(pos.w, pos.h);
+                    this._window.moveTo(pos.x, pos.y);
+                }
+            }, 200);
+        }
+    }
+
+    _saveScreenPosition() {
+        if (this._unloaded || this._window == null || this._window.closed) {
+            log.warn('saving position of closed window');
+            return;
+        }
+
+        log.debug('save screen postion');
+        /*
+         * if user allowed multiple screens, this will get the
+         * screen position.  if not, this will position the this._window
+         * on the main this._window's screen;
+         */
+        const x = this._window.screenX;
+        const y = this._window.screenY;
+        const w = this._window.outerWidth;
+        const h = this._window.outerHeight;
+        if (w > 0 && h > 0) {
+            const pos = { x, y, w, h };
+            const value = JSON.stringify(pos);
+            log.debug('save screen postion', value);
+            localStorage.setItem(`log-view-position-${this._name}`, value);
         }
     }
 
