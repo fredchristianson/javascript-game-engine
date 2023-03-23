@@ -72,10 +72,9 @@ class CustomLogWriterTest {
      * if any expect*() method fails, the test is counted as failing.
      * the number of expect*() sucess and failure is not counted
      */
-    // eslint-disable-next-line camelcase
-    test_customLogWriter(result) {
+    test_DebugLogged(result) {
         const writer = new TestLogWriter(LOGLEVELS.DEBUG);
-        result.Name = 'CustomLogWriter: debug';
+        result.Name = 'CustomLogWriter: debug logged';
         const message = 'testing debug';
 
         const testLogger = createLogger('testLogger', LOGLEVELS.DEBUG);
@@ -88,13 +87,37 @@ class CustomLogWriterTest {
         result.expect(1 == writer.Messages.length);
 
         writer.close();
-        /*
-         * log.info(message);
-         * log.warn(message);
-         * log.error(message);
-         * log.always(message);
-         * log.never(message);
-         */
+    }
+
+    test_InfoLoggerDebugMessage(result) {
+        const writer = new TestLogWriter(LOGLEVELS.DEBUG);
+        //result.Name = 'CustomLogWriter: debug logged';
+        const message = 'testing debug';
+
+        const testLogger = createLogger('testLogger', LOGLEVELS.INFO);
+
+        // reverseMessage will only be called if DEBUG level
+        testLogger.debug(message);
+
+        result.expect(0 == writer.Messages.length);
+
+        writer.close();
+    }
+
+
+    test_InfoWriterDebugMessage(result) {
+        const writer = new TestLogWriter(LOGLEVELS.INFO);
+        //result.Name = 'CustomLogWriter: debug logged';
+        const message = 'testing debug';
+
+        const testLogger = createLogger('testLogger', LOGLEVELS.DEBUG);
+
+        // reverseMessage will only be called if DEBUG level
+        testLogger.debug(message);
+
+        result.expect(0 == writer.Messages.length);
+
+        writer.close();
     }
 
 }
