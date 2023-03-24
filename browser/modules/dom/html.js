@@ -57,7 +57,10 @@ export class DOMRepeatValue extends DOMElementValue {
     }
 
     setValue(element) {
-        ASSERT.isType(element, DOMElement, 'setValue() required DOMElement');
+        /*
+         *  this does not work for elements of child windows.
+         * ASSERT.isType(element, DOMElement, 'setValue() required DOMElement');
+         */
         for (const value of this._iterable) {
             const newElement = DOMElement.create(this._tag);
             newElement.setText(value);
@@ -87,7 +90,7 @@ export class DOMElement extends DOMElementType {
     append(other) {
         if (TYPE.isType(other, DOMElement)) {
             this._htmlElement.append(other.HTMLElement);
-        } else if (TYPE.isType(other, HTMLElement)) {
+        } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {
             this._htmlElement.append(other);
         } else {
             ASSERT.fail('append parameter must be an HTMLElement. Got', other);
@@ -119,7 +122,7 @@ export class DOMElement extends DOMElementType {
     matches(selector) {
         if (STRING.isString(selector)) {
             return this._htmlElement.matches(selector);
-        } else if (TYPE.isType(selector, HTMLElement)) {
+        } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {
             return selector === this._htmlElement;
         } else if (TYPE.isType(selector, DOMElement)) {
             return selector.HTMLElement === this._htmlElement;
@@ -131,7 +134,7 @@ export class DOMElement extends DOMElementType {
     contains(other) {
         if (STRING.isString(other)) {
             return this._htmlElement.querySelector(other) != null;
-        } else if (TYPE.isType(selector, HTMLElement)) {
+        } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {TYPE.isType(selector, HTMLElement)) {
             return this._htmlElement.contains(other);
         } else if (TYPE.isType(selector, DOMElement)) {
             return this._htmlElement.contains(other.HTMLElement);
@@ -193,11 +196,10 @@ export class NullElement extends DOMElement {
 
 
 export function domElementOf(htmlElement) {
-    ASSERT.isType(htmlElement, HTMLElement, 'HTML.elementOf requires and HTMLElement parameter');
     if (TYPE.isType(htmlElement, DOMElement)) {
         // already have DOMElement
         return htmlElement;
-    };
+    }
     const tag = htmlElement.tagName;
     if (['input', 'textarea'].includes(tag)) {
         return new InputElement(htmlElement);

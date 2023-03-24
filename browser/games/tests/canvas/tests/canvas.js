@@ -26,7 +26,7 @@ class CanvasTest {
         ASSERT.isType(worldElement, WorldBase, 'CanvasTest.setup requires a World');
         this._theGame = theGame;
         this._worldElement = worldElement;
-        this._worldDOM = worldElement.getDOM();
+        this._worldDOM = await worldElement.getDOM();
         //this._canvas = this._worldDOM.first('canvas');
         this._worldDOM.append('<div>test</div>');
     }

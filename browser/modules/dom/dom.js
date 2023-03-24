@@ -8,18 +8,25 @@ import { EventListener } from '../event/event-listener.js';
 import { ArgumentException } from '../exception.js';
 const log = createLogger('DOM');
 
-function createShadowRoot(shadowHostElement) {
-    if (shadowHostElement instanceof HTMLElement) {
-        return shadowHostElement.attachShadow({ mode: 'open' });
-    } else if (shadowHostElement instanceof DOMElementType) {
-        return shadowHostElement.HTMLElement.attachShadow({ mode: 'open' });
-    } else if (FUNCTION.hasMethod(shadowHostElement, 'attachShadow')) {
-        try {
-            // elements from other windows fail the first test.  try if the method exists
-            return shadowHostElement.attachShadow({ mode: 'open' });
-        } catch (ex) {
-            log.error('cannot create shadow host for ', shadowHostElement);
-        }
+function createShadowRoot(shadowParent) {
+    let hostParent = null;
+    if (shadowParent instanceof HTMLElement) {
+        hostParent = shadowParent;
+    } else if (shadowParent instanceof DOMElementType) {
+        hostParent = shadowParent.HTMLElement;
+    } else if (FUNCTION.hasMethod(shadowParent, 'attachShadow')) {
+        // elements from other windows don't match HTMLElement in this document
+        hostParent = shadowParent;
+    }
+    if (hostParent != null) {
+        // clear children.  removes previous shadow root if there is one
+        hostParent.replaceChildren();
+        const parentElement = hostParent.ownerDocument.createElement('div');
+        parentElement.classList.add('shadow-host');
+        parentElement.dataset['isShadow'] = 'true';
+        hostParent.appendChild(parentElement);
+        const shadow = parentElement.attachShadow({ mode: 'open' });
+        return shadow;
     }
     throw new ArgumentException('createShadowRoot needs and HTMLElement or DOMElement parameter');
 }
@@ -188,6 +195,9 @@ class DOMBase {
         }
     }
 
+    removeAllChildren() {
+        this._root.removeAllChildren();
+    }
 
 }
 

@@ -42,7 +42,8 @@ class WindowWriter extends LogWriter {
      */
     constructor(level = null, formatter = new JSONFormatter()) {
         super(level, formatter);
-        this._loggerWindow = new ChildWindow('log-view', 'log-view.html');
+        this._loggerWindow = new ChildWindow('log-view');
+        this._loggerWindow.create('log-view.html');
     }
 
     async _write(logMessage, formattedMessage) {

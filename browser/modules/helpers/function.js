@@ -19,7 +19,7 @@ const FUNCTION = {
    * @returns {Boolean} true if object has the method
    */
   hasMethod: function (object, name) {
-    return (typeof object == 'object') && (typeof object[name] == 'function');
+    return object != null && (typeof object == 'object') && (typeof object[name] == 'function');
   },
 
   /**
