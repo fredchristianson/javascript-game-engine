@@ -101,6 +101,47 @@ class ResourceManagerImpl {
         }
         return null;
     }
+    /**
+     * Request a URL and return HTML response.
+     *
+     * @async
+     * @param {String} url - url to request
+     * @param {Map|Object} params - name/value pairs to add to the query string
+     * @returns {Object} the HTML text or null if failed
+     */
+    async getHTML(url, params = null) {
+        if (!OBJECT.isEmpty(params)) {
+            url = URL.addQueryParams(url, params);
+        }
+        const response = await this.getResource(url);
+        if (response != null && response.ok) {
+            return await response.text();
+        }
+        return null;
+    }
+
+    /**
+     * Request a URL and return text response.
+     *
+     * @async
+     * @param {String} url - url to request
+     * @param {Map|Object} params - name/value pairs to add to the query string
+     * @returns {Object} the  text or null if failed
+     */
+    async getText(url, params = null) {
+        if (!OBJECT.isEmpty(params)) {
+            url = URL.addQueryParams(url, params);
+        }
+        const response = await this.getResource(url);
+        if (response != null && response.ok) {
+            const text = await response.text();
+            const mime = response.headers.get('content-type') ?? 'text/plain';
+            const isHTML = mime.includes('html');
+            const isCSS = mime.includes('css');
+            return { text, mimeType: mime, isHTML, isCSS };
+        }
+        return null;
+    }
 
     /**
      * Post a JSON body to a url

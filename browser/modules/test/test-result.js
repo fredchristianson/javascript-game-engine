@@ -56,14 +56,19 @@ export class TestResult {
         await this._run;
     }
 
-    async run() {
+    async run(testGame) {
         try {
+            this._testGame = testGame;
             this._success = true;
             this._complete = false;
             this._running = true;
             this._resolveRun(this);
             log.debug('start test ', this._name);
             await this._function(this);
+            if (this._testGame) {
+                this._testGame.testRunning(this);
+                this._success = await this._testGame.isSuccess();
+            }
             log.debug('finished test ', this._name);
         } catch (ex) {
             log.error('AutoTestResult failed', this._name, ex);
@@ -73,6 +78,7 @@ export class TestResult {
         this._resolveResult(this);
         return this._success;
     }
+
 
     error(message = NO_MESSAGE) {
         this._errors.push(message);

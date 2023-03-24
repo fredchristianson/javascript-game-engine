@@ -1,23 +1,24 @@
 const moduleUrl = import.meta.url;
+import { NETURL } from '../../modules/net.js';
 
 import { ASSERT } from '../assert.js';
 import { WindowWorld } from '../../core/world/window-world.js';
 import { createLogger } from '../logging.js';
 import { TestSuite } from './test-suite.js';
 import { BuildClickHandler } from '../../modules/event.js';
-import { URL } from '../../modules/net.js';
 
 const log = createLogger('TestGame');
 
 function getHtmlURL() {
-    const parentUrl = URL.removeLastComponent(moduleUrl);
-    return URL.combine(parentUrl, 'test-game.html');
+    const parentUrl = NETURL.removeLastComponent(moduleUrl);
+    return new URL('test-game.html', parentUrl);
 
 }
 
 class TestGame {
     constructor() {
-
+        this._resolve = null;
+        this._reject = null;
     }
 
     async setup(testSuite, testImplementation) {
@@ -27,19 +28,40 @@ class TestGame {
         await this._world.create();
         this._worldDocumentDOM = this._world.getDocumentDOM();
         this._worldDOM = await this._world.getDOM();
-        //this._worldDocument = new DOM.DocumentDOM(await this._world.getDocument());
-        return new Promise((resolve, _reject) => {
-            BuildClickHandler()
-                .listenTo(this._worldDocumentDOM)
-                .selector('button.success')
-                .onClick((_event) => {
-                    this._worldDOM.removeAllChildren();
-                    resolve();
-                })
-                .build();
 
-            testImplementation.setup(this, this._world);
+        BuildClickHandler()
+            .listenTo(this._worldDocumentDOM)
+            .selector('button.success')
+            .onClick((_event) => {
+                if (this._resolve) {
+                    this._resolve(true);
+                }
+            })
+            .build();
+        BuildClickHandler()
+            .listenTo(this._worldDocumentDOM)
+            .selector('button.fail')
+            .onClick((_event) => {
+                if (this._resolve) {
+                    this._resolve(false);
+                }
+            })
+            .build();
+
+        await testImplementation.setup(this, this._world);
+    }
+
+    testRunning(test) {
+        const prompt = test.Prompt ?? 'need a description of this test.';
+        this._worldDocumentDOM.setValues({ '.description': prompt });
+    }
+
+    async isSuccess() {
+        const success = new Promise((resolve, reject) => {
+            this._resolve = resolve;
+            this._reject = reject;
         });
+        return await success;
     }
 
     cleanup() {
@@ -50,4 +72,4 @@ class TestGame {
 
 export {
     TestGame
-}
+};

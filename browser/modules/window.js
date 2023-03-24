@@ -9,7 +9,7 @@ import { UTIL } from './helpers.js';
 const namedWindows = {};
 window.addEventListener('beforeunload', () => {
     for (const [name, data] of Object.entries(namedWindows)) {
-        data._window?.close();
+        data.window?.close();
     }
 });
 
@@ -158,8 +158,8 @@ export class ChildWindow extends Window {
             setTimeout(() => {
                 const pos = JSON.parse(value);
                 if (pos.w > 100 && pos.h > 100) {
-                    this._window.resizeTo(pos.w, pos.h);
-                    this._window.moveTo(pos.x, pos.y);
+                    this._window?.resizeTo(pos.w, pos.h);
+                    this._window?.moveTo(pos.x, pos.y);
                 }
             }, 200);
         }

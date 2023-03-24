@@ -1,11 +1,12 @@
 import { HTML, NullElement } from './html.js';
 import { ASSERT } from '../assert.js';
-import { TYPE, UTIL, STRING, FUNCTION } from '../helpers.js';
+import { TYPE, UTIL, STRING, FUNCTION, OBJECT } from '../helpers.js';
 import { createLogger } from '../logging.js';
 import { DOMElementType, setDOMSymbol } from './dom-common.js';
 import { EventGroup } from '../event/event-group.js';
 import { EventListener } from '../event/event-listener.js';
 import { ArgumentException } from '../exception.js';
+import { resourceManager } from '../net.js';
 const log = createLogger('DOM');
 
 function createShadowRoot(shadowParent) {
@@ -197,6 +198,23 @@ class DOMBase {
 
     removeAllChildren() {
         this._root.removeAllChildren();
+    }
+
+    async load(...urls) {
+        ASSERT.isArray(urls, 'load requires one or more urls');
+        for (const url of urls) {
+            // eslint-disable-next-line no-await-in-loop
+            const response = await resourceManager.getText(url);
+            if (!OBJECT.isObject(response) || !STRING.isString(response.text)) {
+                log.error('failed to get text from ', url);
+            }
+            if (response.isCSS) {
+                this.addStyle(response.text);
+            }
+            if (response.isHTML) {
+                this.append(response.text);
+            }
+        }
     }
 
 }

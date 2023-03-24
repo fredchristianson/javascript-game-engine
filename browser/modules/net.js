@@ -14,6 +14,6 @@ import { ResourceManagerImpl } from './network/resource-manager.js';
  */
 const resourceManager = new ResourceManagerImpl();
 
-export { URL } from './network/url.js';
+export { URL as NETURL } from './network/url.js';
 export { ResourceManagerImpl as ResourceManager } from './network/resource-manager.js';
 export { resourceManager };

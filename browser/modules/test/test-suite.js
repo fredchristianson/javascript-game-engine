@@ -47,6 +47,7 @@ export class TestSuite {
                     await this._testGame.setup(this, this._implementation);
 
                 } else {
+                    this._testGame = null;
                     await this._implementation.setup();
                 }
             } else {
@@ -56,7 +57,7 @@ export class TestSuite {
                 log.debug('run test ', test.Name);
                 if (!this._testRunner.IsCancelled) {
                     // eslint-disable-next-line no-await-in-loop
-                    const isSuccess = await test.run();
+                    const isSuccess = await test.run(this._testGame);
                     log.debug('completed test ', test.Name);
                     if (isSuccess) {
                         this._successCount++;
