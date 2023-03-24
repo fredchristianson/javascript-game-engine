@@ -5,6 +5,7 @@
 
 import { TIMER } from './timer.js';
 import { UTIL } from './helpers.js';
+import { DocumentDOM } from './dom/dom.js';
 
 const namedWindows = {};
 window.addEventListener('beforeunload', () => {
@@ -190,6 +191,11 @@ export class ChildWindow extends Window {
     async getDocument() {
         await this.open();
         return this._window?.document;
+    }
+
+    async getDOM() {
+        await this.open();
+        return new DocumentDOM(this._window?.document);
     }
 
     close() {

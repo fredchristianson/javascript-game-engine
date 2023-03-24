@@ -1,9 +1,10 @@
 import { ASSERT } from '../../../../modules/assert.js';
-import { WorldBase } from '../../../../core/world/world-base.js';
+import { WorldBase } from '../../../../core/world.js';
 import { LOGLEVELS, createLogger } from '../../../../modules/logging.js';
 import { TestGame } from '../../../../modules/test/test-game.js';
 import { NETURL } from '../../../../modules/net.js';
-
+import { BuildInputHandler } from '../../../../modules/event.js';
+import { ChildWindow } from '../../../../modules/window.js';
 const log = createLogger('TestCanvas', LOGLEVELS.DEBUG);
 const moduleBaseUrl = NETURL.removeLastComponent(import.meta.url);
 
@@ -35,14 +36,43 @@ class CanvasTest {
          */
         await this._worldDOM.load(new URL('style.css', moduleBaseUrl),
             new URL('test.html', moduleBaseUrl));
+
+        this._controlWindow = new ChildWindow('cube-controls');
+        await this._controlWindow.create('cube-controls.html', moduleBaseUrl);
+
+        this._controlDOM = this._controlWindow.getDOM();
+
+        BuildInputHandler()
+            .listenTo(this._controlDOM)
+            .selector('input')
+            .changeHandlers(this,
+                {
+                    "[name='x-axis']": this.onXAxisChange,
+                    "[name='y-axis']": this.onYAxisChange,
+                    "[name='z-axis']": this.onZAxisChange
+                })
+            .build();
+
     }
 
+    onXAxisChange(value) {
+        log.debug('X change ', value);
+    }
 
+    onYAxisChange(value) {
+        log.debug('Y change ', value);
+    }
+
+    onZAxisChange(value) {
+        log.debug('Z change ', value);
+    }
     /*
      * free resources or anything else needed
      * after all tests are run;
      */
-    cleanup() { }
+    cleanup() {
+        this._controls?.close();
+    }
 
 
     uitest_Cube(result) {

@@ -1,7 +1,7 @@
 import { ASSERT } from '../assert.js';
 import { EventListener } from './event-listener.js';
-import { createLogger } from '../logging.js';
-const log = createLogger("EventGroup");
+import { createLogger } from '../logging/logger.js';
+const log = createLogger('EventGroup');
 
 export class EventGroup {
     constructor() {
@@ -9,7 +9,7 @@ export class EventGroup {
     }
 
     removeAll() {
-        for (let event of this._eventHandlers) {
+        for (const event of this._eventHandlers) {
             event.remove();
         }
         this._eventHandlers.splice(0, this._eventHandlers.length);

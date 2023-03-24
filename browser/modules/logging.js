@@ -3,7 +3,7 @@
 import { ConsoleWriter } from './logging/console-writer.js';
 import { WindowWriter } from './logging/window-writer.js';
 import { ApiWriter } from './logging/api-writer.js';
-
+import { _writersInitialized } from './logging/logger.js';
 
 /** @module Logging */
 
@@ -50,6 +50,7 @@ function configureLogOutput() {
   defaultConsoleWriter._configureDefault();
   defaultWindowWriter._configureDefault();
   defaultApiWriter._configureDefault();
+  _writersInitialized();
 }
 
 /* export implementations that should be visible outside Logging */

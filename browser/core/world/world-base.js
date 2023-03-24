@@ -1,5 +1,5 @@
 import { ShadowDOM } from '../../modules/dom/dom.js';
-import { createLogger } from '../../modules/logging.js';
+import { createLogger } from '../../modules/logging/logger.js';
 const log = createLogger('WorldBase');
 
 class WorldBase {

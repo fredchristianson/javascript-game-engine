@@ -1,8 +1,8 @@
-import { createLogger } from '../../modules/logging.js';
+import { createLogger } from '../../modules/logging/logger.js';
 import { WorldBase } from './world-base.js';
 const log = createLogger('DomWorld');
 
-class DomWorld extends WorldBase {
+class DOMWorld extends WorldBase {
     constructor(domElement) {
         super();
         super.attach(domElement);
@@ -10,4 +10,4 @@ class DomWorld extends WorldBase {
 
 }
 
-export { DomWorld };
+export { DOMWorld };

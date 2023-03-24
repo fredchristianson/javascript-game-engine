@@ -13,11 +13,12 @@ import { LOGLEVELS, LogLevel } from './log-level.js';
 import { STRING, TYPE } from '../helpers.js';
 import { ArgumentException } from '../exception.js';
 import { createLogMessage } from './log-message.js';
-import { writeMessage } from './log-writer.js';
 import { ASSERT } from '../assert.js';
 import { LOGENV } from './logging-env.js';
 import { createObserver } from '../observe.js';
 import { ENV } from '../env.js';
+
+let writeMessage = null;
 
 /**
  *@module Logging
@@ -101,7 +102,13 @@ class Logger {
   write(level, ...message) {
     if (this._level.isWanted(level)) {
       const logMessage = createLogMessage(this._moduleName, level, message, new Date());
-      writeMessage(logMessage);
+      if (writeMessage != null) {
+        writeMessage(logMessage);
+      } else {
+        // writers have not been initialized so write to console;
+        const consoleMessage = STRING.toString(...message);
+        console.log(consoleMessage);
+      }
     }
   }
 
@@ -206,4 +213,10 @@ function createLogger(moduleName, logLevel = null) {
   return logger;
 }
 
-export { Logger, createLogger };
+async function _writersInitialized() {
+  const module = await import('./log-writer.js');
+  // eslint-disable-next-line require-atomic-updates
+  writeMessage = module.writeMessage;
+}
+
+export { Logger, createLogger, _writersInitialized };

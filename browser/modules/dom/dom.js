@@ -1,7 +1,7 @@
 import { HTML, NullElement } from './html.js';
 import { ASSERT } from '../assert.js';
 import { TYPE, UTIL, STRING, FUNCTION, OBJECT } from '../helpers.js';
-import { createLogger } from '../logging.js';
+import { createLogger } from '../logging/logger.js';
 import { DOMElementType, setDOMSymbol } from './dom-common.js';
 import { EventGroup } from '../event/event-group.js';
 import { EventListener } from '../event/event-listener.js';

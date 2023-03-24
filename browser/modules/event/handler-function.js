@@ -1,6 +1,6 @@
 import { ASSERT } from '../assert.js';
 import { FUNCTION, STRING, TYPE } from '../helpers.js';
-import { createLogger } from '../logging.js';
+import { createLogger } from '../logging/logger.js';
 import { EventContinuation } from './continuation.js';
 const log = createLogger('HandlerFunction');
 
@@ -11,6 +11,7 @@ export class HandlerFunction {
         let func = 0;
         let obj = null;
         let eventType = null;
+
         if (args.length == 1) {
             func = args[0];
         } else {
@@ -28,12 +29,20 @@ export class HandlerFunction {
         this._function = func;
         this._object = obj;
         this._eventType = eventType;
+        this._selector = null;
+    }
+
+    setSelector(selector) {
+        this._selector = selector;
     }
 
     async call(handler, event, target, ...args) {
         let cont = handler.Continuation;
         if (this._eventType != null && this._eventType != event.type) {
-            return; // this handler doesn't want the event type
+            return cont; // this handler doesn't want the event type
+        }
+        if (this._selector != null && !target.matches(selector)) {
+            return cont; // handler not for this target
         }
         try {
             const result = await this._function.call(this._object, ...args, target, event, handler);
@@ -41,8 +50,10 @@ export class HandlerFunction {
                 ASSERT.isType(result, EventContinuation, 'event handler returned a result that is not an EventContinuation');
                 cont = result;
             }
+            return cont;
         } catch (ex) {
             log.error('Failed to handle event', event.type, ex);
+            return cont;
         }
     }
 

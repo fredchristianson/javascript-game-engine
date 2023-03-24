@@ -1,4 +1,4 @@
-import { createLogger } from '../../modules/logging.js';
+import { createLogger } from '../../modules/logging/logger.js';
 import { ChildWindow } from '../../modules/window.js';
 import { WorldBase } from './world-base.js';
 import { DOM } from '../../modules/dom.js';
