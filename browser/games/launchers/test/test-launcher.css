@@ -1,4 +1,10 @@
-body{
+.test-launcher-container {
+    padding: 8px;
     background-color: green;
 
+}
+
+.fail {
+    background-color: hsl(0 50% 50%);
+    color: hsl(0 100% 100%);
 }

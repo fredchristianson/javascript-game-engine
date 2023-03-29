@@ -76,6 +76,9 @@ export class DOMElement extends DOMElementType {
     }
     constructor(htmlElement = null) {
         super();
+        if (htmlElement?.nodeName?.localeCompare('#document') == 0) {
+            htmlElement = htmlElement.querySelector('body');
+        }
         this._htmlElement = htmlElement;
     }
 
@@ -85,6 +88,19 @@ export class DOMElement extends DOMElementType {
 
     getHTMLElement() {
         return this._htmlElement;
+    }
+
+    size() {
+        if (this._htmlElement) {
+            return {
+                width: this._htmlElement.clientWidth,
+                height: this._htmlElement.clientHeight
+            };
+        }
+        return {
+            width: 0,
+            height: 0
+        }
     }
 
     append(other) {

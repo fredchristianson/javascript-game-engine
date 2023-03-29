@@ -225,7 +225,13 @@ export class DocumentDOM extends DOMBase {
     }
 
     getChildNodes() {
-        return this._htmlElement.childNodes;
+        const allNodes = this._htmlElement.childNodes;
+        const body = allNodes[0]?.querySelector('body');
+        if (body != null) {
+            return body.childNodes;
+        } else {
+            return allNodes;
+        }
     }
 
 }

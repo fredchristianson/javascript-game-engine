@@ -1,15 +1,17 @@
 import { ASSERT } from '../assert.js';
+import { OBJECT } from '../helpers.js';
 import { createLogger } from '../logging/logger.js';
 import { HandlerFunction } from './handler-function.js';
 import { EventHandler } from './event-handler.js';
 import { EventHandlerBuilder } from './event-builder.js';
+
 const log = createLogger('InputHandler');
 
 
 export class InputEventHandler extends EventHandler {
     constructor() {
         super();
-        this.EventTypes = ['Input', 'Change'];
+        this.EventTypes = ['input', 'change'];
     }
 
     _getHandlerArguments(event, target) {
@@ -40,8 +42,9 @@ export class InputHandlerBuilder extends EventHandlerBuilder {
      */
     changeHandlers(handlerObject, selectorMethods) {
         ASSERT.isObject(handlerObject, 'changeHandlers requires a handler object');
-        ASSERT.isNotNull(selectorMethods?.entries, 'selectorMap must implement entries()');
-        for (const [selector, method] of selectorMethods.entries()) {
+        ASSERT.isTrue(OBJECT.isObject(selectorMethods) || selectorMethods?.entries, 'selectorMap must implement entries()');
+        const entries = selectorMethods.entries ? selectorMethods.entries() : Object.entries(selectorMethods);
+        for (const [selector, method] of entries) {
             const handler = new HandlerFunction('input', handlerObject, method);
             handler.setSelector(selector);
             this._eventHandler.addHandlerFunction(handler);

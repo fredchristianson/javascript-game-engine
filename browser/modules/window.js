@@ -88,11 +88,12 @@ export class ChildWindow extends Window {
             this._isLoaded = new Promise((resolve, _reject) => {
                 this._resolve = resolve;
             });
+            const features = this._createFeatures();
             //console.log('open window');
             this._window = window.open(
                 this._url,
                 this._name,
-                'toolbar=false,resizeable=yes'
+                features
             );
             this._namedWindow.window = this._window;
             this._addListeners();
@@ -102,6 +103,46 @@ export class ChildWindow extends Window {
             await this._isLoaded;
         }
 
+    }
+
+    /**
+     * The 3rd parameter of window.open is a string of features.  
+     * If we have saved the window's position before set the 
+     * top/left/width/height features.
+     * Otherwise set the "popup=true" feature and the browser will 
+     * set the position.  If it is not a popup, it will probably
+     * be a new tab instead of new window.
+     *
+     * @returns {*}
+     */
+    _createFeatures() {
+        let values = ['popup=true'];
+        try {
+            const position = localStorage.getItem(`child-view-position-${this._name}`);
+            if (position !== null && typeof position == 'string') {
+                values = []; // no popup if we have a position
+                // pos
+                const pos = JSON.parse(position);
+                if (typeof pos.left == 'number') {
+                    values.push(`left=${pos.left}`);
+                }
+                if (typeof pos.top == 'number') {
+                    values.push(`top=${pos.top}`);
+                }
+                if (typeof pos.width == 'number') {
+                    values.push(`width=${pos.width}`);
+                }
+                if (typeof pos.height == 'number') {
+                    values.push(`height=${pos.height}`);
+                }
+            }
+        } catch (ex) {
+            // ignore exceptions (invalid JSON position in localStorage)
+            log.error(`cannot parse position ${ex.message}`);
+            console.log(ex);
+        }
+
+        return values.join(',');
     }
 
     _addListeners() {
@@ -154,13 +195,13 @@ export class ChildWindow extends Window {
 
     _setScreenPosition() {
 
-        const value = localStorage.getItem(`log-view-position-${this._name}`);
+        const value = localStorage.getItem(`child-view-position-${this._name}`);
         if (value) {
             setTimeout(() => {
                 const pos = JSON.parse(value);
                 if (pos.w > 100 && pos.h > 100) {
-                    this._window?.resizeTo(pos.w, pos.h);
-                    this._window?.moveTo(pos.x, pos.y);
+                    this._window?.resizeTo(pos.width, pos.height);
+                    this._window?.moveTo(pos.left, pos.top);
                 }
             }, 200);
         }
@@ -181,10 +222,10 @@ export class ChildWindow extends Window {
         const w = this._window.outerWidth;
         const h = this._window.outerHeight;
         if (w > 0 && h > 0) {
-            const pos = { x, y, w, h };
+            const pos = { left: x, top: y, width: w, height: h };
             const value = JSON.stringify(pos);
             //console.log(`save screen postion ${value}`);
-            localStorage.setItem(`log-view-position-${this._name}`, value);
+            localStorage.setItem(`child-view-position-${this._name}`, value);
         }
     }
 

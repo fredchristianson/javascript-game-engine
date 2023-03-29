@@ -7,7 +7,7 @@ import { API } from '../../modules/network/api.js';
 import { resourceManager } from '/modules/net.js';
 import { createLogger } from '../../modules/logging.js';
 import { createTestRunner } from '../../modules/test/test-runner.js';
-import { HTML } from '../../modules/DOM.js';
+import { HTML } from '../../modules/dom.js';
 import { BuildClickHandler } from '../../modules/event.js';
 
 const log = createLogger('GameTest');
@@ -123,7 +123,7 @@ class TestLauncher {
     const values = {
       '.time': new Date().toLocaleTimeString(),
       '.name': test.Name
-    }
+    };
     clone.setValues(values);
     this._statusDOM.append(clone);
   }

@@ -41,7 +41,7 @@ export class HandlerFunction {
         if (this._eventType != null && this._eventType != event.type) {
             return cont; // this handler doesn't want the event type
         }
-        if (this._selector != null && !target.matches(selector)) {
+        if (this._selector != null && !target.matches(this._selector)) {
             return cont; // handler not for this target
         }
         try {

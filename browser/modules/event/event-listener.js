@@ -36,10 +36,16 @@ export class EventListener {
         ASSERT.isFalse(UTIL.isEmpty(this._eventTypes), 'EventListener has no event types to listen to.');
         this._elementTypePairs = UTIL.join(this._listenToElements, this._eventTypes);
         for (const [element, type] of this._elementTypePairs) {
-            const htmlElement = element.getHTMLElement();
+            let htmlElement = element.getHTMLElement();
             log.debug('addEventListener', type, htmlElement);
-
-            htmlElement.addEventListener(type, this._onEventFunction, this._options);
+            if (htmlElement.nodeName == '#document') {
+                htmlElement = htmlElement.querySelector('body');
+            }
+            if (htmlElement != null) {
+                htmlElement.addEventListener(type, this._onEventFunction, this._options);
+            } else {
+                log.error('no elment found');
+            }
         }
     }
 
