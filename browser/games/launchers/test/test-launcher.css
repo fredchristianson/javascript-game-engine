@@ -1,10 +1,36 @@
+* {
+    box-sizing: border-box;
+}
 .test-launcher-container {
     padding: 8px;
     background-color: green;
-
+    height: 100%;
 }
 
 .fail {
     background-color: hsl(0 50% 50%);
     color: hsl(0 100% 100%);
+}
+
+.runner {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+
+.status {
+    overflow: auto;
+}
+
+.test-started {
+    margin-top: 0.5em;
+}
+
+.test-ended {
+    border-bottom: 1px dashed #444;
+}
+
+.all-tests {
+    border-bottom: 0px;
+    margin-top: 1em;
 }

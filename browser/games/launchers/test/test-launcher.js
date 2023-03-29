@@ -146,12 +146,13 @@ class TestLauncher {
   _addAllTestsComplete(runner) {
     const clone = this._testCompletedTemplate.clone();
     const values = {
-      '.test-ended': HTML.classValue(runner.FailureCount == 0 ? 'success' : 'fail'),
+      '.test-ended': [HTML.classValue(runner.FailureCount == 0 ? 'success' : 'fail'),
+      HTML.classValue('all-tests')],
       '.time': new Date().toLocaleTimeString(),
       '.result': runner.FailureCount == 0 ? 'success' : 'fail',
       '.name': `${runner.Name}  --- All Tests Complete ---`,
       'ul': [HTML.styleValue('display', 'none')]
-    }
+    };
     clone.setValues(values);
 
     this._statusDOM.append(clone);

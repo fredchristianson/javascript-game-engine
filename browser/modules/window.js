@@ -7,10 +7,18 @@ import { TIMER } from './timer.js';
 import { UTIL } from './helpers.js';
 import { DocumentDOM } from './dom/dom.js';
 
-const namedWindows = {};
+function registerChildWindow(child) {
+    if (window._gameChildren == null) {
+        window._gameChildren = [];
+    }
+    window._gameChildren.push(child);
+}
+
 window.addEventListener('beforeunload', () => {
-    for (const [name, data] of Object.entries(namedWindows)) {
-        data.window?.close();
+    if (window._gameChildren != null) {
+        for (const child of window._gameChildren) {
+            child?.close();
+        }
     }
 });
 
@@ -54,17 +62,8 @@ export class ChildWindow extends Window {
         this._isLoaded = false;
         this._unloaded = true;
         //childWindows.push(this);
-        this._namedWindow = namedWindows[this._name];
-        if (this._namedWindow != null) {
-            this._namedWindow.childWindow.close();
-        }
+        registerChildWindow(this);
 
-        this._namedWindow = {
-            name: this._name,
-            window: null,
-            childWindow: this
-        };
-        namedWindows[this._name] = this._namedWindow;
         this._window = null;
 
         this._boundLoadHandler = this._loadHandler.bind(this);
@@ -95,7 +94,7 @@ export class ChildWindow extends Window {
                 this._name,
                 features
             );
-            this._namedWindow.window = this._window;
+
             this._addListeners();
 
             await this._isLoaded;
@@ -152,11 +151,7 @@ export class ChildWindow extends Window {
 
     _loadHandler() {
         this._unloaded = false;
-        /*
-         * this._window.addEventListener('beforeunload', () => {
-         *     this._saveScreenPosition();
-         * });
-         */
+
 
         this._setScreenPosition();
         this._window.getScreenDetails()
@@ -219,8 +214,8 @@ export class ChildWindow extends Window {
          */
         const x = this._window.screenX;
         const y = this._window.screenY;
-        const w = this._window.outerWidth;
-        const h = this._window.outerHeight;
+        const w = this._window.innerWidth;
+        const h = this._window.innerHeight;
         if (w > 0 && h > 0) {
             const pos = { left: x, top: y, width: w, height: h };
             const value = JSON.stringify(pos);

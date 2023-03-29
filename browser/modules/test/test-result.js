@@ -68,6 +68,9 @@ export class TestResult {
             if (this._testGame) {
                 this._testGame.testRunning(this);
                 this._success = await this._testGame.isSuccess();
+                if (this._errors.length == 0) {
+                    this._errors.push('user failed');
+                }
             }
             log.debug('finished test ', this._name);
         } catch (ex) {

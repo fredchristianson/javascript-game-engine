@@ -3,18 +3,20 @@
             height: 100%;
             overflow: hidden;
             display: grid;
-            grid-template-rows: min-content 1fr min-content;
+            grid-template-rows: min-content min-content 1fr;
         }
+        .world { overflow: hidden;}
         button { margin-right: 15px;}
         button.fail { background-color: hsl(0 50% 50%); color: white;}
         button.success { background-color: hsl(130 50% 50%); color: #000;}
     </style>
 
-        <div id='test'>
+    <div id='test'>
         <div class="description">Test should have a description</div>
-        <div class="world"></div>
         <div class="result">
             <button class="success">Success</button>
             <button class="fail">Fail</button>
         </div>
+        <div class="world"></div>
+
     </div>

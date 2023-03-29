@@ -79,7 +79,7 @@ class CanvasTest {
      * after all tests are run;
      */
     cleanup() {
-        this._controls?.close();
+        this._controlWindow?.close();
     }
 
     drawCube() {
@@ -123,13 +123,6 @@ class CanvasTest {
         ctx.stroke();
         ctx.fill();
 
-        // ctx.beginPath();
-        // //ctx.translate(ctx.width / 2, ctx.height / 2);
-        // ctx.arc(this._x, this._y, 50, 0, 2 * Math.PI);
-        // ctx.fillStyle = '#0000ff';
-        // ctx.strokeStyle = '#ff00ff';
-        // ctx.stroke();
-        // ctx.fill();
 
     }
 
@@ -141,7 +134,7 @@ class CanvasTest {
 
     uitest_Cube2(result) {
         result.Name = 'Draw a cube 2';
-        result.Prompt = 'Do you see another cube?';
+        result.Prompt = 'Do you see another cube? Need a long prompt here.  want to take multiple lines.  seeing if the canvas gets smaller';
 
     }
 
