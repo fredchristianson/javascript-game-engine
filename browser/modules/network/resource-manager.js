@@ -41,8 +41,8 @@ class ResourceManagerImpl {
      * Request a URL and return the response object
      *
      * @async
-     * @param {String} url
-     * @returns {Object}
+     * @param {String} url the url to request
+     * @returns {Object} response object
      */
     async getResource(url) {
         const response = await fetch(url);
@@ -66,18 +66,31 @@ class ResourceManagerImpl {
     }
 
     /**
-     * Import a module by url.
+     * Import a text resource by for a game.
      *
      * @async
      * @param {String} gameName name of the game
      * @param {String} resourcePath can be a path in the game foler, or "html" for the top-level html file, or "css" for the top-level css file
-     * @returns {Module}
+     * @returns {Object} the resource text or null if not found
      */
     async getGameResource(gameName, resourcePath) {
         const url = ResourceManagerImpl.getGameResourceUrl(gameName, resourcePath);
         const response = await this.getResource(url);
         if (response && response.ok) {
-            return response.text();
+            const text = await response.text();
+            if (text.length < 100) {
+                try {
+                    const json = JSON.parse(text);
+                    if (json != null && !json.success) {
+                        return null;
+                    }
+                    return text;
+                } catch (ex) {
+                    log.info(`resource not found for game ${gameName}: ${reportError}`);
+                }
+            } else {
+                return text;
+            }
         }
         return null;
 
@@ -170,4 +183,6 @@ class ResourceManagerImpl {
 
 }
 
-export { ResourceManagerImpl };
+const resourceManager = new ResourceManagerImpl();
+
+export { ResourceManagerImpl, resourceManager };

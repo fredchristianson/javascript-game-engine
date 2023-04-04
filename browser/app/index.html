@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="/app/image/favicon.png">
 </head>
 
 <body>
@@ -21,9 +22,11 @@
 </body>
 <script type="module">
     import { loadENV} from "../modules/env.js";
-    import { theGameApp } from "./js/game-app.js";
+    import { GameMain } from "./js/game-main.js";
     const ENV = await loadENV('/env-local.json','/env.json');
-    theGameApp.run("launcher");
+    const main = new GameMain();
+    // run the game named default-launcher
+    main.run("default-launcher");
 </script>
 
 </html>

@@ -6,77 +6,13 @@
 
 /** @module Helpers */
 
-import { STRING as string } from './helpers/string.js';
-import { UTIL as util } from './helpers/util.js';
-import { TYPE as type } from './helpers/type.js';
-import { OBJECT as object } from './helpers/object.js';
-import { BOOLEAN as boolean } from './helpers/boolean.js';
-import { FUNCTION as func } from './helpers/function.js';
-import { NUMBER as number } from './helpers/number.js';
+export { STRING } from './helpers/string.js';
+import { UTIL } from './helpers/util.js';
+import { TYPE } from './helpers/type.js';
+import { OBJECT } from './helpers/object.js';
+import { BOOLEAN } from './helpers/boolean.js';
+import { FUNCTION } from './helpers/function.js';
+import { NUMBER } from './helpers/number.js';
+import { Enum } from './helpers/enum.js';
 
-/**
- * Collection of functions for working with strings.
- *
- * @type {STRING}
- * @export
- * @instance
- */
-const STRING = string;
-
-/**
- * Collection of functions for working with utils.
- *
- * @type {UTIL}
- * @export
- * @instance
- */
-const UTIL = util;
-
-/**
- * Collection of functions for working with types.
- *
- * @type {TYPE}
- * @export
- * @instance
- */
-const TYPE = type;
-
-/**
- * Collection of functions for working with objects.
- *
- * @type {OBJECT}
- * @export
- * @instance
- */
-const OBJECT = object;
-
-/**
- * Collection of functions for working with functions.
- *
- * @type {FUNCTION}
- * @export
- * @instance
- */
-const FUNCTION = func;
-
-
-/**
- * Collection of functions for working with booleans.
- *
- * @type {BOOLEAN}
- * @export
- * @instance
- */
-const BOOLEAN = boolean;
-
-/**
- * Collection of functions for working with numberss.
- *
- * @type {NUMBER}
- * @export
- * @instance
- */
-const NUMBER = number;
-
-
-export { STRING, UTIL, TYPE, OBJECT, BOOLEAN, FUNCTION, NUMBER };
+export { UTIL, TYPE, OBJECT, BOOLEAN, FUNCTION, NUMBER, Enum };

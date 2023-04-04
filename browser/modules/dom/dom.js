@@ -41,7 +41,7 @@ function isHTMLElement(value) {
         FUNCTION.hasMethod(value, 'querySelector');
     //return TYPE.isType(root, [HTMLElement, HTMLHtmlElement, Document, DocumentFragment]) || root == document
 }
-
+ 
 class DOMBase {
     constructor(root) {
         ASSERT.notNull(root, 'DOM constructor must have an HTMLElement parameter');
@@ -115,6 +115,20 @@ class DOMBase {
 
     }
 
+    createScriptTemplate(scriptSelector) {
+        const element = this.first(selector);
+        if (UTIL.isNullish(element)) {
+            log.warn('attempt to create childDOM but selector not found', selector);
+            return null;
+        } else if (element.isTag('script')) {
+            return this.parseString(element.Text);
+        } else {
+            log.warn('element is not a <script>', selector);
+            return null;
+        }
+    }
+
+
     childDOM(selector) {
         const element = this.first(selector);
         if (UTIL.isNullish(element)) {
@@ -168,6 +182,7 @@ class DOMBase {
             }
         }
     }
+
 
     parseString(html) {
         ASSERT.isString(html, 'parseString requires a string parameter');

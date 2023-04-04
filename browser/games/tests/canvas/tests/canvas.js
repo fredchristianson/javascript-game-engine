@@ -2,11 +2,11 @@ import { ASSERT } from '../../../../modules/assert.js';
 import { WorldBase } from '../../../../core/world.js';
 import { LOGLEVELS, createLogger } from '../../../../modules/logging.js';
 import { TestGame } from '../../../../modules/test/test-game.js';
-import { NETURL } from '../../../../modules/net.js';
+import { removeLastComponent } from '../../../../modules/net.js';
 import { BuildInputHandler } from '../../../../modules/event.js';
 import { ChildWindow } from '../../../../modules/window.js';
 const log = createLogger('TestCanvas', LOGLEVELS.DEBUG);
-const moduleBaseUrl = NETURL.removeLastComponent(import.meta.url);
+const moduleBaseUrl = removeLastComponent(import.meta.url);
 
 class CanvasTest {
     constructor() {

@@ -104,6 +104,19 @@ const OBJECT = {
         OBJECT.addNewProperties(old, newValue);
       }
     }
+  },
+  /**
+   * check if an object contains a method by name
+   *
+   * @param {*} obj the object instance to test
+   * @param {String} methodName the method name
+   * @returns {boolean} true if object has the method
+   */
+  hasMethod(obj, methodName) {
+
+    return !OBJECT.isNull(obj) &&
+      typeof methodName == 'string' &&
+      typeof obj[methodName] == 'function';
   }
 
 };

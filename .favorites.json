@@ -1,0 +1,38 @@
+[
+    {
+        "type": "Directory",
+        "name": "d:\\dev\\javascript-game-engine\\browser\\app",
+        "parent_id": null,
+        "fsPath": "d:\\dev\\javascript-game-engine\\browser\\app",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Y2108DHBhnGEfsQw"
+    },
+    {
+        "type": "Directory",
+        "name": "d:\\dev\\javascript-game-engine\\browser\\core",
+        "parent_id": null,
+        "fsPath": "d:\\dev\\javascript-game-engine\\browser\\core",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "qHgLQ3ecEs5DUfjz"
+    },
+    {
+        "type": "Directory",
+        "name": "d:\\dev\\javascript-game-engine\\browser\\games",
+        "parent_id": null,
+        "fsPath": "d:\\dev\\javascript-game-engine\\browser\\games",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "W2Kw0fohEmOaMp6B"
+    },
+    {
+        "type": "Directory",
+        "name": "d:\\dev\\javascript-game-engine\\browser\\modules",
+        "parent_id": null,
+        "fsPath": "d:\\dev\\javascript-game-engine\\browser\\modules",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "xe5Ybl2vgfipTEz4"
+    }
+]

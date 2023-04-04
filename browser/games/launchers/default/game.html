@@ -1,8 +1,14 @@
-<div class="game-launcher">
-<h1>Launcher Run</h1>
-<button data-name="hello-world">Hello World</button>
-<button data-name="tic-tac-toe">Tic-Tac-Toe</button>
-<script type="module">
-    import {launcher} from "/games/launcher/js/launcher.js";
-</script>
+<div id="background-layer"></div>
+
+<div id="action-layer">
+    <div class="game-launcher">
+        <h1>Launcher Run</h1>
+        <ul class="game list">
+
+        </ul>
+    </div>
 </div>
+
+<script id="game-select-template" type='text/template'>
+    <li><button class='title'>Title Goes Here<span class='description'>Title Goes Here</span></li>
+</script>

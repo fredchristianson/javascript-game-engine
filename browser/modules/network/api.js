@@ -2,7 +2,8 @@ import { ENV } from '../env.js';
 import { URL } from './url.js';
 import { resourceManager } from '../net.js';
 import { createLogger } from '../logging/logger.js';
-const logger = createLogger("API");
+import { BOOLEAN } from '../helpers.js';
+const logger = createLogger('API');
 
 /** @namespace API */
 const API = {
@@ -35,6 +36,16 @@ const API = {
         message: ex.message,
         exception: ex
       };
+    }
+  },
+
+  getGames: async function () {
+    const games = await API.get('games');
+    if (games == null || !BOOLEAN.isTrue(games.success)) {
+      log.error('failed to load games: ', games?.message ?? 'unknown error');
+      return [];
+    } else {
+      return games.data;
     }
   }
 };

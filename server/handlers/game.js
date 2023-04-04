@@ -101,6 +101,13 @@ exports.getGameResource = async function (req, res) {
         console.log(`\tresource: ${moduleName}`);
         const pathExists = await findFirstFile(game.path, fileOptions);
         console.log(`\tfound: ${pathExists}`);
+        if (pathExists == null) {
+            const response = JSON.stringify({ success: false, message: "resource not found" });
+            res.setHeader('Content-Type', "text/json");
+
+            res.end(response);
+            return;
+        }
         FileHandler.returnFile(req, res, pathExists);
     } catch (ex) {
         console.log(`getGameModule ${req.path} failed`, ex);
@@ -119,5 +126,7 @@ exports.getGames = async function (req, res) {
         success: true,
         data: games
     };
+    res.setHeader('Content-Type', "text/json");
+
     res.end(JSON.stringify(response));
 };

@@ -1,4 +1,3 @@
-import { ResourceManagerImpl } from './network/resource-manager.js';
 
 /**
  * @module Net
@@ -12,8 +11,7 @@ import { ResourceManagerImpl } from './network/resource-manager.js';
  * @export
  * @instance
  */
-const resourceManager = new ResourceManagerImpl();
 
-export { URL as NETURL } from './network/url.js';
-export { ResourceManagerImpl as ResourceManager } from './network/resource-manager.js';
-export { resourceManager };
+export { API } from './network/api.js';
+export { ResourceManagerImpl as ResourceManager, resourceManager } from './network/resource-manager.js';
+export { removeLastComponent } from './network/url.js';

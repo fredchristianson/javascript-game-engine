@@ -1,5 +1,5 @@
 const moduleUrl = import.meta.url;
-import { NETURL } from '../../modules/net.js';
+import { removeLastComponent } from '../../modules/net.js';
 
 import { ASSERT } from '../assert.js';
 import { WindowWorld } from '../../core/world/window-world.js';
@@ -10,7 +10,7 @@ import { BuildClickHandler } from '../../modules/event.js';
 const log = createLogger('TestGame');
 
 function getHtmlURL() {
-    const parentUrl = NETURL.removeLastComponent(moduleUrl);
+    const parentUrl = removeLastComponent(moduleUrl);
     return new URL('test-game.html', parentUrl);
 
 }

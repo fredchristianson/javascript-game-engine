@@ -1,4 +1,4 @@
-import { Environment } from './env/env.js';
+import { ENV } from './env/env.js';
 
 /**
  * @module Env
@@ -6,13 +6,6 @@ import { Environment } from './env/env.js';
  * 
  */
 
-/**
- * A singleton instance of the environment properties.
- * @type {Environment}
- * 
- * @instance
- */
-let ENV = new Environment();
 
 /**
  * loadENV needs to be called before ENV is used.
@@ -22,14 +15,32 @@ let ENV = new Environment();
  * await loadENV('env-local.json','env.json')
  * ```
  * 
- * will load both urls.  env-local.json takes priority if both define the same property.
+ * will load both urls.  env-local.json takes priority in this case
+ * if both define the same property since it is loaded first.
  *
- * @param {...{}} urls
+ * @param {...String} urls urls to load.  Usually ('env-local.json','env.json').
  */
 async function loadENV(...urls) {
-    await ENV.loadUrls(...urls);
+    const loader = await import('./env/env-loader.js');
+    await loader.loadUrls(...urls);
     return ENV;
 }
 
 
-export { loadENV, ENV };
+/**
+ * Load the environment for a named game.  Other environment sources remain
+ * the same, but the game source is replaced.
+ *
+ * @async
+ * @param {String} gameName name of the game
+ * @returns {ENV}
+ */
+async function loadGameENV(gameName) {
+    const loader = await import('./env/env-loader.js');
+    await loader.loadGameEnvironment(gameName);
+    return ENV;
+}
+
+
+export { ENV } from './env/env.js';
+export { loadENV, loadGameENV };

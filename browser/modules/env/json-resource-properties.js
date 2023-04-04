@@ -13,6 +13,9 @@ class JsonResourceProperties extends PropertySource {
     this._loaded = false;
   }
 
+  get Url() {
+    return this._assetUrl;
+  }
   async load() {
     try {
       const response = await fetch(this._assetUrl);

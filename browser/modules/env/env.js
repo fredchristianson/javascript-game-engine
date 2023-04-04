@@ -1,8 +1,6 @@
 import { UTIL, BOOLEAN, STRING, OBJECT } from '../helpers.js';
 import { PropertySource } from './proptery-source.js';
 import { QueryStringProperties } from './query-string-properties.js';
-import { JsonResourceProperties } from './json-resource-properties.js';
-import { ResourceManager } from '../net.js';
 import { createObservable } from '../observe.js';
 /**
  * Environment name/value property provider.  Multiple sources 
@@ -21,69 +19,40 @@ import { createObservable } from '../observe.js';
 class Environment {
   constructor() {
     this._changeObservable = createObservable(this);
-    this._loaded = false;
     this._setProperties = new PropertySource();
     this._queryStringProperties = new QueryStringProperties();
     this._gameProperties = null;
     this._loadedProperties = [];
 
-    this._loaded = true;
-    this._loadPromises = [];
   }
 
-  get ChangeObservable() { return this._changeObservable; }
+  get ChangeObservable() {
+    return this._changeObservable;
+  }
   /**
-   * Load env.json for gameName
+   * Set env.json for gameName
    *
    * @async
-   * @param {String} gameName - the game to load.  
+   * @param {PropertySource} gameProps are loaded for a specific game
    */
-  async loadGameEnvironment(gameName) {
-    this._loaded = false;
-    this._gameProperties = new JsonResourceProperties(ResourceManager.getGameResourceUrl(gameName, 'env.json'));
-    this._loadPromises.push(this._gameProperties.load());
-    await Promise.all(this._loadPromises);
-    this._loaded = true;
+  _setGameProperties(gameProps) {
+    this._gameProperties = gameProps;
     this._changeObservable.changed({ gameUpdated: true });
   }
 
   /**
-   * loads properties from one or more urls.  if multiple
-   * urls have the same property, the first one has priority.
-   * 
-   * If a load fails, the urls is ignored.  It's not an error
-   * to try to load a url that doesn't exist.
+   * adds a new property source.  order matters and the first sources added
+   * have higher priority.
    *
    * @async
-   * @param {...String} urls - urls to load
+   * @param {PropertySource} props properties to add
    */
-  async loadUrls(...urls) {
-    this._loaded = false;
-    for (const url of urls) {
-      const props = new JsonResourceProperties(url);
-      this._loadPromises.push(props.load());
-      this._loadedProperties.push(props);
-    }
-    await Promise.all(this._loadPromises);
-    this._loaded = true;
-    this._changeObservable.changed({ UrlsAdded: true, urls: urls });
+  async _addLoadedProperties(props) {
+    this._loadedProperties.push(props);
+    this._changeObservable.changed({ UrlsAdded: true, url: props.Url });
 
   }
 
-  /**
-   * wait until any loading resource are complete.  return true
-   * if there were no issues.  
-   *
-   * @async
-   * @returns {Boolean} - always true
-   */
-  async waitForLoad() {
-
-    if (!this._loaded) {
-      await Promise.all(this._loadPromises);
-    }
-    return this._loaded;
-  }
 
   /**
    * Return true if environment isDebug is true or environment property mode is 'debug'
@@ -129,5 +98,6 @@ class Environment {
   }
 }
 
-export { Environment };
+export const ENV = new Environment();
+
 
