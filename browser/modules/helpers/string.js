@@ -47,7 +47,7 @@ const STRING = {
    * @returns {Boolean} true if is a string and not empty
    */
   isNotEmpty: function (value) {
-    return (value != null && typeof value == 'string' && value.length > 0);
+    return !STRING.isBlank(value);
   },
 
   /**

@@ -6,10 +6,10 @@ class PieceType extends Enum {
     }
 }
 
-const AREA_TYPE = {
+const PIECE_TYPE = {
     UNKNOWN: new PieceType('unknown'),
     VISUAL: new PieceType('visual'),
     INTERACTIVE: new PieceType('interactive')
 };
 
-export { AREA_TYPE, PieceType };
+export { PIECE_TYPE, PieceType };

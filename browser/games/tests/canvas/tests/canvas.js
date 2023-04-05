@@ -1,5 +1,4 @@
 import { ASSERT } from '../../../../modules/assert.js';
-import { WorldBase } from '../../../../core/world.js';
 import { LOGLEVELS, createLogger } from '../../../../modules/logging.js';
 import { TestGame } from '../../../../modules/test/test-game.js';
 import { removeLastComponent } from '../../../../modules/net.js';

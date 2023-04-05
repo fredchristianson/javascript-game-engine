@@ -22,7 +22,7 @@ class Launcher {
     this._pieceRenderer = rendererBuilder.defineRenderer()
       .rendererType(RENDERER_TYPE.HTML_TEMPLATE)
       .templateSelector('#game-select-template')
-      .build();
+      .buildOne();
   }
 
   async defineLayers(layerBuilder) {
@@ -39,7 +39,7 @@ class Launcher {
     this._board = areaBuilder.defineBoard()
       .parent(this._boardLayer)
       .selector('.game.list')
-      .build();
+      .buildOne();
   }
 
   async definePieces(pieceBuilder) {
@@ -54,15 +54,15 @@ class Launcher {
     }
   }
 
-  async buildActions(actionBuilder) {
-    actionBuilder.buildAction()
+  async defineActions(actionBuilder) {
+    actionBuilder.defineAction()
       .actionType(ACTION_TYPE.TIMER)
-      .frequencyMilliSeconds(200)
-      .handler(this.changeBackgroundColor);
-    actionBuilder.buildAction()
+      .periodMilliseconds(200)
+      .handler(this, this.changeBackgroundColor);
+    actionBuilder.defineAction()
       .actionType(ACTION_TYPE.CLICK)
       .forKind('game')
-      .handler(this.launchGame);
+      .handler(this, this.launchGame);
 
   }
 
@@ -75,8 +75,8 @@ class Launcher {
     this._backgroundHue += 1;
   }
 
-  renderBackground(layer) {
-    layer.setBackgroundColor(HSL(this._backgroundHue, 0.5, 0.5).toHTML());
+  renderBackground(layer, htmlElement) {
+    htmlElement.setStyle('background-color', HSL(this._backgroundHue, 100, 50).toHTML());
   }
 }
 

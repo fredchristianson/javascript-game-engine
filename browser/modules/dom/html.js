@@ -1,7 +1,17 @@
 import { ASSERT } from '../assert.js';
-import { STRING, TYPE } from '../helpers.js';
-import { DOMElementType } from './dom-common.js';
+import { NUMBER, FUNCTION, OBJECT, STRING, TYPE, UTIL } from '../helpers.js';
+import { DOMElementType, isDOM } from './dom-common.js';
 
+
+function normalizeDatasetName(name) {
+    let idx = name.indexOf('-');
+    while (idx >= 0) {
+        const fix = `${name.substring(0, idx)}${name.substring(idx + 1, idx + 2).toUpperCase()}${name.substring(idx + 2)}`;
+        name = fix;
+        idx = name.indexOf('-');
+    }
+    return name;
+}
 class DOMElementValue {
     constructor() { }
     setValue(element) {
@@ -100,7 +110,7 @@ export class DOMElement extends DOMElementType {
         return {
             width: 0,
             height: 0
-        }
+        };
     }
 
     append(other) {
@@ -108,6 +118,8 @@ export class DOMElement extends DOMElementType {
             this._htmlElement.append(other.HTMLElement);
         } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {
             this._htmlElement.append(other);
+        } else if (isDOM(other)) {
+            this._htmlElement.append(...other.getChildNodes());
         } else {
             ASSERT.fail('append parameter must be an HTMLElement. Got', other);
         }
@@ -178,6 +190,38 @@ export class DOMElement extends DOMElementType {
 
     removeAllChildren() {
         this._htmlElement.replaceChildren();
+    }
+
+    setData(name, val) {
+        name = normalizeDatasetName(name);
+        ASSERT.isTrue(STRING.isNotEmpty(name), 'setData requires a name');
+        if (UTIL.isNullish(val)) {
+            this._htmlElement.dataset[name] = null;
+        } else if (STRING.isString(val)) {
+            this._htmlElement.dataset[name] = val;
+        } else if (NUMBER.isNumber(val)) {
+            this._htmlElement.dataset[name] = val.toString();
+
+        } else if (!OBJECT.isObject(val)) {
+            const json = JSON.stringify({ value: val });
+            this._htmlElement.dataset[name] = json;
+        }
+    }
+
+
+    getData(name) {
+        name = normalizeDatasetName(name);
+        const val = this._htmlElement.dataset[name] ?? null;
+        if (STRING.isString(val)) {
+            if (val[0] == '{') {
+                const json = JSON.parse(val);
+                return json.value;
+            } else if (!isNaN(val)) {
+                return Number.parseInt(val);
+            }
+            return val;
+        }
+        return alert;
     }
 
 }

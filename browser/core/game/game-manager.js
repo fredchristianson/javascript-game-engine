@@ -2,7 +2,6 @@ import { createLogger } from '../../modules/logging.js';
 import { resourceManager } from '../../modules/net.js';
 import { loadGameENV } from '../../modules/env.js';
 import { STRING, FUNCTION } from '../../modules/helpers.js';
-import { DOMWorld } from '../world.js';
 import { LayerBuilder } from '../layer/layer-builder.js';
 import { PieceBuilder } from '../piece/piece-builder.js';
 import { RendererBuilder } from '../render/renderer-builder.js';
@@ -11,6 +10,7 @@ import { GameMechanics } from '../mechanics/game-mechanics.js';
 import { GameRenderer } from '../render/game-renderer.js';
 import { GameRunner } from './game-runner.js';
 import { ofText } from '../../modules/dom.js';
+import { ActionBuilder } from '../action/action-builder.js';
 const log = createLogger('GameManager');
 
 class GameManager {
@@ -18,7 +18,6 @@ class GameManager {
         this._worldDOM = null;
         this._styleDOM = null;
         this._templateDOM = null;
-        this._world = null;
         this._coreControlsDOM = null;
         this._gameControlsDOM = null;
         this._coreStatusDOM = null;
@@ -35,14 +34,18 @@ class GameManager {
         log.info(`GameAppRunning game ${name}`);
         const gameHtml = await resourceManager.getGameResource(name, 'html'); //await fetch(`/games/${name}/game.html`);
         const gameStyle = await resourceManager.getGameResource(name, 'css'); //await fetch(`/games/${name}/game.html`);
+
         if (STRING.isString(gameHtml)) {
             this._templateDOM = ofText(gameHtml);
         } else {
+            this._templateDOM = ofText('<div></div>');
             log.warn(`game ${name} does not have html`);
         }
         if (STRING.isString(gameStyle)) {
-            this._styleDOM = ofText(gameStyle);
+            this._styleDOM = ofText(`<div><style>${gameStyle}</style></div>`);
         } else {
+            this._styleDOM = ofText('<div></div>');
+
             log.warn(`game ${name} does not have style`);
         }
 
@@ -54,7 +57,7 @@ class GameManager {
         this._mechanics = new GameMechanics(this);
         this._gameRenderer = new GameRenderer(this);
         this._gameRunner = null;
-        this._setup();
+        await this._setup();
         this._run();
     }
 
@@ -77,7 +80,7 @@ class GameManager {
         this._collisions = [];
         const game = this._game;
         if (FUNCTION.hasMethod(game, 'setup')) {
-            await game.setup(this, this._world);
+            await game.setup(this, this._worldDOM);
         }
 
         await this._setupRules();
@@ -99,6 +102,20 @@ class GameManager {
         this._gameRunner = new GameRunner(this);
         this._gameRunner.start();
     }
+
+    addLayer(layer) {
+        this._layers.push(layer);
+    }
+
+    addPiece(piece) {
+        this._pieces.push(piece);
+    }
+
+
+    addAction(action) {
+        this._actions.push(action);
+    }
+
 
     async _setupLayers() {
         const game = this._game;
@@ -146,8 +163,10 @@ class GameManager {
 
     async _setupActions() {
         const game = this._game;
+        const actionBuilder = new ActionBuilder(this);
         if (FUNCTION.hasMethod(game, 'defineActions')) {
-
+            await game.defineActions(actionBuilder);
+            actionBuilder.buildAll();
         } else {
 
         }
@@ -196,16 +215,17 @@ class GameManager {
 
     setWorld(dom) {
         this._worldDOM = dom;
-        this._world = new DOMWorld(dom);
     }
     setCoreControls(dom) {
         this._coreControlsDOM = dom;
+        this._coreControlsDOM.append('<div>JSGames</div>');
     }
     setGameControls(dom) {
         this._gameControlsDOM = dom;
     }
     setCoreStatus(dom) {
         this._coreStatusDOM = dom;
+        this._coreStatusDOM.append('<div>Running</div>');
     }
     setGameStatus(dom) {
         this._gameStatusDOM = dom;

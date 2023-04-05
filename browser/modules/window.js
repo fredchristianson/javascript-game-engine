@@ -154,16 +154,18 @@ export class ChildWindow extends Window {
 
 
         this._setScreenPosition();
-        this._window.getScreenDetails()
-            .then(() => {
-                //user allowed multiscreen
-                this._resolve();
-            })
-            .catch((ex) => {
-                // user did not allow multiscreen.  not a problem.
-                this._resolve();
-            });
-        //console.log('set unload handler');
+        if (this._window.getScreenDetails) {
+            this._window.getScreenDetails()
+                .then(() => {
+                    //user allowed multiscreen
+                    this._resolve();
+                })
+                .catch((ex) => {
+                    // user did not allow multiscreen.  not a problem.
+                    this._resolve();
+                });
+            //console.log('set unload handler');
+        }
         this._window.onunload = this._boundUnloadHandler;
 
     }

@@ -26,9 +26,9 @@ class RendererDefinition extends EntityDefinition {
     }
 
     // eslint-disable-next-line consistent-return
-    build() {
+    buildEntities() {
         if (this._rendererType == RENDERER_TYPE.HTML_TEMPLATE) {
-            return new HtmlTemplateRenderer(this._templateSelector);
+            return [new HtmlTemplateRenderer(this._templateSelector)];
         } else if (this._rendererType == RENDERER_TYPE.HTML) {
             return new HtmlTemplateRenderer();
         }

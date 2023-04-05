@@ -1,22 +1,6 @@
 import { Enum } from '../../modules/helpers.js';
+import { gameTimer } from './game-timer.js';
 
-class GameTimer {
-    constructor(startTime) {
-        this._startTime = startTime;
-        this._currentTime = startTime;
-        this._lastFrame = startTime;
-        this._elapsedTime = 0;
-        this._stepTime = 0;
-
-    }
-
-    update(timestamp) {
-        this._currentTime = timestamp;
-        this._stepTime = this._currentTime - this._lastFrame;
-        this._elapsedTime = this._currentTime - this._startTime;
-        this._lastFrame = timestamp;
-    }
-}
 
 class GameState extends Enum {
     constructor(name) {
@@ -33,9 +17,8 @@ const GAME_STATE = {
 
 class GameRunner {
     constructor(gameManager) {
-        this._gameState = GameState.INITIALIZING;
+        this._gameState = GAME_STATE.INITIALIZING;
         this._gameManager = gameManager;
-        this._timer = null;
         this._firstFrameProcessor = this.firstFrameProcessor.bind(this);
         this._frameProcessor = this.frameProcessor.bind(this);
         this._mechanics = gameManager.Mechanics;
@@ -62,14 +45,18 @@ class GameRunner {
     }
 
     firstFrameProcessor(timestamp) {
-        this._timer = new GameTimer(timestamp);
+        gameTimer.startGame(timestamp);
+
+        requestAnimationFrame(this._frameProcessor);
     }
 
     frameProcessor(timestamp) {
-        this._timer.update(timestamp);
-        this._mechanics.step(this._timer);
-        this._physics.step(this._timer);
-        this._gameRenderer.step(this._timer);
+        gameTimer.update(timestamp);
+        this._mechanics.step();
+        this._physics.step();
+        this._gameRenderer.step();
+
+        requestAnimationFrame(this._frameProcessor);
     }
 }
 

@@ -12,6 +12,12 @@ class GameMechanics {
     setupActions(actions) {
         this._actions = actions;
     }
+
+    step() {
+        for (const action of this._actions) {
+            action.check();
+        }
+    }
 }
 
 export { GameMechanics };

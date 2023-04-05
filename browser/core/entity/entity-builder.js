@@ -1,7 +1,7 @@
 import { ASSERT } from '../../modules/assert.js';
 import { EntityDefinition } from './entity-definition.js';
-
-
+import { createLogger } from '../../modules/logging.js';
+const log = createLogger('EntityBuilder');
 class EntityBuilder {
     constructor(gameManager, defs = []) {
         this._gameManager = gameManager;
@@ -15,13 +15,23 @@ class EntityBuilder {
 
 
     buildAll() {
-        const entities = [];
+        const result = [];
         for (const def of this._definitions) {
-            if (!def.isTemplate() && def.Count > 0) {
-                entities.push(def.build());
+            if (!def.IsTemplate) {
+                for (let count = 0; count < def.Count; count++) {
+                    const entities = def.buildEntities();
+                    result.push(...entities);
+                    for (const entity of entities) {
+                        this._entityCreated(entity, def);
+                    }
+                }
             }
         }
-        return entities;
+        return result;
+    }
+
+    _entityCreated(_entity, _def) {
+        // derived classes can overwrite
     }
 
 

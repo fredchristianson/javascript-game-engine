@@ -1,6 +1,7 @@
 import { EntityDefinition } from '../entity/entity-definition.js';
 import { EntityBuilder } from '../entity/entity-builder.js';
 import { ENTITY_TYPE } from '../entity/entity-type.js';
+import { Piece } from './piece.js';
 
 class PieceDefinition extends EntityDefinition {
     constructor(pieceType, builder) {
@@ -13,7 +14,17 @@ class PieceDefinition extends EntityDefinition {
         this._pieceKind = pieceKind;
         return this;
     }
-};
+
+    _createEntity() {
+        const piece = new Piece(this._pieceType);
+        piece.Kind = this._pieceKind;
+        piece.Renderer = this._renderer;
+        piece.Data = this._data;
+        piece.ParentEntity = this._parentEntity;
+        piece.TemplateSelector = this._templateSelector;
+        return piece;
+    }
+}
 
 class PieceBuilder extends EntityBuilder {
     constructor(gameManager) {
@@ -31,6 +42,10 @@ class PieceBuilder extends EntityBuilder {
         return def;
     }
 
+
+    _entityCreated(entity, _def) {
+        this._gameManager.addPiece(entity);
+    }
 }
 
 export { PieceBuilder };

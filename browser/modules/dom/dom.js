@@ -41,7 +41,7 @@ function isHTMLElement(value) {
         FUNCTION.hasMethod(value, 'querySelector');
     //return TYPE.isType(root, [HTMLElement, HTMLHtmlElement, Document, DocumentFragment]) || root == document
 }
- 
+
 class DOMBase {
     constructor(root) {
         ASSERT.notNull(root, 'DOM constructor must have an HTMLElement parameter');
@@ -168,19 +168,31 @@ class DOMBase {
         }
     }
 
+    /**
+     * append one or more children.  return the first new child node
+     *
+     * @param {...{}} children
+     * @returns {*}
+     */
     append(...children) {
+        let appended = null;
         for (const child of children) {
             if (TYPE.isType(child, HTMLElement)) {
                 this._htmlElement.append(child);
+                appended = child;
             } else if (TYPE.isType(child, DOMElementType)) {
                 this._htmlElement.append(child.HTMLElement);
+                appended = child.HTMLElement;
             } else if (TYPE.isType(child, DOMBase)) {
-                this._htmlElement.append(...child.getChildNodes());
+                const nodes = [...child.getChildNodes()];
+                this._htmlElement.append(...nodes);
+                appended = nodes[0];
             } else if (STRING.isString(child)) {
                 const parsedDOM = this.parseString(child);
-                this.append(parsedDOM);
+                appended = this.append(parsedDOM);
             }
         }
+        return HTML.domElementOf(appended);
     }
 
 

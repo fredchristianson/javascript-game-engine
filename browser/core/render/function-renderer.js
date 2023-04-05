@@ -5,6 +5,10 @@ class FunctionRenderer extends Renderer {
         super();
         this._function = func;
     }
+
+    render(...args) {
+        this._function(...args);
+    }
 }
 
 export { FunctionRenderer };

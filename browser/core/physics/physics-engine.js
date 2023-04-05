@@ -12,6 +12,11 @@ class PhysicsEngine {
     setupCollisions(collisions) {
         this._collisions = collisions;
     }
+
+    step() {
+
+    }
+
 }
 
 export { PhysicsEngine };

@@ -2,6 +2,8 @@ import { NotImplementedException } from '../../modules/exception/not-implemented
 import { FUNCTION, OBJECT, TYPE } from '../../modules/helpers.js';
 import { MethodRenderer } from '../render/method-renderer.js';
 import { Renderer } from '../render/renderer.js';
+import { createLogger } from '../../modules/logging.js';
+const log = createLogger('EntityDefinition');
 class EntityDefinition {
     constructor(entityType, builder = null) {
         this._builder = builder;
@@ -11,6 +13,7 @@ class EntityDefinition {
         this._renderer = null;
         this._data = null;
         this._parentEntity = null;
+        this._templateSelector = null;
     }
 
     get Count() {
@@ -20,7 +23,12 @@ class EntityDefinition {
     get IsTemplate() {
         return this._isTemplate;
     }
-    build(count = null) {
+
+    buildOne() {
+        return this.buildEntities(1)[0];
+    }
+
+    buildEntities(count = null) {
         const instanceCount = count ?? this._count ?? 1;
         if (instanceCount == 0) {
             return null;
@@ -29,15 +37,23 @@ class EntityDefinition {
         for (let number = 0; number < instanceCount; number++) {
             const instance = this._createEntity();
             entities.push(instance);
+            if (this._parentEntity) {
+                this._parentEntity.addChild(instance);
+            }
         }
 
-        return instanceCount == 1 ? entities[0] : entities;
+        return entities;
     }
 
     _createEntity() {
         log.error('derived class must implement _createEntity');
         throw new NotImplementedException();
     }
+
+    get Parent() {
+        return this._parentEntity;
+    }
+
     set Renderer(renderer) {
         this._renderer = renderer;
     }

@@ -6,6 +6,8 @@
 
 import { STRING, OBJECT } from '../helpers.js';
 import { URL } from './url.js';
+import { createLogger } from '../logging.js';
+const log = createLogger('ResourceManager');
 
 
 /**
@@ -78,7 +80,7 @@ class ResourceManagerImpl {
         const response = await this.getResource(url);
         if (response && response.ok) {
             const text = await response.text();
-            if (text.length < 100) {
+            if (response.headers.get('content-type') == 'text/json') {
                 try {
                     const json = JSON.parse(text);
                     if (json != null && !json.success) {
@@ -86,7 +88,8 @@ class ResourceManagerImpl {
                     }
                     return text;
                 } catch (ex) {
-                    log.info(`resource not found for game ${gameName}: ${reportError}`);
+                    log.info(`Unable to parse JSON for game ${gameName}: ${resourcePath}`);
+                    return null;
                 }
             } else {
                 return text;

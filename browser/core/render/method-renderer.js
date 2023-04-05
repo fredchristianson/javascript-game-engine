@@ -6,6 +6,10 @@ class MethodRenderer extends Renderer {
         this._object = object;
         this._method = method;
     }
+
+    render(...args) {
+        this._method.call(this._object, ...args);
+    }
 }
 
 export { MethodRenderer };
