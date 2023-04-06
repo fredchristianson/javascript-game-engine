@@ -11,30 +11,24 @@ class EntityBuilder {
     _addDefinition(def) {
         ASSERT.isType(def, EntityDefinition, 'definition parameter must by an EntityDefinition');
         this._definitions.push(def);
+        def._setBuilder(this);
     }
 
 
     buildAll() {
         const result = [];
         for (const def of this._definitions) {
-            if (!def.IsTemplate) {
-                for (let count = 0; count < def.Count; count++) {
-                    const entities = def.buildEntities();
-                    result.push(...entities);
-                    for (const entity of entities) {
-                        this._entityCreated(entity, def);
-                    }
-                }
+            if (!def.IsTemplate && def.Count > 0) {
+                const entities = def.buildEntities();
+                result.push(...entities);
             }
         }
         return result;
     }
 
-    _entityCreated(_entity, _def) {
-        // derived classes can overwrite
+    _entityCreated(instance) {
+        // derived class can override if needed
     }
-
-
 }
 
 export { EntityBuilder };

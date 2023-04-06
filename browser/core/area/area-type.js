@@ -8,7 +8,10 @@ class AreaType extends Enum {
 
 const AREA_TYPE = {
     UNKNOWN: new AreaType('unknown'),
-    BOARD: new AreaType('board')
+    BOARD: new AreaType('board'),
+    GRID: new AreaType('grid'),
+    RECTANGLE: new AreaType('rectangle')
+
 };
 
 export { AREA_TYPE, AreaType };

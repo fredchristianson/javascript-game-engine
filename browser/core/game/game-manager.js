@@ -11,6 +11,7 @@ import { GameRenderer } from '../render/game-renderer.js';
 import { GameRunner } from './game-runner.js';
 import { ofText } from '../../modules/dom.js';
 import { ActionBuilder } from '../action/action-builder.js';
+import { AreaBuilder } from '../area/area-builder.js';
 const log = createLogger('GameManager');
 
 class GameManager {
@@ -89,6 +90,7 @@ class GameManager {
         await this._setupRenderers();
         await this._setupActions();
         await this._setupLayers();
+        await this._setupAreas();
         await this._setupPieces();
         await this._setupCollisions();
 

@@ -9,14 +9,30 @@ class Entity {
         this._entityType = type;
         this._parentElement = null;
         this._renderer = null;
-
+        this._templateSelector = null;
         this._data = null;
         this._updateState = 0; // incremented each update.  
         this._changed = false;
         this._children = [];
+        this._attachSelector = null;
+        this._kind = null;
     }
 
 
+    set Kind(kind) {
+        this._kind = kind;
+    }
+    get Kind() {
+        return this._kind;
+    }
+
+    get Children() {
+        return this._children;
+    }
+
+    get AttachSelector() {
+        return this._attachSelector;
+    }
     set Data(data) {
         this._data = data;
     }
@@ -64,12 +80,9 @@ class Entity {
         return this._entityType;
     }
 
-
-    position(parent) {
-        this._parentElement = parent;
-        return this;
+    addChild(childEntity) {
+        this._children.push(childEntity);
     }
-
     renderer(render) {
         /*
          * todo: check if renderrer is a function.

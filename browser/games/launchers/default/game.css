@@ -1,3 +1,15 @@
-#game-render-layers {
-    background-color: #000;
+#action-layer {
+    padding: 1em;
+}
+
+li {
+    list-style: none;
+    margin-bottom: 0.5em;
+    display: inline-block;
+}
+
+li button {
+    display: block;
+    min-width: 15em;
+    text-align: left;
 }

@@ -8,14 +8,6 @@ class Piece extends Entity {
     constructor(type) {
         super(ENTITY_TYPE.PIECE);
         this._type = type;
-        this._kind = null;
-    }
-
-    set Kind(kind) {
-        this._kind = kind;
-    }
-    get Kind() {
-        return this._kind;
     }
 
 

@@ -7,6 +7,10 @@ class Enum {
     equals(other) {
         return other != null && this._symbol == other._symbol;
     }
+
+    toString() {
+        return `Enum(${this._name})`;
+    }
 }
 
 export { Enum };

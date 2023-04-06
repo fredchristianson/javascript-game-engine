@@ -67,6 +67,11 @@ class DOMBase {
         this._eventGroup.add(listener);
     }
 
+    clone() {
+        const clone = this._htmlElement.cloneNode(true);
+        const dom = new FragmentDOM(clone);
+        return dom;
+    }
     removeListeners() {
         this._eventGroup.removeAll();
     }
@@ -152,10 +157,10 @@ class DOMBase {
     }
 
     setValues(values) {
-        /*
-         * todo: create different types of values.  
-         *  currently only sets element innerText. need attributes, values, class,etc
-         */
+
+        if (UTIL.isNullish(values)) {
+            return;
+        }
         ASSERT.isType(values, Object, 'setValues requires an object');
         for (const [selector, value] of Object.entries(values)) {
             const elements = this.all(selector);

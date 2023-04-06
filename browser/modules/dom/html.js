@@ -43,6 +43,20 @@ export class DOMClassValue extends DOMElementValue {
         element.addClass(this._className);
     }
 }
+
+
+export class DOMDataValue extends DOMElementValue {
+    constructor(dataName, dataValue) {
+        super();
+        this._dataName = dataName ?? '';
+        this._dataValue = dataValue ?? '';
+    }
+
+    setValue(element) {
+        ASSERT.isType(element, DOMElement, 'setValue() required DOMElement');
+        element.setData(this._dataName, this._dataValue);
+    }
+}
 export class DOMStyleValue extends DOMElementValue {
     constructor(styleName, styleValue) {
         super();
@@ -92,6 +106,9 @@ export class DOMElement extends DOMElementType {
         this._htmlElement = htmlElement;
     }
 
+    clone() {
+        return this._htmlElement.cloneNode(true);
+    }
     get HTMLElement() {
         return this._htmlElement;
     }
@@ -113,16 +130,38 @@ export class DOMElement extends DOMElementType {
         };
     }
 
+    first(selector) {
+        const element = this._htmlElement?.querySelector(selector);
+        return element ? new DOMElement(element) : null;
+    }
+
+    firstOrIgnore(selector) {
+        const first = this._htmlElement?.first(selector);
+        return domElementOf(first);
+
+    }
+
+    all(selector) {
+        if (UTIL.isNullish(selector) || UTIL.isNullish(this._htmlElement)) {
+            return [];
+        }
+        return this._htmlElement.querySelectorAll(selector).map(domElementOf);
+    }
+
     append(other) {
+        let appended = other;
         if (TYPE.isType(other, DOMElement)) {
             this._htmlElement.append(other.HTMLElement);
         } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {
             this._htmlElement.append(other);
         } else if (isDOM(other)) {
-            this._htmlElement.append(...other.getChildNodes());
+            const children = other.getChildNodes();
+            this._htmlElement.append(...children);
+            appended = children[0];
         } else {
             ASSERT.fail('append parameter must be an HTMLElement. Got', other);
         }
+        return domElementOf(appended);
     }
     setValue(value) {
         if (TYPE.isType(value, DOMElementValue)) {
@@ -256,6 +295,9 @@ export class NullElement extends DOMElement {
 
 
 export function domElementOf(htmlElement) {
+    if (UTIL.isNullish(htmlElement)) {
+        return new NullElement();
+    }
     if (TYPE.isType(htmlElement, DOMElement)) {
         // already have DOMElement
         return htmlElement;
@@ -287,6 +329,9 @@ export const HTML = {
     },
     repeatValue: function (tag, iterable) {
         return new DOMRepeatValue(tag, iterable);
+    },
+    dataValue: function (name, value) {
+        return new DOMDataValue(name, value);
     },
 
     DOMClassValue,

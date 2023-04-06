@@ -14,8 +14,12 @@ class EntityDefinition {
         this._data = null;
         this._parentEntity = null;
         this._templateSelector = null;
+        this._attachSelector = null;
     }
 
+    _setBuilder(builder) {
+        this._builder = builder;
+    }
     get Count() {
         return this._count;
     }
@@ -25,7 +29,9 @@ class EntityDefinition {
     }
 
     buildOne() {
-        return this.buildEntities(1)[0];
+        const instance = this.buildEntities(1)[0];
+        this._count = 0;
+        return instance;
     }
 
     buildEntities(count = null) {
@@ -36,10 +42,16 @@ class EntityDefinition {
         const entities = [];
         for (let number = 0; number < instanceCount; number++) {
             const instance = this._createEntity();
+            instance._attachSelector = this._attachSelector;
+            instance._templateSelector = this._templateSelector;
             entities.push(instance);
-            if (this._parentEntity) {
-                this._parentEntity.addChild(instance);
+
+            this._builder._entityCreated(instance);
+            if (instance.ParentEntity != null) {
+                instance.ParentEntity.addChild(instance);
             }
+
+            this._count -= 1;
         }
 
         return entities;
@@ -95,6 +107,11 @@ class EntityDefinition {
 
     templateSelector(selector) {
         this._templateSelector = selector;
+        return this;
+    }
+
+    attach(selector) {
+        this._attachSelector = selector;
         return this;
     }
 

@@ -8,11 +8,26 @@ class Layer extends Entity {
     constructor(type) {
         super(ENTITY_TYPE.LAYER);
         this._type = type;
+        this._order = 0; // lower order has lower z-index
     }
 
     get Type() {
         return this._type;
     }
+
+
 }
 
-export { Layer };
+function layerOrderCompare(a, b) {
+    if (a == null) {
+        return b == null ? 0 : -1;
+    }
+    if (b == null) {
+        return 1;
+    }
+
+    return a._order - b._order;
+
+}
+
+export { Layer, layerOrderCompare };

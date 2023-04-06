@@ -29,7 +29,10 @@ class Action {
     }
 
     check() {
-        log.warn('derived class does not implement Action.check()');
+        if (this._warnOnce == null) {
+            this._warnOnce = 'done';
+            log.warn('derived class does not implement Action.check()', this._type);
+        }
     }
     _doAction() {
         this._handler.call(this._data);

@@ -1,6 +1,7 @@
 import { API } from '../../../modules/net.js';
 import { HSL } from '../../../modules/color.js';
 import { RENDERER_TYPE, ACTION_TYPE } from '../../../core/game.js';
+import { HTML } from '../../../modules/dom.js';
 
 class Launcher {
   constructor() {
@@ -30,7 +31,8 @@ class Launcher {
       .templateSelector('#background-layer')
       .renderer(this, this.renderBackground);
     this._boardLayer = layerBuilder.defineHtmlLayer(this)
-      .templateSelector('#action-layer');
+      .templateSelector('#action-layer')
+      .buildOne();
 
   }
 
@@ -38,7 +40,7 @@ class Launcher {
     // need the board instance so call build()
     this._board = areaBuilder.defineBoard()
       .parent(this._boardLayer)
-      .selector('.game.list')
+      .attach('.game.list')
       .buildOne();
   }
 
@@ -48,8 +50,13 @@ class Launcher {
     for (const game of games.filter((g) => g.type == 'game')) {
       pieceBuilder.definePiece()
         .parent(this._board)
+        .templateSelector('#game-select-template')
         .kind('game')
-        .data({ Name: game.name, Description: game.description })
+        .data({
+          '.title': game.name,
+          '.description': game.description,
+          'li': HTML.dataValue('name', game.name)
+        })
         .renderer(this._pieceRenderer);
     }
   }
@@ -57,7 +64,7 @@ class Launcher {
   async defineActions(actionBuilder) {
     actionBuilder.defineAction()
       .actionType(ACTION_TYPE.TIMER)
-      .periodMilliseconds(200)
+      .periodMilliseconds(50)
       .handler(this, this.changeBackgroundColor);
     actionBuilder.defineAction()
       .actionType(ACTION_TYPE.CLICK)
@@ -72,7 +79,7 @@ class Launcher {
   }
 
   changeBackgroundColor() {
-    this._backgroundHue += 1;
+    this._backgroundHue = (this._backgroundHue + 1) % 360;
   }
 
   renderBackground(layer, htmlElement) {
