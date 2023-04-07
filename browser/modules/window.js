@@ -165,6 +165,8 @@ export class ChildWindow extends Window {
                     this._resolve();
                 });
             //console.log('set unload handler');
+        } else {
+            this._resolve(); // not chrome so nothing to wait for.
         }
         this._window.onunload = this._boundUnloadHandler;
 

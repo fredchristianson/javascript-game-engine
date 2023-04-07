@@ -27,10 +27,8 @@
 
 </body>
 <script type="module">
-    import { ParentWindow } from "../modules/window.js";
     import { JSONFormatter, HTMLFormatter } from "../modules/logging/log-formatter.js";
 
-    const parentWindow = new ParentWindow();
     const jsonFormatter = new JSONFormatter();
     const htmlFormatter = new HTMLFormatter();
     const logContainer = document.getElementById("log-messages");
@@ -38,13 +36,17 @@
     const historyValue = document.querySelector('#log-history');
     const lockCheckbox = document.getElementById('log-lock');
     const levels = document.querySelector('.levels');
-    function handleMessage(json) {
+    function handleMessage(event) {
+        let jsonMessage = JSON.parse(event.data);
+        if (jsonMessage == null || jsonMessage.type != "log") {
+            return;
+        }
         let size = 1000;
         let inputSize = historyValue.valueAsNumber;
         if (!isNaN(inputSize) && inputSize > 0) {
             size = inputSize;
         }
-        const logMessage = jsonFormatter.parse(json);
+        const logMessage = jsonFormatter.parse(jsonMessage.data);
         const element = htmlFormatter.format(logMessage);
         logContainer.append(element);
         while (logContainer.childElementCount > size) {
@@ -66,7 +68,7 @@
         logContainer.classList.toggle(hideClass, !checked);
         console.debug(`level ${level} is ${checked ? 'visible' : 'hidden'}`);
     });
-    parentWindow.addMessageHandler(handleMessage);
+    window.addEventListener('message',handleMessage);
 
 
  

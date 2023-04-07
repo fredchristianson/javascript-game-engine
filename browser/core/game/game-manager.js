@@ -4,7 +4,6 @@ import { loadGameENV } from '../../modules/env.js';
 import { STRING, FUNCTION, UTIL } from '../../modules/helpers.js';
 import { LayerBuilder } from '../layer/layer-builder.js';
 import { PieceBuilder } from '../piece/piece-builder.js';
-import { RendererBuilder } from '../render/renderer-builder.js';
 import { PhysicsEngine } from '../physics/physics-engine.js';
 import { GameMechanics } from '../mechanics/game-mechanics.js';
 import { GameRenderer } from '../render/game-renderer.js';
@@ -98,7 +97,6 @@ class GameManager {
         await this._setupRules();
         await this._setupMechanics();
         await this._setupPhysics();
-        await this._setupRenderers();
         await this._setupModels();
         await this._setupLayers();
         await this._setupAreas();
@@ -312,15 +310,7 @@ class GameManager {
 
         }
     }
-    async _setupRenderers() {
-        const game = this._game;
-        const rendererBuilder = new RendererBuilder(this);
 
-        if (FUNCTION.hasMethod(game, 'defineRenderers')) {
-            await game.defineRenderers(rendererBuilder);
-            rendererBuilder.buildAll();
-        }
-    }
 
     setWorld(dom) {
         this._worldDOM = dom;

@@ -1,6 +1,8 @@
 import { API } from '../../../modules/net.js';
 import { HSL } from '../../../modules/color.js';
 import { HTML } from '../../../modules/dom.js';
+import { createLogger } from '../../../modules/logging.js';
+const log = createLogger('Launcher');
 
 
 class Launcher {
