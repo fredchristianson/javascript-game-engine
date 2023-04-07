@@ -90,6 +90,10 @@ class Entity {
         this._children.push(childEntity);
     }
 
+    _beforeRun(gameManager) {
+        // derived classes can override
+    }
+
 
 }
 

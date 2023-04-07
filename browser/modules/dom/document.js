@@ -230,6 +230,13 @@ export class FragmentDOM extends DocumentDOM {
         super(doc ?? document.createDocumentFragment());
     }
 
+    getChildNodes() {
+        if (this._htmlElement.tagName == 'BODY') {
+            return this._htmlElement.childNodes;
+        }
+        return [this._htmlElement];
+    }
+
     clone() {
         const clone = this._htmlElement.cloneNode(true);
         const dom = new FragmentDOM(clone);

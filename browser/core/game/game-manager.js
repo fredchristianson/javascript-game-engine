@@ -14,6 +14,8 @@ import { AreaBuilder } from '../area/area-builder.js';
 import { ASSERT } from '../../modules/assert.js';
 import { ENTITY_TYPE } from '../game.js';
 import { ModelBuilder } from '../model/model-builder.js';
+import { inputHandler } from '../action/input-handler.js';
+
 const log = createLogger('GameManager');
 
 class GameManager {
@@ -79,6 +81,7 @@ class GameManager {
     }
 
     async _setup() {
+        inputHandler.reset();
         this._entityIdMap = new Map();
         this._actions = [];
         this._layers = [];
@@ -114,6 +117,10 @@ class GameManager {
         this._physics.setupCollisions(this._collisions);
         this._gameRenderer.setupLayers(this._worldDOM, this._layers, this._templateDOM, this._styleDOM);
         this._gameRunner = new GameRunner(this);
+        for (const entity of this._allEntities) {
+            entity._beforeRun(this);
+        }
+        inputHandler.listen(this);
         this._gameRunner.start();
     }
 

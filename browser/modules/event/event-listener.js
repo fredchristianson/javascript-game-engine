@@ -51,7 +51,7 @@ export class EventListener {
 
     removeListeners() {
         for (const [element, type] of this._elementTypePairs) {
-            element.removeEventListener(element, type, this._onEventFunction, this._options);
+            element?._htmlElement?.removeEventListener(type, this._onEventFunction, this._options);
         }
     }
 }

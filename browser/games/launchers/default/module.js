@@ -88,7 +88,7 @@ class Launcher {
   }
 
   launchGame(piece) {
-    const gameName = piece.Data.Name;
+    const gameName = piece.Data.name;
     this._theGame.run(gameName);
   }
 

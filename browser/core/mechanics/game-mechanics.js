@@ -15,7 +15,7 @@ class GameMechanics {
 
     step() {
         for (const action of this._actions) {
-            action.check();
+            action.process();
         }
     }
 }

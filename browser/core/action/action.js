@@ -8,9 +8,23 @@ class Action extends Entity {
     constructor(type) {
         super(type);
         this._handler = null;
+        this._kind = null;
+        this._data = null;
     }
 
+    get Kind() {
+        return this._kind;
+    }
+    set Kind(kind) {
+        this._kind = kind;
+    }
 
+    get Data() {
+        return this._data;
+    }
+    set Data(data) {
+        this._data = data;
+    }
     get Handler() {
         return this._handler;
     }
@@ -18,11 +32,9 @@ class Action extends Entity {
         this._handler = handler;
     }
 
-    check() {
-        if (this._warnOnce == null) {
-            this._warnOnce = 'done';
-            log.warn('derived class does not implement Action.check()', this._type);
-        }
+    process() {
+        log.once(LOGLEVELS.ERROR, 'derived class does not implement Action.process()', this._type);
+
     }
     _doAction() {
         this._handler.call(this._data);

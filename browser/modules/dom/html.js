@@ -145,18 +145,22 @@ export class DOMElement extends DOMElementType {
     }
 
     all(selector) {
+        if (selector instanceof HTMLElement || selector instanceof DOMElement) {
+            return [domElementOf(selector)];
+        }
         if (UTIL.isNullish(selector) || UTIL.isNullish(this._htmlElement)) {
             return [];
         }
         return [...this._htmlElement.querySelectorAll(selector)].map(domElementOf);
     }
 
+
     append(other) {
         let appended = other;
         if (isDOM(other)) {
             const children = other.getChildNodes();
+            appended = [...children][0];
             this._htmlElement.append(...children);
-            appended = children[0];
         } else if (TYPE.isType(other, DOMElement)) {
             this._htmlElement.append(other.HTMLElement);
         } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {

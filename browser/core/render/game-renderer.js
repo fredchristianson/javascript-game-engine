@@ -21,9 +21,14 @@ class GameRenderer {
         this._gameRenderLayers = [];
         this._layerRenderers = [];
         this._worldDOM = null;
+        this._rootDOM = null;
         this._templateDOM = null;
         this._styleDOM = null;
         this._nextId = 1;
+    }
+
+    get RootDOM() {
+        return this._rootDOM;
     }
 
     setupLayers(worldDOM, layers, templateDOM, styleDOM) {
@@ -40,6 +45,7 @@ class GameRenderer {
         this._layerRenderers = [];
         this._rootHtml = this._worldDOM.parseString(RENDER_HTML);
         this._worldDOM.append(this._rootHtml);
+        this._rootDOM = this._worldDOM.childDOM('.game-render-root');
         this._gameRenderStyle = this._worldDOM.childDOM('#game-render-style');
         this._gameRenderLayers = this._worldDOM.childDOM('#game-render-layers');
         if (this._styleDOM != null) {

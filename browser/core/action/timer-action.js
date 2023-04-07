@@ -23,7 +23,7 @@ class TimerAction extends Action {
         return this._type;
     }
 
-    check() {
+    process() {
         if (this._timer == null) {
             this._timer = gameTimer.createTimer(this._periodMilliseconds);
         }

@@ -10,7 +10,7 @@ export class EventGroup {
 
     removeAll() {
         for (const event of this._eventHandlers) {
-            event.remove();
+            event.removeListeners();
         }
         this._eventHandlers.splice(0, this._eventHandlers.length);
     }

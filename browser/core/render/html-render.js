@@ -14,6 +14,9 @@ class HtmlRenderer extends Renderer {
         entity._rendererData = {
             renderer: this,
             element: this._element
+        };
+        if (this._element) {
+            this._element._htmlElement._renderData = { renderer: this, entity: entity };
         }
     }
 

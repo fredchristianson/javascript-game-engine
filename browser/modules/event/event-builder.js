@@ -48,6 +48,7 @@ export class EventHandlerBuilder {
     listenTo(element, dom = null) {
         if (dom == null && isDOM(element)) {
             this._dom = element;
+            this._listenTo = element.HTMLElement;
             return this;
         }
         ASSERT.isType(element, ['string', DOMElementType, HTMLElement], 'eventTarget must be a string (CSS selector) or HTMLElement');
