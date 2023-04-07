@@ -26,8 +26,8 @@ class EntityBuilder {
         return result;
     }
 
-    _entityCreated(instance) {
-        // derived class can override if needed
+    _entityCreated(entity) {
+        this._gameManager._addEntity(entity);
     }
 }
 

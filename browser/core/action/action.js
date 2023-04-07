@@ -1,31 +1,21 @@
 import { createLogger } from '../../modules/logging.js';
+import { Entity } from '../entity/entity.js';
 
 const log = createLogger('Action');
 
-class Action {
+class Action extends Entity {
 
     constructor(type) {
-        this._type = type;
+        super(type);
         this._handler = null;
-        this._data = null;
     }
+
 
     get Handler() {
         return this._handler;
     }
     set Handler(handler) {
         this._handler = handler;
-    }
-    get Type() {
-        return this._type;
-    }
-
-    get Data() {
-        return this._data;
-    }
-
-    set Data(data) {
-        this._data = data;
     }
 
     check() {

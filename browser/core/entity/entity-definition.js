@@ -1,20 +1,16 @@
 import { NotImplementedException } from '../../modules/exception/not-implemented.js';
-import { FUNCTION, OBJECT, TYPE } from '../../modules/helpers.js';
-import { MethodRenderer } from '../render/method-renderer.js';
-import { Renderer } from '../render/renderer.js';
 import { createLogger } from '../../modules/logging.js';
 const log = createLogger('EntityDefinition');
 class EntityDefinition {
     constructor(entityType, builder = null) {
         this._builder = builder;
         this._entityType = entityType;
-        this._isTemplate = false;
         this._count = 1;
-        this._renderer = null;
         this._data = null;
-        this._parentEntity = null;
-        this._templateSelector = null;
-        this._attachSelector = null;
+        this._id = null;
+        this._parentId = null;
+        this._kind = null;
+
     }
 
     _setBuilder(builder) {
@@ -24,9 +20,6 @@ class EntityDefinition {
         return this._count;
     }
 
-    get IsTemplate() {
-        return this._isTemplate;
-    }
 
     buildOne() {
         const instance = this.buildEntities(1)[0];
@@ -42,6 +35,7 @@ class EntityDefinition {
         const entities = [];
         for (let number = 0; number < instanceCount; number++) {
             const instance = this._createEntity();
+
             instance._attachSelector = this._attachSelector;
             instance._templateSelector = this._templateSelector;
             entities.push(instance);
@@ -57,66 +51,39 @@ class EntityDefinition {
         return entities;
     }
 
+    _initializeEntity(entity) {
+        entity._entityType = this._entityType;
+        if (this._data) {
+            entity.Data = this._data;
+        }
+        if (this._parentId) {
+            entity.Id = this._id;
+        }
+        if (this._kind) {
+            entity.Kind = this._kind;
+        }
+    }
+
     _createEntity() {
         log.error('derived class must implement _createEntity');
         throw new NotImplementedException();
     }
 
-    get Parent() {
-        return this._parentEntity;
-    }
-
-    set Renderer(renderer) {
-        this._renderer = renderer;
-    }
-    get Renderer() {
-        return this._renderer;
-    }
 
     /* Builder methods.  Each returns "this" so the next can be called*/
 
-    parent(parentEntity) {
-        this._parentEntity = parentEntity;
-        return this;
-    }
     count(val) {
         this._count = val;
         return this;
     }
 
-    isTemplate(template) {
-        this._isTemplate = template;
-        this._count = template ? 0 : 1;
-        return this;
-    }
-    renderer(entityRenerer, method = null) {
-        if (TYPE.isType(entityRenerer, Renderer)) {
-            this._renderer = entityRenerer;
-        } else if (FUNCTION.isFunction(entityRenerer)) {
-            this._renderer = new FunctionRenderer(entityRenerer);
-        } else if (OBJECT.isObject(entityRenerer) && FUNCTION.isFunction(method)) {
-            this._renderer = new MethodRenderer(entityRenerer, method);
-        }
-        return this;
-    }
-
-    rendererType(type) {
-        this._rendererType = type;
-        return this;
-    }
-
-    templateSelector(selector) {
-        this._templateSelector = selector;
-        return this;
-    }
-
-    attach(selector) {
-        this._attachSelector = selector;
-        return this;
-    }
-
     data(val) {
         this._data = val;
+        return this;
+    }
+
+    id(val) {
+        this._id = val;
         return this;
     }
 }

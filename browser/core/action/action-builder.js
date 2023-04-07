@@ -7,9 +7,9 @@ import { ClickAction } from './click-action.js';
 import { TimerAction } from './timer-action.js';
 
 class ActionDefinition extends EntityDefinition {
-    constructor(gameManager) {
-        super(gameManager);
-        this._actionType = ACTION_TYPE.UNKNOWN;
+    constructor(type, builder) {
+        super(ENTITY_TYPE.ACTION, builder);
+        this._actionType = type;
         this._periodMSecs = null;
         this._handler = null;
         this._forKind = null;
@@ -38,6 +38,7 @@ class ActionDefinition extends EntityDefinition {
 
     _createEntity() {
         const action = this._createActionByType(this._actionType);
+        this._initializeEntity(action);
         action.Kind = this._actionKind;
         action.Data = this._data;
         action.Handler = this._handler;
@@ -66,16 +67,22 @@ class ActionBuilder extends EntityBuilder {
         this._gameManager = gameManager;
     }
 
-    defineAction() {
-        const def = new ActionDefinition();
+    defineAction(type) {
+        const def = new ActionDefinition(type, this);
         this._addDefinition(def);
         return def;
     }
 
 
-    _entityCreated(entity, _def) {
-        this._gameManager.addAction(entity);
+    defineTimer() {
+        return this.defineAction(ACTION_TYPE.TIMER);
     }
+
+    defineClick() {
+        return this.defineAction(ACTION_TYPE.CLICK);
+    }
+
+
 }
 
 export { ActionBuilder };

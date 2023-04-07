@@ -9,6 +9,15 @@ class Layer extends Entity {
         super(ENTITY_TYPE.LAYER);
         this._type = type;
         this._order = 0; // lower order has lower z-index
+        this._dom = null;
+    }
+
+    get DOM() {
+        return this._dom;
+    }
+    
+    set DOM(dom) {
+        this._com = dom;
     }
 
     get Type() {

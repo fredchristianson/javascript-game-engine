@@ -5,7 +5,8 @@ const ENTITY_TYPE = {
     AREA: Symbol('1-area'),
     PIECE: Symbol('2-piece'),
     LAYER: Symbol('3-layer'),
-    ACTION: Symbol('4-action')
+    ACTION: Symbol('4-action'),
+    MODEL: Symbol('4-model')
 };
 
 export { ENTITY_TYPE };

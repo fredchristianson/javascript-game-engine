@@ -1,4 +1,7 @@
 class Enum {
+    static of(name) {
+        return new Enum(name);
+    }
     constructor(name) {
         this._name = name;
         this._symbol = Symbol(name);

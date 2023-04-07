@@ -1,4 +1,3 @@
-import { EntityDefinition } from '../entity/entity-definition.js';
 import { EntityBuilder } from '../entity/entity-builder.js';
 import { ENTITY_TYPE } from '../entity/entity-type.js';
 import { LAYER_TYPE } from './layer-type.js';
@@ -7,7 +6,8 @@ import { ForegroundLayer } from './foreground-layer.js';
 import { InputLayer } from './input-layer.js';
 import { BackgroundLayer } from './background-layer.js';
 import { CanvasLayer } from './canvas-layer.js';
-class LayerDefinition extends EntityDefinition {
+import { VisibleEntityDefinition } from '../entity/visible-entity-definition.js';
+class LayerDefinition extends VisibleEntityDefinition {
     constructor(layerType, builder) {
         super(ENTITY_TYPE.LAYER, builder);
         this._layerType = layerType;
@@ -15,8 +15,10 @@ class LayerDefinition extends EntityDefinition {
 
     _createEntity() {
         const layer = this._createLayer();
-        layer.Renderer = this._renderer;
+        layer._beforeRenderer = this._beforeRenderer;
         layer._templateSelector = this._templateSelector;
+        layer._attachSelector = this._attachSelector;
+        layer._parentEntity = this._parentEntity;
         layer._data = this._data;
         return layer;
     }
@@ -68,9 +70,6 @@ class LayerBuilder extends EntityBuilder {
     }
 
 
-    _entityCreated(entity, _def) {
-        this._gameManager.addLayer(entity);
-    }
 }
 
 export { LayerBuilder };

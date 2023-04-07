@@ -5,7 +5,7 @@
 
 import { TIMER } from './timer.js';
 import { UTIL } from './helpers.js';
-import { DocumentDOM } from './dom/dom.js';
+import { DocumentDOM } from './dom/document.js';
 
 function registerChildWindow(child) {
     if (window._gameChildren == null) {

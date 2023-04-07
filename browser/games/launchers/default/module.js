@@ -1,47 +1,63 @@
 import { API } from '../../../modules/net.js';
 import { HSL } from '../../../modules/color.js';
-import { RENDERER_TYPE, ACTION_TYPE } from '../../../core/game.js';
 import { HTML } from '../../../modules/dom.js';
+
 
 class Launcher {
   constructor() {
     this._theGame = null;
     this._worldDOM = null;
-    this._boardLayer = null;
-    this._board = null;
     this._backgroundHue = 0;
+    this._gamePieceKindId = null;
+    this._pieceModelId = null;
+    this._boardId = null;
+    this._boardLayerId = null;
+    this._backgroundLayerId = null;
   }
 
 
   async setup(theGame, world) {
     this._theGame = theGame;
     this._world = world;
+
+    this._gamePieceKindId = theGame.createId('gamePiece');
+    this._pieceModelId = theGame.createId('Piece Model');
+    this._boardId = theGame.createId('board');
+    this._boardLayerId = theGame.createId('board layer');
+    this._backgroundLayerId = theGame.createId('background layer');
   }
 
-  async defineRenderers(rendererBuilder) {
-
-    this._pieceRenderer = rendererBuilder.defineRenderer()
-      .rendererType(RENDERER_TYPE.HTML_TEMPLATE)
-      .templateSelector('#game-select-template')
-      .buildOne();
-  }
 
   async defineLayers(layerBuilder) {
     layerBuilder.defineBackgroundLayer()
+      .id(this._backgroundLayerId)
       .templateSelector('#background-layer')
-      .renderer(this, this.renderBackground);
-    this._boardLayer = layerBuilder.defineHtmlLayer(this)
-      .templateSelector('#action-layer')
-      .buildOne();
+      .beforeRender(this, this.beforeRender);
+    layerBuilder.defineHtmlLayer(this)
+      .id(this._boardLayerId)
+      .templateSelector('#action-layer');
 
+  }
+
+  async defineModels(modelBuilder) {
+    modelBuilder.defineHtmlModel()
+      .id(this._pieceModelId)
+      .templateSelector('#game-select-template')
+      .templateValues((pieceData) => {
+        return {
+          '.title': pieceData.name,
+          '.description': pieceData.description,
+          'li': HTML.dataValue('name', pieceData.name)
+        };
+      });
   }
 
   async defineAreas(areaBuilder) {
     // need the board instance so call build()
-    this._board = areaBuilder.defineBoard()
-      .parent(this._boardLayer)
-      .attach('.game.list')
-      .buildOne();
+    areaBuilder.defineBoard()
+      .id(this._boardId)
+      .parentId(this._boardLayerId)
+      .attachSelector('.game.list');
   }
 
   async definePieces(pieceBuilder) {
@@ -49,26 +65,21 @@ class Launcher {
 
     for (const game of games.filter((g) => g.type == 'game')) {
       pieceBuilder.definePiece()
-        .parent(this._board)
+        .modelId(this._pieceModelId)
+        .modelId(8)
+        .parentId(this._boardId)
         .templateSelector('#game-select-template')
-        .kind('game')
-        .data({
-          '.title': game.name,
-          '.description': game.description,
-          'li': HTML.dataValue('name', game.name)
-        })
-        .renderer(this._pieceRenderer);
+        .kind(this._gamePieceKindId)
+        .data(game);
     }
   }
 
   async defineActions(actionBuilder) {
-    actionBuilder.defineAction()
-      .actionType(ACTION_TYPE.TIMER)
+    actionBuilder.defineTimer()
       .periodMilliseconds(50)
       .handler(this, this.changeBackgroundColor);
-    actionBuilder.defineAction()
-      .actionType(ACTION_TYPE.CLICK)
-      .forKind('game')
+    actionBuilder.defineClick()
+      .forKind(this._gamePieceKindId)
       .handler(this, this.launchGame);
 
   }
@@ -82,9 +93,10 @@ class Launcher {
     this._backgroundHue = (this._backgroundHue + 1) % 360;
   }
 
-  renderBackground(layer, htmlElement) {
-    htmlElement.setStyle('background-color', HSL(this._backgroundHue, 100, 50).toHTML());
+  beforeRender(layer) {
+    layer.getDOM().setStyle('background-color', HSL(this._backgroundHue, 100, 50).toHTML());
   }
+
 }
 
 export const game = new Launcher();

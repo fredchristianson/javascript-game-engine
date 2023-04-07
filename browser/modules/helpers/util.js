@@ -97,6 +97,21 @@ const UTIL = {
       return pairs;
     }, []);
     return result;
+  },
+  includes: function (object, member) {
+    if (UTIL.isNullish(object)) {
+      return false;
+    }
+    if (Array.isArray(object)) {
+      return object.includes(member);
+    }
+    if (typeof object == 'string') {
+      return object.includes(member);
+    }
+    if (object instanceof Map) {
+      return object.has(member);
+    }
+    return false;
   }
 }
 export { UTIL }; 

@@ -1,7 +1,8 @@
 import { ASSERT } from './assert.js';
-import { DOM as dom } from './dom/dom.js';
+import { DOM as dom } from './dom/document.js';
 import { setDocumentDOM, DOMElementType } from './dom/dom-common.js';
 import { HTML } from './dom/html.js';
+import { HTMLTemplate } from './dom/html-template.js';
 import { createLogger } from './logging.js';
 const log = createLogger('DOM Module');
 export const documentDOM = new dom.DocumentDOM();
@@ -44,19 +45,27 @@ export function ofScript(selector) {
 
 }
 
-export function first(selector) {
+export function firstElement(selector) {
     return documentDOM.first(selector);
 }
 
-export { HTML };
+
+export function allElements(selector) {
+    return documentDOM.all(selector);
+}
+
+
+export { HTML, HTMLTemplate };
 export const DOM = {
     DocumentDOM: dom.DocumentDOM,
     PartialDOM: dom.PartialDOM,
     FragmentDOM: dom.FragmentDOM,
-    first,
+    firstElement,
+    allElements,
     ofSelector,
     ofScript,
     ofText,
     documentDOM,
-    HTML
+    HTML,
+    HTMLTemplate
 };

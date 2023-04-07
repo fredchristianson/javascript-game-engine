@@ -1,19 +1,30 @@
 
 import { createLogger } from '../../modules/logging/logger.js';
 import { ENTITY_TYPE } from './entity-type.js';
+import { Entity } from './entity.js';
 
 const log = createLogger('Layer');
 
-class Entity {
+class VisibleEntity extends Entity {
     constructor(type = ENTITY_TYPE.UNKNOWN) {
-        this._entityType = type;
-        this._data = null;
-        this._updateState = 0; // incremented each update.  
-        this._changed = false;
-        this._parentId = null;
-        this._parent = null;
-        this._children = null;
-        this._kind = null;
+        super(type);
+        this._templateSelector = null;
+        this._attachSelector = null;
+        this._models = null;
+        this._modelIds = null;
+    }
+
+    _initializeEntity(entity) {
+        super._initializeEntity(entity);
+        if (this._templateSelector) {
+            entity.TemplateSelector = this._templateSelector;
+        }
+        if (this._attachSelector) {
+            entity.AttachSelector = this._attachSelector;
+        }
+        if (this._modelIds) {
+            entity.ModelIds = this._modelIds;
+        }
     }
 
     set Kind(kind) {
@@ -40,12 +51,13 @@ class Entity {
         return this._data;
     }
 
-    set ParentEntity(parentEntity) {
-        this._parentEntity = parentEntity;
+    set Renderer(renderer) {
+        this._renderer = renderer;
     }
-    get ParentEntity() {
-        return this._parentEntity;
+    get Renderer() {
+        return this._renderer;
     }
+
 
     set TemplateSelector(templateSelector) {
         this._templateSelector = templateSelector;
@@ -57,6 +69,19 @@ class Entity {
     get EntityType() {
         return this._entityType;
     }
+
+    get Models() {
+        return this._models;
+    }
+
+    get ModelIds() {
+        return this._modelIds;
+    }
+    addModel(model) {
+        this._models = this._models || [];
+        this._models.push(model);
+    }
+
 
     setChanged() {
         this._changed = true;
@@ -72,21 +97,6 @@ class Entity {
     }
 
 
-    addChild(childEntity) {
-        if (this._children == null) {
-            this._children = [];
-        }
-        if (UTIL.includes(this._children, childEntity)) {
-            log.warn('child ', childEntity, ' alread added to entityt', this);
-            return;
-        }
-        this._children.push(childEntity);
-    }
-
-    setParent(parent) {
-        this._parent = parent;
-    }
-
 }
 
-export { Entity };
+export { VisibleEntity };

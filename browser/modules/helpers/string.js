@@ -109,7 +109,7 @@ const STRING = {
   /**
    * Creates a string of an html element including the tag, id,  and classes.
    *
-   * @param {HTMLElement} htmlElement - the HTMLElement to print
+   * @param {HTMLElement} item - the HTMLElement to print
    * @returns {String} displayable string of the element.  Empty string if not an HTMLElement
    */
   htmlElementToString: function (item) {

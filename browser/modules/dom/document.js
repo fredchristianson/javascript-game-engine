@@ -1,4 +1,4 @@
-import { HTML, NullElement } from './html.js';
+import { DOMElement, HTML } from './html.js';
 import { ASSERT } from '../assert.js';
 import { TYPE, UTIL, STRING, FUNCTION, OBJECT } from '../helpers.js';
 import { createLogger } from '../logging/logger.js';
@@ -42,26 +42,15 @@ function isHTMLElement(value) {
     //return TYPE.isType(root, [HTMLElement, HTMLHtmlElement, Document, DocumentFragment]) || root == document
 }
 
-class DOMBase {
-    constructor(root) {
-        ASSERT.notNull(root, 'DOM constructor must have an HTMLElement parameter');
+class DOMDocumentBase extends DOMElement {
+    constructor(htmlElement) {
+        super(htmlElement);
         setDOMSymbol(this);
-        if (isHTMLElement(root)) {
-            this._htmlElement = root;
-            this._root = new HTML.DOMElement(root);
-        } else {
-            this._root = root;
-            this._htmlElement = root.getHTMLElement();
-        }
+
         this._eventGroup = new EventGroup();
     }
 
-    get Root() {
-        return this._root;
-    }
-    get DOMElement() {
-        return this._root;
-    }
+
     addListener(listener) {
         ASSERT.isType(listener, EventListener);
         this._eventGroup.add(listener);
@@ -74,50 +63,6 @@ class DOMBase {
     }
     removeListeners() {
         this._eventGroup.removeAll();
-    }
-
-    first(selector) {
-        ASSERT.notNull(selector, 'DOM.first parameter must not be null');
-        if (TYPE.isType(selector, DOMElementType)) {
-            return selector;
-        }
-        if (TYPE.isType(selector, HTMLElement)) {
-            return HTML.domElementOf(selector);
-        }
-        log.debug('Find first element: ', selector);
-        const htmlElement = this._htmlElement.querySelector(selector);
-        if (htmlElement === null) {
-            log.debug('selector ', selector, ' not found');
-            return null;
-        }
-        return HTML.domElementOf(htmlElement);
-
-    }
-
-    firstOrIgnore(selector) {
-        const first = this.first(selector);
-        return first ?? new NullElement();
-
-    }
-
-    all(selector) {
-        ASSERT.notNull(selector, 'DOM.all parameter must not be null');
-        log.debug('Find first element: ', selector);
-        if (TYPE.isType(selector, DOMElementType)) {
-            return [selector];
-        }
-        if (TYPE.isType(selector, HTMLElement)) {
-            return [HTML.elementOf(selector)];
-        }
-        const htmlElements = this._htmlElement.querySelectorAll(selector);
-        if (htmlElements === null) {
-            log.debug('selector ', selector, ' not found');
-            return [];
-        }
-        return [...htmlElements].map((htmlElement) => {
-            return HTML.domElementOf(htmlElement);
-        });
-
     }
 
     createScriptTemplate(scriptSelector) {
@@ -188,7 +133,7 @@ class DOMBase {
             } else if (TYPE.isType(child, DOMElementType)) {
                 this._htmlElement.append(child.HTMLElement);
                 appended = child.HTMLElement;
-            } else if (TYPE.isType(child, DOMBase)) {
+            } else if (TYPE.isType(child, DOMDocumentBase)) {
                 const nodes = [...child.getChildNodes()];
                 this._htmlElement.append(...nodes);
                 appended = nodes[0];
@@ -213,10 +158,6 @@ class DOMBase {
         }
     }
 
-    getChildNodes() {
-        return this._htmlElement;
-    }
-
     addStyle(style) {
         ASSERT.notNull(style, 'addStyle requires a non-null parameter');
         if (STRING.isString(style)) {
@@ -228,9 +169,6 @@ class DOMBase {
         }
     }
 
-    removeAllChildren() {
-        this._root.removeAllChildren();
-    }
 
     async load(...urls) {
         ASSERT.isArray(urls, 'load requires one or more urls');
@@ -251,7 +189,7 @@ class DOMBase {
 
 }
 
-export class DocumentDOM extends DOMBase {
+export class DocumentDOM extends DOMDocumentBase {
     constructor(doc = document) {
         super(doc);
     }
@@ -268,7 +206,7 @@ export class DocumentDOM extends DOMBase {
 
 }
 
-export class PartialDOM extends DOMBase {
+export class PartialDOM extends DOMDocumentBase {
     constructor(root) {
         super(root);
     }
@@ -295,7 +233,7 @@ export class FragmentDOM extends DocumentDOM {
 
 }
 
-export class ShadowDOM extends DOMBase {
+export class ShadowDOM extends DOMDocumentBase {
     constructor(shadowHostElement) {
         super(createShadowRoot(shadowHostElement));
     }
@@ -308,4 +246,9 @@ export class ShadowDOM extends DOMBase {
 
 }
 
-export const DOM = { DocumentDOM, PartialDOM, FragmentDOM };
+export const DOM = {
+    DocumentDOM,
+    PartialDOM,
+    FragmentDOM,
+    ShadowDOM
+};
