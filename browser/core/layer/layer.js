@@ -1,24 +1,20 @@
 
 import { createLogger } from '../../modules/logging/logger.js';
-import { Entity } from '../entity/entity.js';
 import { ENTITY_TYPE } from '../entity/entity-type.js';
+import { VisibleEntity } from '../entity/visible-entity.js';
 const log = createLogger('Layer');
 
-class Layer extends Entity {
+class Layer extends VisibleEntity {
     constructor(type) {
         super(ENTITY_TYPE.LAYER);
         this._type = type;
-        this._order = 0; // lower order has lower z-index
-        this._dom = null;
+        this._order = 0;
     }
 
     get DOM() {
-        return this._dom;
+        return this._rendererData?.element;
     }
-    
-    set DOM(dom) {
-        this._com = dom;
-    }
+
 
     get Type() {
         return this._type;

@@ -17,7 +17,9 @@ class VisibleEntity extends Entity {
 
     beforeRender() {
         if (this._beforeRender) {
-            this._beforeRender.call(this);
+            for (const handler of this._beforeRender) {
+                handler.call(this);
+            }
         }
     }
 

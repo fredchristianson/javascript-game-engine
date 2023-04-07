@@ -130,13 +130,13 @@ class DOMDocumentBase extends DOMElement {
             if (TYPE.isType(child, HTMLElement)) {
                 this._htmlElement.append(child);
                 appended = child;
-            } else if (TYPE.isType(child, DOMElementType)) {
-                this._htmlElement.append(child.HTMLElement);
-                appended = child.HTMLElement;
             } else if (TYPE.isType(child, DOMDocumentBase)) {
                 const nodes = [...child.getChildNodes()];
                 this._htmlElement.append(...nodes);
                 appended = nodes[0];
+            } else if (TYPE.isType(child, DOMElementType)) {
+                this._htmlElement.append(child.HTMLElement);
+                appended = child.HTMLElement;
             } else if (STRING.isString(child)) {
                 const parsedDOM = this.parseString(child);
                 appended = this.append(parsedDOM);
@@ -195,9 +195,14 @@ export class DocumentDOM extends DOMDocumentBase {
     }
 
     getChildNodes() {
-        const allNodes = this._htmlElement.childNodes;
+        /*
+         * ignore text nodes.  only care about HTML nodes
+         * templates may have whitespace before or after
+         */
+        const allNodes = this._htmlElement.children;
         const body = allNodes[0]?.querySelector('body');
         if (body != null) {
+            // return all nodes, including text
             return body.childNodes;
         } else {
             return allNodes;

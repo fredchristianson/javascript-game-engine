@@ -11,6 +11,10 @@ class HtmlRenderer extends Renderer {
         this._attach();
         this._getTemplate();
         this._createChildRenderers();
+        entity._rendererData = {
+            renderer: this,
+            element: this._element
+        }
     }
 
     _createChildRenderers() {

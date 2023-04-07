@@ -19,11 +19,7 @@ class PieceDefinition extends VisibleEntityDefinition {
         const piece = new Piece(this._pieceType);
         this._initializeEntity(piece);
         piece.Kind = this._pieceKind;
-        piece.Renderer = this._renderer;
         piece.Data = this._data;
-        piece.ParentEntity = this._parentEntity;
-        piece.TemplateSelector = this._templateSelector;
-        piece._modelIds = this.ModelIds;
         return piece;
     }
 }

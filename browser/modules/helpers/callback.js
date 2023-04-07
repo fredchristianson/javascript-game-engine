@@ -12,7 +12,7 @@ class Callback {
     }
 
     async call(...args) {
-        return await this._function.call(this._object, [...args, ...this._data ?? []]);
+        return await this._function.apply(this._object, [...args, ...this._data ?? []]);
     }
 }
 /** @namespace CALLBACK */

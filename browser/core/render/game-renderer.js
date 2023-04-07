@@ -48,8 +48,7 @@ class GameRenderer {
 
         const sorted = [...this._layers].sort(layerOrderCompare);
         for (const layer of sorted) {
-            const renderElement = this._gameRenderLayers.append('<div></div>');
-            const layerRenderer = new HtmlRenderer(this, renderElement, layer);
+            const layerRenderer = new HtmlRenderer(this, this._gameRenderLayers, layer);
             this._layerRenderers.push(layerRenderer);
         }
     }
@@ -67,7 +66,11 @@ class GameRenderer {
 
     step() {
         for (const renderer of this._layerRenderers) {
-            renderer.render();
+            try {
+                renderer.render();
+            } catch (ex) {
+                log.error('failed to render layer ', renderer);
+            }
         }
     }
 }

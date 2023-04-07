@@ -97,7 +97,7 @@ class Launcher {
   }
 
   beforeRender(layer) {
-    layer.getDOM().setStyle('background-color', HSL(this._backgroundHue, 100, 50).toHTML());
+    layer.DOM.setStyle('background-color', HSL(this._backgroundHue, 100, 50).toHTML());
   }
 
 }

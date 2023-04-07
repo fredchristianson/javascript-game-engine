@@ -1,4 +1,4 @@
-import { HandlerFunction } from '../../modules/event/handler-function.js';
+import { CALLBACK } from '../../modules/helpers/callback.js';
 import { createLogger } from '../../modules/logging.js';
 import { EntityDefinition } from './entity-definition.js';
 const log = createLogger('VisibleEntityDefinition');
@@ -31,19 +31,6 @@ class VisibleEntityDefinition extends EntityDefinition {
     }
 
 
-    get TemplateSelector() {
-        return this._templateSelector;
-    }
-    get BeforeRender() {
-        return this._beforeRender;
-    }
-    get ModelIds() {
-        return this._modelIds;
-    }
-    get AttachSelector() {
-        return this._attachSelector;
-    }
-
     /* Builder methods.  Each returns "this" so the next can be called*/
 
 
@@ -63,7 +50,7 @@ class VisibleEntityDefinition extends EntityDefinition {
     }
 
     beforeRender(...callback) {
-        this._beforeRender.push(new HandlerFunction(...callback));
+        this._beforeRender.push(CALLBACK.create(...callback));
         return this;
     }
 

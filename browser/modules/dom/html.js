@@ -153,14 +153,14 @@ export class DOMElement extends DOMElementType {
 
     append(other) {
         let appended = other;
-        if (TYPE.isType(other, DOMElement)) {
-            this._htmlElement.append(other.HTMLElement);
-        } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {
-            this._htmlElement.append(other);
-        } else if (isDOM(other)) {
+        if (isDOM(other)) {
             const children = other.getChildNodes();
             this._htmlElement.append(...children);
             appended = children[0];
+        } else if (TYPE.isType(other, DOMElement)) {
+            this._htmlElement.append(other.HTMLElement);
+        } else if (FUNCTION.hasMethod(other, 'querySelector')) {  // isType does't work for elements from child windows TYPE.isType(other, HTMLElement)) {
+            this._htmlElement.append(other);
         } else {
             ASSERT.fail('append parameter must be an HTMLElement. Got', other);
         }
