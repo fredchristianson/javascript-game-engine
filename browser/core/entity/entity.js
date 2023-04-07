@@ -1,4 +1,5 @@
 
+import { UTIL } from '../../modules/helpers.js';
 import { createLogger } from '../../modules/logging/logger.js';
 import { ENTITY_TYPE } from './entity-type.js';
 
@@ -7,15 +8,23 @@ const log = createLogger('Layer');
 class Entity {
     constructor(type = ENTITY_TYPE.UNKNOWN) {
         this._entityType = type;
+        this._id = null;
         this._data = null;
         this._updateState = 0; // incremented each update.  
         this._changed = false;
         this._parentId = null;
-        this._parent = null;
+        this._parentEntity = null;
         this._children = null;
         this._kind = null;
     }
 
+    get Id() {
+        return this._id;
+    }
+
+    get ParentId() {
+        return this._parentId;
+    }
     set Kind(kind) {
         this._kind = kind;
     }
@@ -23,8 +32,12 @@ class Entity {
         return this._kind;
     }
 
-    get Parent() {
-        return this._parent;
+    get ParentEntity() {
+        return this._parentEntity;
+    }
+
+    set ParentEntity(parentEntity) {
+        this._parentEntity = parentEntity;
     }
     get Children() {
         return this._children;
@@ -40,12 +53,6 @@ class Entity {
         return this._data;
     }
 
-    set ParentEntity(parentEntity) {
-        this._parentEntity = parentEntity;
-    }
-    get ParentEntity() {
-        return this._parentEntity;
-    }
 
     set TemplateSelector(templateSelector) {
         this._templateSelector = templateSelector;
@@ -83,9 +90,6 @@ class Entity {
         this._children.push(childEntity);
     }
 
-    setParent(parent) {
-        this._parent = parent;
-    }
 
 }
 

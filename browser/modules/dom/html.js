@@ -101,9 +101,12 @@ export class DOMElement extends DOMElementType {
     constructor(htmlElement = null) {
         super();
         if (htmlElement?.nodeName?.localeCompare('#document') == 0) {
-            htmlElement = htmlElement.querySelector('body');
+            this._htmlElement = htmlElement.querySelector('body');
+        } else if (htmlElement instanceof DOMElement) {
+            this._htmlElement = htmlElement.HTMLElement;
+        } else {
+            this._htmlElement = htmlElement;
         }
-        this._htmlElement = htmlElement;
     }
 
     clone() {
@@ -145,7 +148,7 @@ export class DOMElement extends DOMElementType {
         if (UTIL.isNullish(selector) || UTIL.isNullish(this._htmlElement)) {
             return [];
         }
-        return this._htmlElement.querySelectorAll(selector).map(domElementOf);
+        return [...this._htmlElement.querySelectorAll(selector)].map(domElementOf);
     }
 
     append(other) {

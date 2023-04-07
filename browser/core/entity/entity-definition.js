@@ -57,7 +57,10 @@ class EntityDefinition {
             entity.Data = this._data;
         }
         if (this._parentId) {
-            entity.Id = this._id;
+            entity._parentId = this._parentId;
+        }
+        if (this._id) {
+            entity._id = this._id;
         }
         if (this._kind) {
             entity.Kind = this._kind;
@@ -84,6 +87,11 @@ class EntityDefinition {
 
     id(val) {
         this._id = val;
+        return this;
+    }
+
+    parentId(id) {
+        this._parentId = id;
         return this;
     }
 }

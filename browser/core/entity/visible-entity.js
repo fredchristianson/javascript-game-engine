@@ -12,18 +12,12 @@ class VisibleEntity extends Entity {
         this._attachSelector = null;
         this._models = null;
         this._modelIds = null;
+        this._beforeRender = null;
     }
 
-    _initializeEntity(entity) {
-        super._initializeEntity(entity);
-        if (this._templateSelector) {
-            entity.TemplateSelector = this._templateSelector;
-        }
-        if (this._attachSelector) {
-            entity.AttachSelector = this._attachSelector;
-        }
-        if (this._modelIds) {
-            entity.ModelIds = this._modelIds;
+    beforeRender() {
+        if (this._beforeRender) {
+            this._beforeRender.call(this);
         }
     }
 
@@ -34,9 +28,7 @@ class VisibleEntity extends Entity {
         return this._kind;
     }
 
-    get Parent() {
-        return this._parent;
-    }
+
     get Children() {
         return this._children;
     }

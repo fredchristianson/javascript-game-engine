@@ -130,7 +130,7 @@ class GameManager {
             if (UTIL.isNullish(parent) == null) {
                 log.error('entity ', entity, 'has unknown ParentID ');
             } else {
-                entity.Parent = parent;
+                entity.ParentEntity = parent;
                 parent.addChild(entity);
             }
         }
@@ -172,9 +172,9 @@ class GameManager {
 
         }
         this._allEntities.push(entity);
-        if (!UTIL.isNullish(entity.id)) {
-            const id = entity.id;
-            ASSERT.null(this._entityIdMap[id], 'addEntity requires a non-null entity ID ', id, ' alread exists');
+        if (!UTIL.isNullish(entity.Id)) {
+            const id = entity.Id;
+            ASSERT.isNull(this._entityIdMap[id], 'addEntity requires a non-null entity ID ', id, ' alread exists');
             this._entityIdMap[id] = entity;
         }
         if (!UTIL.isNullish(entity.ParentId)) {

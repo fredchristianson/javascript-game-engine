@@ -17,13 +17,13 @@ class PieceDefinition extends VisibleEntityDefinition {
 
     _createEntity() {
         const piece = new Piece(this._pieceType);
+        this._initializeEntity(piece);
         piece.Kind = this._pieceKind;
         piece.Renderer = this._renderer;
         piece.Data = this._data;
         piece.ParentEntity = this._parentEntity;
         piece.TemplateSelector = this._templateSelector;
-        piece._modelId = this.ModelId;
-        piece._parentId = this.ParentId;
+        piece._modelIds = this.ModelIds;
         return piece;
     }
 }

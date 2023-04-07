@@ -19,6 +19,7 @@ class Launcher {
 
 
   async setup(theGame, world) {
+    log.debug('Setup default game launcher');
     this._theGame = theGame;
     this._world = world;
 

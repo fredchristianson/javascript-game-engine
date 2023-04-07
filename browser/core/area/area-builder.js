@@ -13,6 +13,7 @@ class AreaDefinition extends VisibleEntityDefinition {
 
     _createEntity() {
         const area = this._createArea();
+        this._initializeEntity(area);
         area._data = this._data;
         area.ParentEntity = this._parentEntity;
         return area;

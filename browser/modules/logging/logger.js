@@ -20,6 +20,8 @@ import { ENV } from '../env.js';
 
 let writeMessage = null;
 
+const oneTimeMessages = {};
+
 /**
  *@module Logging
  * @private
@@ -175,6 +177,26 @@ class Logger {
    */
   never(..._message) {
     // do nothing
+  }
+
+  /**
+   * write a message one time. mainly intended for errors that would be written a lot but we
+   * only need to see the first.
+   *
+   * @param {...*} message if the first parameter is a LogLevel it is used.  Otherwise LOGLEVELS.ALWAYS
+   *              The rest of the values are used as the message.
+   */
+  once(...message) {
+    let level = LOGLEVELS.ALWAYS;
+    if (message[0] instanceof LogLevel) {
+      level = message.shift();
+    }
+    const first = message[0];
+    if (oneTimeMessages[first] == null) {
+      oneTimeMessages[first] = true;
+      this.write(level, ...message);
+    }
+
   }
 }
 

@@ -15,6 +15,7 @@ class VisibleEntityDefinition extends EntityDefinition {
 
 
     _initializeEntity(entity) {
+        super._initializeEntity(entity);
         if (this._attachSelector) {
             entity._attachSelector = this._attachSelector;
         }
@@ -29,9 +30,6 @@ class VisibleEntityDefinition extends EntityDefinition {
         }
     }
 
-    get ParentId() {
-        return this._parentId;
-    }
 
     get TemplateSelector() {
         return this._templateSelector;
@@ -39,8 +37,8 @@ class VisibleEntityDefinition extends EntityDefinition {
     get BeforeRender() {
         return this._beforeRender;
     }
-    get ModelId() {
-        return this._modelId;
+    get ModelIds() {
+        return this._modelIds;
     }
     get AttachSelector() {
         return this._attachSelector;
@@ -48,10 +46,7 @@ class VisibleEntityDefinition extends EntityDefinition {
 
     /* Builder methods.  Each returns "this" so the next can be called*/
 
-    parent(parentEntity) {
-        this._parentEntity = parentEntity;
-        return this;
-    }
+
     count(val) {
         this._count = val;
         return this;
@@ -72,10 +67,6 @@ class VisibleEntityDefinition extends EntityDefinition {
         return this;
     }
 
-    parentId(id) {
-        this._parentId = id;
-        return this;
-    }
 
     modelId(id) {
         this._modelIds = this._modelIds || [];

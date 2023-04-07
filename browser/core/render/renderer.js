@@ -6,7 +6,7 @@ class Renderer {
     }
 
     render(...args) {
-        ASSERT.fail('rend() is not implemented by derived class');
+        ASSERT.fail('render() is not implemented by derived class');
     }
 }
 

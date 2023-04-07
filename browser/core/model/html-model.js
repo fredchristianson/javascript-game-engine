@@ -14,6 +14,12 @@ class HtmlModel extends Model {
         this._templateValueFunction = null;
     }
 
+    getValues(data) {
+        if (this._templateValueFunction) {
+            return this._templateValueFunction(data);
+        }
+        return {};
+    }
 
 }
 

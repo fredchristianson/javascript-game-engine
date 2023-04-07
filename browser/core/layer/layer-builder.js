@@ -15,6 +15,7 @@ class LayerDefinition extends VisibleEntityDefinition {
 
     _createEntity() {
         const layer = this._createLayer();
+        this._initializeEntity(layer);
         layer._beforeRenderer = this._beforeRenderer;
         layer._templateSelector = this._templateSelector;
         layer._attachSelector = this._attachSelector;
