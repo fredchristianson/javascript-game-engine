@@ -1,20 +1,27 @@
 class PhysicsEngine {
     constructor(gameManager) {
         this._gameManager = gameManager;
-        this._pieces = [];
-        this._collisions = [];
+
     }
 
-    setupPieces(pieces) {
-        this._pieces = pieces;
-    }
+    setup() {
 
-    setupCollisions(collisions) {
-        this._collisions = collisions;
     }
 
     step() {
+        const movements = [];
+        for (const piece of this._gameManager._pieces) {
+            const startEnd = this._move(piece);
+            if (startEnd != null) {
+                movements.push(startEnd);
+            }
+        }
 
+
+    }
+
+    _move(piece) {
+        return null;
     }
 
 }

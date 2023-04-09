@@ -1,19 +1,23 @@
 import { createLogger } from '../../modules/logging.js';
 import { ACTION_TYPE } from './action-type.js';
 import { Action } from './action.js';
-import { inputHandler } from './input-handler.js';
 
 const log = createLogger('ClickAction');
 class ClickAction extends Action {
     constructor() {
         super(ACTION_TYPE.CLICK);
-        inputHandler.addClickAction(this);
         this._clicked = [];
     }
 
     get Type() {
         return this._type;
     }
+
+    setInputHandler(inputHandler) {
+        this._inputHandler = inputHandler;
+        inputHandler.addClickAction(this);
+    }
+
 
     process() {
         if (this._handler) {

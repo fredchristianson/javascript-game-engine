@@ -17,6 +17,9 @@ class Launcher {
     this._backgroundLayerId = null;
   }
 
+  get Title() {
+    return 'Launcher';
+  }
 
   async setup(theGame, world) {
     log.debug('Setup default game launcher');
@@ -69,7 +72,6 @@ class Launcher {
     for (const game of games.filter((g) => g.type == 'game')) {
       pieceBuilder.definePiece()
         .modelId(this._pieceModelId)
-        .modelId(8)
         .parentId(this._boardId)
         .templateSelector('#game-select-template')
         .kind(this._gamePieceKindId)

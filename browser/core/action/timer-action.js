@@ -1,4 +1,3 @@
-import { gameTimer } from '../game/game-timer.js';
 import { ACTION_TYPE } from './action-type.js';
 import { Action } from './action.js';
 
@@ -13,8 +12,13 @@ class TimerAction extends Action {
         return _periodMilliseconds;
     }
 
+    set GameTimer(gameTimer) {
+        this._gameTimer = gameTimer;
+    }
+
     set PeriodMilliseconds(msecs) {
-        gameTimer.createTimer(msecs);
+
+        this._gameTimer.createTimer(msecs);
         this._periodMilliseconds = msecs;
     }
 
@@ -25,7 +29,7 @@ class TimerAction extends Action {
 
     process() {
         if (this._timer == null) {
-            this._timer = gameTimer.createTimer(this._periodMilliseconds);
+            this._timer = this._gameTimer.createTimer(this._periodMilliseconds);
         }
         if (this._timer?.IsDone) {
             this._doAction();

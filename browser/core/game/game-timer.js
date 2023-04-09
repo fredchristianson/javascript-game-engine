@@ -53,6 +53,4 @@ class GameTimer {
     }
 }
 
-const gameTimer = new GameTimer();
-
-export { gameTimer };
+export { GameTimer };

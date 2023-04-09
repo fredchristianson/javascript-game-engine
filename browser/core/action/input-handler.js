@@ -4,17 +4,11 @@ import { createLogger } from '../../modules/logging.js';
 const log = createLogger('inputHandler');
 class ActionInputHandler {
     constructor() {
-        this._actions = null;
+        this._actions = [];
         this._dom = null;
-        this._clickActions = null;
+        this._clickActions = [];
     }
 
-    reset() {
-        this._actions = [];
-        this._clickActions = [];
-        this._dom?.removeListeners();
-        this._dom = null;
-    }
 
     listen(gameManager) {
         const renderer = gameManager.GameRenderer;
@@ -48,6 +42,4 @@ class ActionInputHandler {
 }
 
 
-const inputHandler = new ActionInputHandler();
-
-export { inputHandler };
+export { ActionInputHandler };

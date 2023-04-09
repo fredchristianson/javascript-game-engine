@@ -6,7 +6,8 @@ const ENTITY_TYPE = {
     PIECE: Symbol('2-piece'),
     LAYER: Symbol('3-layer'),
     ACTION: Symbol('4-action'),
-    MODEL: Symbol('4-model')
+    PLAYER: Symbol('5-PLAYER'),
+    COLLISION: Symbol('6-COLLISION')
 };
 
 export { ENTITY_TYPE };

@@ -8,7 +8,9 @@
 <body>
     <div id="app">
         <div class="controls">
-            <div class="engine">engine controls</div>
+            <div class="engine">
+
+            </div>
             <div class="game">game controls</div>
         </div>
         <div id='world' class="world game">world</div>
@@ -24,9 +26,9 @@
     import { loadENV} from "../modules/env.js";
     import { GameMain } from "./js/game-main.js";
     const ENV = await loadENV('/env-local.json','/env.json');
-    const main = new GameMain();
+    const main = new GameMain("default-launcher");
     // run the game named default-launcher
-    main.run("default-launcher");
+    main.run();
 
 
 </script>

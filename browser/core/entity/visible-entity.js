@@ -12,12 +12,12 @@ class VisibleEntity extends Entity {
         this._attachSelector = null;
         this._models = null;
         this._modelIds = null;
-        this._beforeRender = null;
+        this._beforeRenderer = null;
     }
 
     beforeRender() {
-        if (this._beforeRender) {
-            for (const handler of this._beforeRender) {
+        if (this._beforeRenderer) {
+            for (const handler of this._beforeRenderer) {
                 handler.call(this);
             }
         }

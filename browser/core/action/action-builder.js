@@ -9,6 +9,9 @@ import { TimerAction } from './timer-action.js';
 class ActionDefinition extends EntityDefinition {
     constructor(type, builder) {
         super(ENTITY_TYPE.ACTION, builder);
+        this._builder = builder;
+        this._gameManager = builder._gameManager;
+        this._inputHandler = builder._inputHandler;
         this._actionType = type;
         this._periodMSecs = null;
         this._handler = null;
@@ -42,6 +45,7 @@ class ActionDefinition extends EntityDefinition {
         action.Kind = this._actionKind;
         action.Data = this._data;
         action.Handler = this._handler;
+        action.setInputHandler(this._inputHandler);
         return action;
     }
 
@@ -50,6 +54,7 @@ class ActionDefinition extends EntityDefinition {
         switch (type) {
             case ACTION_TYPE.TIMER:
                 action = new TimerAction();
+                action.GameTimer = this._gameManager.GameTimer;
                 action.PeriodMilliseconds = this._periodMSecs;
                 break;
             case ACTION_TYPE.CLICK:
@@ -65,6 +70,7 @@ class ActionBuilder extends EntityBuilder {
     constructor(gameManager) {
         super(ENTITY_TYPE.ACTION);
         this._gameManager = gameManager;
+        this._inputHandler = gameManager._inputHandler;
     }
 
     defineAction(type) {

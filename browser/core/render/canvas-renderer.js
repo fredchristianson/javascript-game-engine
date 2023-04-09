@@ -2,8 +2,9 @@ import { HtmlModel } from '../model/html-model.js';
 import { MODEL_TYPE } from '../model/model-type.js';
 import { Renderer } from './renderer.js';
 
-const DEFAULT_HTML_ELEMENT = "<div class='html-renderer'></div>";
-class HtmlRenderer extends Renderer {
+const DEFAULT_CANVAS_ELEMENT = '<div class="canvas-renderer"><canvas style="width: 100%; height: 100%"></canvas></div>';
+
+class CanvasRenderer extends Renderer {
     constructor(gameRender, parentElement, entity) {
         super();
         this._gameRenderer = gameRender;
@@ -17,29 +18,22 @@ class HtmlRenderer extends Renderer {
         if (this._element == null) {
             this._createElement();
         }
-
-        this._createChildRenderers();
         entity._rendererData = {
             renderer: this,
             element: this._element
         };
         if (this._element) {
             this._element._htmlElement._renderData = { renderer: this, entity: entity };
+            this._canvas = this._element.first('canvas')._htmlElement;
         }
     }
 
     _createElement() {
-        this._element = this._parentElement.append(DEFAULT_HTML_ELEMENT);
+        this._element = this._parentElement.append(DEFAULT_CANVAS_ELEMENT);
     }
 
     _createChildRenderers() {
-        if (this._entity.Children && this._element) {
-            this._entity.Children.map((child) => {
-                return new HtmlRenderer(this._gameRenderer, this._element, child);
-            });
-        } else {
-            this._childRenderers = [];
-        }
+
     }
 
     _getTemplate() {
@@ -75,7 +69,6 @@ class HtmlRenderer extends Renderer {
             this._element = this._parentElement.first(this._entity.AttachSelector);
         }
     }
-
     render(...args) {
         if (this._entity.beforeRender) {
             this._entity.beforeRender(this, ...args);
@@ -85,8 +78,28 @@ class HtmlRenderer extends Renderer {
                 this._renderModel(model);
             }
         }
+
+        const size = this._element.size();
+
+        const context = this._canvas.getContext('2d');
+        for (const child of this._entity.Children) {
+            this._renderChild(context, child);
+        }
     }
 
+    _renderChild(context, child) {
+        if (child.Models) {
+            for (const model of child.Models) {
+                if (model.Type == MODEL_TYPE.TEXT) {
+                    context.font = '48px serif';
+                    context.fillStyle = '#00ff00';
+                    context.strokeStyle = '#0000ff';
+                    context.fillText(model.Text, 50, 50);
+                    context.strokeText(model.Text, 50, 50);
+                }
+            }
+        }
+    }
     _renderModel(model) {
         switch (model.Type) {
             case MODEL_TYPE.STYLE: this._applyStyles(model);
@@ -103,4 +116,4 @@ class HtmlRenderer extends Renderer {
     }
 }
 
-export { HtmlRenderer };
+export { CanvasRenderer };

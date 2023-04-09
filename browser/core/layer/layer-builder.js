@@ -49,6 +49,12 @@ class LayerDefinition extends VisibleEntityDefinition {
     }
 }
 
+class CanvasLayerDefinition extends LayerDefinition {
+    constructor(builder) {
+        super(LAYER_TYPE.CANVAS, builder);
+    }
+}
+
 class LayerBuilder extends EntityBuilder {
     constructor(gameManager) {
         super(gameManager);
@@ -66,8 +72,16 @@ class LayerBuilder extends EntityBuilder {
         return def;
     }
 
-    _buildDefaultLayers() {
+    defineCanvasLayer() {
+        const def = new CanvasLayerDefinition(this);
+        this._definitions.push(def);
+        return def;
+    }
 
+    _buildDefaultLayers() {
+        this.defineBackgroundLayer();
+        this.defineHtmlLayer();
+        this.buildAll();
     }
 
 

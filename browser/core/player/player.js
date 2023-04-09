@@ -2,24 +2,20 @@
 import { createLogger } from '../../modules/logging/logger.js';
 import { Entity } from '../entity/entity.js';
 import { ENTITY_TYPE } from '../entity/entity-type.js';
-import { MODEL_TYPE } from './model-type.js';
+import { AREA_TYPE } from './area-type.js';
 const log = createLogger('Layer');
 
-class Model extends Entity {
+class Area extends Entity {
     constructor() {
-        super(ENTITY_TYPE.MODEL);
-        this._type = MODEL_TYPE.UNKNOWN;
+        super(ENTITY_TYPE.AREA);
+        this._type = AREA_TYPE.UNKNOWN;
         this._parentElement = null;
         this._renderer = null;
         this._order = null;
     }
 
-    get Type() {
-        return this._type;
-    }
-
     type(type) {
-        log.debug('create model type', type);
+        log.debug('create area type', type);
         this._type = type;
         return this;
     }
@@ -33,11 +29,6 @@ class Model extends Entity {
         this._renderer = render;
         return this;
     }
-
-    _buildDefaultModels() {
-        // no defaults
-    }
-
 }
 
-export { Model };
+export { Area };

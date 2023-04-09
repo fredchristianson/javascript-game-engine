@@ -14,10 +14,17 @@ import { AreaBuilder } from '../area/area-builder.js';
 import { ASSERT } from '../../modules/assert.js';
 import { ENTITY_TYPE } from '../game.js';
 import { ModelBuilder } from '../model/model-builder.js';
-import { inputHandler } from '../action/input-handler.js';
+import { ActionInputHandler } from '../action/input-handler.js';
+import { GameTimer } from './game-timer.js';
+import { CollisionBuilder } from '../collision/collision-builder.js';
 
 const log = createLogger('GameManager');
 
+const CORE_GAME_CONTROLS = `<button id="start-game">Start</button>
+                <button id="reset-game">Reset</button>
+                <button id="stop-game">Stop</button>
+                <button id="pause-game">Pause</button>
+                    <button id="resume-game">Resume</button>`;
 class GameManager {
     constructor() {
         this._worldDOM = null;
@@ -38,9 +45,23 @@ class GameManager {
         this._entityIdMap = null;
         this._allEntities = null;
         this._childEntities = null;
+        this._name = 'unnamed';
+        this._title = 'unnamed';
+    }
+
+    _reset() {
+        this.run(this._name);
     }
     async run(name) {
+        /*
+         * stop any other game that's running
+         * future: allow multiple games to run simultaneously?
+         */
+        window._gameManager?._gameRunner?.stop();
+        window._gameManager = this;
+
         log.info(`GameAppRunning game ${name}`);
+        this._name = name;
         const gameHtml = await resourceManager.getGameResource(name, 'html'); //await fetch(`/games/${name}/game.html`);
         const gameStyle = await resourceManager.getGameResource(name, 'css'); //await fetch(`/games/${name}/game.html`);
 
@@ -61,6 +82,7 @@ class GameManager {
         const gameModule = await resourceManager.getGameModule(name);//  await import(`/games/${name}/js/game.js`);
         await loadGameENV(name);
         const game = gameModule.game ?? gameModule.test ?? gameModule.launcher ?? gameModule.default;
+        this._title = game.Title ?? this._name;
         this._game = game;
         this._physics = new PhysicsEngine(this);
         this._mechanics = new GameMechanics(this);
@@ -80,8 +102,13 @@ class GameManager {
         return this._gameRenderer;
     }
 
+    get GameTimer() {
+        return this._gameTimer;
+    }
+
     async _setup() {
-        inputHandler.reset();
+        this._inputHandler = new ActionInputHandler();
+        this._gameTimer = new GameTimer();
         this._entityIdMap = new Map();
         this._actions = [];
         this._layers = [];
@@ -111,16 +138,15 @@ class GameManager {
 
     _run() {
         this._findAllRelations();
-        this._mechanics.setupPieces(this._actions);
-        this._mechanics.setupActions(this._actions);
-        this._physics.setupPieces(this._pieces);
-        this._physics.setupCollisions(this._collisions);
+        this._mechanics.setup();
+        this._physics.setup();
         this._gameRenderer.setupLayers(this._worldDOM, this._layers, this._templateDOM, this._styleDOM);
         this._gameRunner = new GameRunner(this);
         for (const entity of this._allEntities) {
             entity._beforeRun(this);
         }
-        inputHandler.listen(this);
+        this._inputHandler.listen(this);
+        this._createControls();
         this._gameRunner.start();
     }
 
@@ -268,10 +294,10 @@ class GameManager {
 
     async _setupPlayers() {
         const game = this._game;
+        const playerBuilder = new PlayerBuilder(this);
         if (FUNCTION.hasMethod(game, 'definePlayers')) {
-
-        } else {
-
+            await game.definePlayers(playerBuilder);
+            playerBuilder.buildAll();
         }
     }
 
@@ -281,16 +307,13 @@ class GameManager {
         if (FUNCTION.hasMethod(game, 'defineActions')) {
             await game.defineActions(actionBuilder);
             actionBuilder.buildAll();
-        } else {
-
         }
     }
     async _setupCollisions() {
         const game = this._game;
+        const collisionBuilder = new CollisionBuilder();
         if (FUNCTION.hasMethod(game, 'defineCollisions')) {
-
-        } else {
-
+            await game.defineCollisions(collisionBuilder);
         }
     }
     async _setupRules() {
@@ -324,7 +347,42 @@ class GameManager {
     }
     setCoreControls(dom) {
         this._coreControlsDOM = dom;
-        this._coreControlsDOM.append('<div>JSGames</div>');
+    }
+
+    onStop(handler) {
+        this._onStop = handler;
+    }
+
+    _createControls() {
+        this._coreControlsDOM.replaceChildren();
+        this._coreControlsDOM.append(`<div>JSGames: ${this._title}</div>`);
+        this._coreControlsDOM.append(CORE_GAME_CONTROLS);
+        this._stopButton = this._coreControlsDOM.first('#stop-game');
+        this._stopButton._htmlElement.addEventListener('click', () => {
+            this._gameRunner?.stop();
+            if (this._onStop) {
+
+                this._onStop();
+            }
+        });
+
+        this._pauseButton = this._coreControlsDOM.first('#pause-game');
+        this._pauseButton._htmlElement.addEventListener('click', () => {
+            this._gameRunner?.pause();
+        });
+
+        this._resumeButton = this._coreControlsDOM.first('#resume-game');
+        this._resumeButton._htmlElement.addEventListener('click', () => {
+            this._gameRunner?.resume();
+        });
+
+        this._resetButton = this._coreControlsDOM.first('#reset-game');
+        this._resetButton._htmlElement.addEventListener('click', () => {
+            this._gameRunner?.stop();
+            this._reset();
+        });
+
+
     }
     setGameControls(dom) {
         this._gameControlsDOM = dom;

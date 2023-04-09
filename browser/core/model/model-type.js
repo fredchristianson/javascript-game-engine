@@ -9,7 +9,9 @@ class ModelType extends Enum {
 const MODEL_TYPE = {
     UNKNOWN: new ModelType('unknown'),
     HTML: new ModelType('HTML'),
-    CANVAS: new ModelType('CANVAS')
+    CANVAS: new ModelType('CANVAS'),
+    STYLE: new ModelType('STYLE'),
+    TEXT: new ModelType('text')
 
 };
 

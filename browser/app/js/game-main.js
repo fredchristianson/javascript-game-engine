@@ -23,21 +23,23 @@ function shadowDOM(selector) {
 }
 
 class GameMain {
-  constructor() {
+  constructor(launcher) {
     configureLogOutput();
     log.debug('GameApplication running');
     this._gameManager = null;
+    this._launcher = launcher;
   }
 
-  async run(name) {
-    log.info(`GameApp running game ${name}`);
+  async run() {
+    log.info(`GameApp running game ${this._launcher}`);
     this._gameManager = new GameManager();
     this._gameManager.setWorld(shadowDOM('#world'));
     this._gameManager.setCoreControls(shadowDOM('#app .controls .engine'));
     this._gameManager.setGameControls(shadowDOM('#app .controls .game'));
     this._gameManager.setCoreStatus(shadowDOM('#app .status .engine'));
     this._gameManager.setGameStatus(shadowDOM('#app .status .game'));
-    this._gameManager.run(name);
+    this._gameManager.onStop(this.run.bind(this));
+    this._gameManager.run(this._launcher);
 
   }
 }

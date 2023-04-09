@@ -8,7 +8,7 @@ class VisibleEntityDefinition extends EntityDefinition {
         super(entityType, builder);
         this._attachSelector = null;
         this._templateSelector = null;
-        this._beforeRender = [];
+        this._beforeRenderer = [];
         this._modelIds = null;
 
     }
@@ -22,8 +22,8 @@ class VisibleEntityDefinition extends EntityDefinition {
         if (this._templateSelector) {
             entity._templateSelector = this._templateSelector;
         }
-        if (this._beforeRender) {
-            entity._beforeRender = this._beforeRender;
+        if (this._beforeRenderer) {
+            entity._beforeRender = this._beforeRenderer;
         }
         if (this._modelIds) {
             entity._modelIds = this._modelIds;
@@ -50,7 +50,7 @@ class VisibleEntityDefinition extends EntityDefinition {
     }
 
     beforeRender(...callback) {
-        this._beforeRender.push(CALLBACK.create(...callback));
+        this._beforeRenderer.push(CALLBACK.create(...callback));
         return this;
     }
 

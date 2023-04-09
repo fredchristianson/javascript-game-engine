@@ -1,20 +1,15 @@
 class GameMechanics {
     constructor(gameManager) {
         this._gameManager = gameManager;
-        this._pieces = [];
-        this._actions = [];
     }
 
-    setupPieces(pieces) {
-        this._pieces = pieces;
-    }
 
-    setupActions(actions) {
-        this._actions = actions;
+    setup() {
+
     }
 
     step() {
-        for (const action of this._actions) {
+        for (const action of this._gameManager._actions) {
             action.process();
         }
     }

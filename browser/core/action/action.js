@@ -10,8 +10,12 @@ class Action extends Entity {
         this._handler = null;
         this._kind = null;
         this._data = null;
+        this._inputHandler = null;
     }
 
+    setInputHandler(inputHandler) {
+        this._inputHandler = inputHandler;
+    }
     get Kind() {
         return this._kind;
     }

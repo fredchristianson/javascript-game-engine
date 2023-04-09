@@ -1,7 +1,8 @@
 import { ASSERT } from '../assert.js';
 import { NUMBER, FUNCTION, OBJECT, STRING, TYPE, UTIL } from '../helpers.js';
+import { createLogger } from '../logging/logger.js';
 import { DOMElementType, isDOM } from './dom-common.js';
-
+const log = createLogger('DOMElement');
 
 function normalizeDatasetName(name) {
     let idx = name.indexOf('-');
@@ -180,7 +181,20 @@ export class DOMElement extends DOMElementType {
     addClass(className) {
         this._htmlElement.classList.add(className);
     }
+
+    setStyles(styles) {
+        ASSERT.isType(styles, Object, 'setStyles requires an object');
+        for (const [name, value] of Object.entries(styles)) {
+            this._htmlElement.style[name] = value;
+        }
+    }
+
     setStyle(name, value) {
+        if (OBJECT.isObject(name)) {
+            log.warn('Use setStyles instead of setStyle for multiple values');
+            this.setStyles(name);
+            return;
+        }
         this._htmlElement.style[name] = value;
     }
 

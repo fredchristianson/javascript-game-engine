@@ -4,6 +4,8 @@ import { ENTITY_TYPE } from '../entity/entity-type.js';
 import { CanvasModel } from './canvas-model.js';
 import { HtmlModel } from './html-model.js';
 import { MODEL_TYPE } from './model-type.js';
+import { StyleModel } from './style-model.js';
+import { TextModel } from './text-model.js';
 
 class ModelDefinition extends EntityDefinition {
     constructor(modelType, builder) {
@@ -12,18 +14,6 @@ class ModelDefinition extends EntityDefinition {
     }
 
 
-    _createModel() {
-        let model = null;
-        switch (this._modelType) {
-            case MODEL_TYPE.HTML:
-                model = new HtmlModel();
-                break;
-            case MODEL_TYPE.CANVAS:
-                model = new CANVASModel();
-                break;
-        }
-        return model;
-    }
 }
 
 class HtmlModelDefinition extends ModelDefinition {
@@ -60,7 +50,46 @@ class CanvasModelDefinition extends ModelDefinition {
     _createEntity() {
         const model = new CanvasModel();
         this._initializeEntity(model);
+        model._styles = this._styles;
         return model;
+    }
+}
+
+class StyleModelDefinition extends ModelDefinition {
+    constructor(builder) {
+        super(MODEL_TYPE.STYLE, builder);
+        this._styles = {};
+    }
+
+
+    backgroundColor(color) {
+        this._styles['backgroundColor'] = color;
+        return this;
+    }
+    _createEntity() {
+        const model = new StyleModel();
+        this._initializeEntity(model);
+        model._styles = this._styles;
+        return model;
+    }
+}
+
+class TextModelDefinition extends ModelDefinition {
+    constructor(builder) {
+        super(MODEL_TYPE.TEXT, builder);
+        this._text = null;
+    }
+
+    _createEntity() {
+        const model = new TextModel();
+        this._initializeEntity(model);
+        model._text = this._text;
+        return model;
+    }
+
+    text(t) {
+        this._text = t;
+        return this;
     }
 }
 
@@ -79,6 +108,22 @@ class ModelBuilder extends EntityBuilder {
         const def = new CanvasModelDefinition(this);
         this._addDefinition(def);
         return def;
+    }
+
+    defineStyleModel() {
+        const def = new StyleModelDefinition(this);
+        this._addDefinition(def);
+        return def;
+    }
+
+    defineTextModel() {
+        const def = new TextModelDefinition(this);
+        this._addDefinition(def);
+        return def;
+    }
+
+    _buildDefaultModels() {
+        // none
     }
 
 }

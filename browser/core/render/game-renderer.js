@@ -1,5 +1,7 @@
 import { createLogger } from '../../modules/logging.js';
+import { LAYER_TYPE } from '../game.js';
 import { layerOrderCompare } from '../layer/layer.js';
+import { CanvasRenderer } from './canvas-renderer.js';
 import { HtmlRenderer } from './html-render.js';
 const log = createLogger('GameRenderer');
 
@@ -54,7 +56,12 @@ class GameRenderer {
 
         const sorted = [...this._layers].sort(layerOrderCompare);
         for (const layer of sorted) {
-            const layerRenderer = new HtmlRenderer(this, this._gameRenderLayers, layer);
+            let layerRenderer = null;
+            if (layer.Type == LAYER_TYPE.CANVAS) {
+                layerRenderer = new CanvasRenderer(this, this._gameRenderLayers, layer);
+            } else {
+                layerRenderer = new HtmlRenderer(this, this._gameRenderLayers, layer);
+            }
             this._layerRenderers.push(layerRenderer);
         }
     }
@@ -75,7 +82,7 @@ class GameRenderer {
             try {
                 renderer.render();
             } catch (ex) {
-                log.error('failed to render layer ', renderer);
+                log.error('failed to render layer ', renderer, ex);
             }
         }
     }
