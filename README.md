@@ -1,3 +1,5 @@
+# I didn't think this through.  Working on better ways of collaborating and coding (three.js) but life has got in the way.  Leaving it here but probably not useful.
+
 # JavaScript Game Engine
 
 [Module Documentation (jsdocs)](https://fredchristianson.github.io/javascript-game-engine/).
